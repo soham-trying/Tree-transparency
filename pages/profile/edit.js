@@ -15,6 +15,7 @@ import {
   where,
   addDoc,
   setDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { useUserStore } from "@/store/user";
 
@@ -38,6 +39,7 @@ export default function EditProfile() {
           if (docSnap.exists()) {
             let userData = docSnap.data();
 
+            setValue("email", user.email ?? "");
             setValue("username", userData.username ?? "");
             setValue("phone", userData.phone ?? "");
             setValue("pinCode", userData.pinCode ?? "");
@@ -71,21 +73,24 @@ export default function EditProfile() {
 
     setNgos(ngos);
   }
+  console.log(user);
 
   const onSubmit = async (data) => {
+    const { email, ...rest } = data;
+
     await changeDisplayName(data.username);
-    const docRef = doc(firestore, "Users", userStore.email);
+    const docRef = doc(firestore, "Users", email);
 
     const user = await getDoc(docRef);
 
-    if (!user)
+    if (!user.exists())
       await setDoc(docRef, {
-        ...data,
+        ...rest,
         lastUpdated: serverTimestamp(),
       });
     else
       await updateDoc(docRef, {
-        ...data,
+        ...rest,
         lastUpdated: serverTimestamp(),
       });
 

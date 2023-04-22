@@ -70,7 +70,7 @@ export const abi = [
 	}
 ]
 
-const address = "0x0920650607B43Cd055d0d605055Ab6C4a1864828";
+const address = "0xd65a2FB7cDCbF8f899f3ed45F08eDE37c68210D1";
 
 // create a new contract object, providing the ABI and address
 export const contract = new web3.eth.Contract(abi, address);

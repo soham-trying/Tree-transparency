@@ -6,11 +6,11 @@ export default function Header() {
     { name: "Adopt", href: "plants" },
     { name: "Donate NGO", href: "donate" },
     { name: "Crowd Fund", href: "crowd-fund" },
-    { name: "Profile", href: "profile" },
+    { name: "Login", href: "login" },
   ];
 
   return (
-    <header className="fixed top-0 navbar">
+    <header className="sticky top-0 navbar">
       <div className="flex-1">
         <a className="gap-2 text-xl normal-case btn btn-ghost">
           <IconTrees className="text-emerald-500" /> Tree Transparency

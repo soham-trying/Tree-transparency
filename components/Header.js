@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Header() {
   const routes = [
     { name: "Adopt", href: "plants" },
-    { name: "Donate NGO", href: "donate" },
+    { name: "Donate", href: "donate" },
     { name: "Crowd Fund", href: "crowd-fund" },
   ];
 

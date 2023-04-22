@@ -15,6 +15,7 @@ import {
 } from "firebase/auth";
 import { auth, firestore } from "./firebase.js";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { useUserStore } from "@/store/user.js";
 
 // import { collection, addDoc } from "firebase/firestore";
 
@@ -24,6 +25,8 @@ export const useUserContext = () => useContext(UserContext);
 
 export const UserContextProvider = ({ children }) => {
   const provider = new GoogleAuthProvider();
+
+  const { userStore, setUser: setUserStore } = useUserStore();
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState();
@@ -101,8 +104,6 @@ export const UserContextProvider = ({ children }) => {
         // The signed-in user info.
         const loggedUser = result.user;
 
-        window.localStorage.setItem("isEditing", false);
-
         let data = {
           id: loggedUser.id,
           name: loggedUser.displayName,
@@ -121,7 +122,8 @@ export const UserContextProvider = ({ children }) => {
           // Add the login data to the database
           const docRef = doc(firestore, "Users", loggedUser.email);
           await setDoc(docRef, data, { merge: true });
-          window.localStorage.setItem("userData", JSON.stringify(data));
+          // window.localStorage.setItem("userData", JSON.stringify(data));
+          setUserStore(user);
         } catch (e) {
           // console.error("Error saving the data: ", e);
         }
@@ -221,7 +223,8 @@ export const UserContextProvider = ({ children }) => {
             const docRef = doc(firestore, "Users", loggedUser.email);
 
             await setDoc(docRef, data, { merge: true });
-            window.localStorage.setItem("userData", JSON.stringify(data));
+            // window.localStorage.setItem("userData", JSON.stringify(data));
+            setUser(data);
           } catch (e) {
             // console.error("Error saving the data: ", e);
           }

@@ -8,7 +8,6 @@ import { create } from "zustand";
 export const useUserStore = create((set) => ({
   userStore: { username: "", phone: "", type: "" },
   setUser: (user) => {
-    console.log(user)
-set({ userStore: user })
+    set((state) => ({ userStore: { ...state.userStore, ...user } }));
   },
 }));

@@ -4,7 +4,18 @@ import userType from "@/constants/user-type.json";
 import { useUserContext } from "@/services/userContext";
 import { useRouter } from "next/router";
 import { firestore } from "@/services/firebase";
-import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  serverTimestamp,
+  getDocs,
+  query,
+  collection,
+  where,
+  addDoc,
+  setDoc,
+} from "firebase/firestore";
 import { useUserStore } from "@/store/user";
 
 export default function EditProfile() {
@@ -12,6 +23,7 @@ export default function EditProfile() {
 
   const { user, changeDisplayName } = useUserContext();
   const { userStore, setUser } = useUserStore();
+  const [ngos, setNgos] = useState([]);
 
   const { register, handleSubmit, setValue, watch, getValues, isSubmitting } =
     useForm();
@@ -22,7 +34,7 @@ export default function EditProfile() {
     if (user) {
       const docRef = doc(firestore, "Users", user.email);
       const docSnap = getDoc(docRef)
-        .then((docSnap) => {
+        .then(async (docSnap) => {
           if (docSnap.exists()) {
             let userData = docSnap.data();
 
@@ -31,9 +43,15 @@ export default function EditProfile() {
             setValue("pinCode", userData.pinCode ?? "");
             userData.type && setValue("type", userData.type ?? "");
 
+            await fetchNgos();
+
+            if (userData.type === "Volunteers") {
+              setValue("volunteerNgo", userData.volunteerNgo ?? "");
+            }
+
             if (userData.type === "NGOs") {
               setValue("ngoId", userData.ngoId ?? "");
-              setValue("type", userData.ngoAddress ?? "");
+              setValue("ngoAddress", userData.ngoAddress ?? "");
             }
           }
         })
@@ -41,13 +59,36 @@ export default function EditProfile() {
     }
   }, [user]);
 
+  async function fetchNgos() {
+    const ngoRef = collection(firestore, "Users");
+    const ngosSnap = await getDocs(query(ngoRef, where("type", "==", "NGOs")));
+
+    const ngos = [];
+
+    ngosSnap.forEach((doc) => {
+      ngos.push({ id: doc.id, ...doc.data() });
+    });
+
+    setNgos(ngos);
+  }
+
   const onSubmit = async (data) => {
     await changeDisplayName(data.username);
     const docRef = doc(firestore, "Users", user.email);
-    await updateDoc(docRef, {
-      ...data,
-      lastUpdated: serverTimestamp(),
-    });
+
+    const user = await getDoc(docRef);
+
+    if (!user)
+      await setDoc(docRef, {
+        ...data,
+        lastUpdated: serverTimestamp(),
+      });
+    else
+      await updateDoc(docRef, {
+        ...data,
+        lastUpdated: serverTimestamp(),
+      });
+
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) return;
@@ -66,7 +107,11 @@ export default function EditProfile() {
       >
         <div className="w-full form-control">
           <label htmlFor="username" className="label">
-            {watch("type") === "NGOs" ? "NGO Name" : "Username"}
+            {watch("type") === "NGOs"
+              ? "NGO Name"
+              : watch("type") === "Private Companies"
+              ? "Company Name"
+              : "Username"}
           </label>
           <input className="input input-bordered" {...register("username")} />
         </div>
@@ -98,7 +143,10 @@ export default function EditProfile() {
           </select>
         </div>
 
-        {watch("type") === "NGOs" ? <NGOFields register={register} /> : ""}
+        {watch("type") === "NGOs" && <NGOFields register={register} />}
+        {watch("type") === "Volunteers" && (
+          <VolunteerFields register={register} ngos={ngos} />
+        )}
 
         <div className="w-full form-control">
           <button type="submit" className="btn btn-primary">
@@ -107,6 +155,24 @@ export default function EditProfile() {
         </div>
       </form>
     </div>
+  );
+}
+
+function VolunteerFields({ register, ngos }) {
+  return (
+    <>
+      <div className="w-full form-control">
+        <label htmlFor="volunteerNgo">NGO</label>
+        <select
+          {...register("volunteerNgo")}
+          className="select select-bordered"
+        >
+          {ngos.map((ngo) => (
+            <option key={ngo.id}>{ngo.username}</option>
+          ))}
+        </select>
+      </div>
+    </>
   );
 }
 

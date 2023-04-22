@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import userType from "@/constants/user-type.json";
-import { useUserContext } from "@/services/userContext";
 import { useRouter } from "next/router";
-import { firestore } from "@/services/firebase";
+
 import {
   doc,
   getDoc,
@@ -16,6 +14,10 @@ import {
   setDoc,
   deleteDoc,
 } from "firebase/firestore";
+
+import userType from "@/constants/user-type.json";
+import { useUserContext } from "@/services/userContext";
+import { firestore } from "@/services/firebase";
 import { useUserStore } from "@/store/user";
 import GuardedPage from "@/components/GuardedPage";
 

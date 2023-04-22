@@ -13,11 +13,11 @@ import {
   query,
   collection,
   where,
-  addDoc,
   setDoc,
   deleteDoc,
 } from "firebase/firestore";
 import { useUserStore } from "@/store/user";
+import GuardedPage from "@/components/GuardedPage";
 
 export default function EditProfile() {
   const router = useRouter();
@@ -36,10 +36,11 @@ export default function EditProfile() {
       const docRef = doc(firestore, "Users", user.email);
       const docSnap = getDoc(docRef)
         .then(async (docSnap) => {
+          setValue("email", user.email ?? "");
+
           if (docSnap.exists()) {
             let userData = docSnap.data();
 
-            setValue("email", user.email ?? "");
             setValue("username", userData.username ?? "");
             setValue("phone", userData.phone ?? "");
             setValue("pinCode", userData.pinCode ?? "");
@@ -73,12 +74,13 @@ export default function EditProfile() {
 
     setNgos(ngos);
   }
-  console.log(user);
 
   const onSubmit = async (data) => {
     const { email, ...rest } = data;
 
     await changeDisplayName(data.username);
+    console.log(email);
+
     const docRef = doc(firestore, "Users", email);
 
     const user = await getDoc(docRef);
@@ -105,61 +107,63 @@ export default function EditProfile() {
   };
 
   return (
-    <div className="container w-full mx-auto">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center justify-center w-full max-w-4xl gap-5 px-4"
-      >
-        <div className="w-full form-control">
-          <label htmlFor="username" className="label">
-            {watch("type") === "NGOs"
-              ? "NGO Name"
-              : watch("type") === "Private Companies"
-              ? "Company Name"
-              : "Username"}
-          </label>
-          <input className="input input-bordered" {...register("username")} />
-        </div>
+    <GuardedPage>
+      <div className="container w-full mx-auto">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col items-center justify-center w-full max-w-4xl gap-5 px-4"
+        >
+          <div className="w-full form-control">
+            <label htmlFor="username" className="label">
+              {watch("type") === "NGOs"
+                ? "NGO Name"
+                : watch("type") === "Private Companies"
+                ? "Company Name"
+                : "Username"}
+            </label>
+            <input className="input input-bordered" {...register("username")} />
+          </div>
 
-        <div className="w-full form-control">
-          <label htmlFor="pinCode" className="label">
-            Pin Code
-          </label>
-          <input className="input input-bordered" {...register("pinCode")} />
-        </div>
+          <div className="w-full form-control">
+            <label htmlFor="pinCode" className="label">
+              Pin Code
+            </label>
+            <input className="input input-bordered" {...register("pinCode")} />
+          </div>
 
-        <div className="w-full form-control">
-          <label htmlFor="phone" className="label">
-            Phone
-          </label>
-          <input className="input input-bordered" {...register("phone")} />
-        </div>
+          <div className="w-full form-control">
+            <label htmlFor="phone" className="label">
+              Phone
+            </label>
+            <input className="input input-bordered" {...register("phone")} />
+          </div>
 
-        <div className="w-full form-control">
-          <label htmlFor="type" className="label">
-            Type
-          </label>
-          <select className="select select-bordered" {...register("type")}>
-            {userType.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-        </div>
+          <div className="w-full form-control">
+            <label htmlFor="type" className="label">
+              Type
+            </label>
+            <select className="select select-bordered" {...register("type")}>
+              {userType.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        {watch("type") === "NGOs" && <NGOFields register={register} />}
-        {watch("type") === "Volunteers" && (
-          <VolunteerFields register={register} ngos={ngos} />
-        )}
+          {watch("type") === "NGOs" && <NGOFields register={register} />}
+          {watch("type") === "Volunteers" && (
+            <VolunteerFields register={register} ngos={ngos} />
+          )}
 
-        <div className="w-full form-control">
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+          <div className="w-full form-control">
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </GuardedPage>
   );
 }
 

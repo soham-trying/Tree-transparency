@@ -10,7 +10,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 navbar">
+    <header className="sticky top-0 shadow-lg navbar bg-base-100">
       <div className="flex-1">
         <a className="gap-2 text-xl normal-case btn btn-ghost">
           <IconTrees className="text-emerald-500" /> Tree Transparency

@@ -74,7 +74,7 @@ export default function EditProfile() {
 
   const onSubmit = async (data) => {
     await changeDisplayName(data.username);
-    const docRef = doc(firestore, "Users", user.email);
+    const docRef = doc(firestore, "Users", userStore.email);
 
     const user = await getDoc(docRef);
 

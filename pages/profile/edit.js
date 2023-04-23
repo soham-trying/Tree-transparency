@@ -15,7 +15,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
-import userType from "@/constants/user-type.json";
+import { userType } from "@/constants/user-type";
 import { useUserContext } from "@/services/userContext";
 import { firestore } from "@/services/firebase";
 import { useUserStore } from "@/store/user";
@@ -28,8 +28,7 @@ export default function EditProfile() {
   const { userStore, setUser } = useUserStore();
   const [ngos, setNgos] = useState([]);
 
-  const { register, handleSubmit, setValue, watch, getValues, isSubmitting } =
-    useForm();
+  const { register, handleSubmit, setValue, watch } = useForm();
 
   useEffect(() => {
     // !user && router.push("/login");
@@ -102,8 +101,7 @@ export default function EditProfile() {
 
     if (!docSnap.exists()) return;
 
-    console.log(docSnap.data());
-    setUser(docSnap.data());
+    setUser({ id: docSnap.id, ...docSnap.data() });
 
     router.push("/profile");
   };

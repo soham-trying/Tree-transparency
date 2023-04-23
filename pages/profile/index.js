@@ -40,7 +40,7 @@ export default function Profile() {
         if (!docSnap.exists()) router.push("/profile/edit");
 
         // window.localStorage.setItem("userStore", JSON.stringify(userStore));
-        setUser(user);
+        setUser({ id: docSnap.id, ...user });
       });
     }
     setLoading(false);

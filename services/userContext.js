@@ -224,7 +224,7 @@ export const UserContextProvider = ({ children }) => {
 
             await setDoc(docRef, data, { merge: true });
             // window.localStorage.setItem("userData", JSON.stringify(data));
-            setUser(data);
+            setUser({ data});
           } catch (e) {
             // console.error("Error saving the data: ", e);
           }

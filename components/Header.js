@@ -1,6 +1,6 @@
 import { useUserContext } from "@/services/userContext";
 import { useUserStore } from "@/store/user";
-import { IconTrees } from "@tabler/icons-react";
+import { IconTrees, IconUserCircle } from "@tabler/icons-react";
 import Link from "next/link";
 
 export default function Header() {
@@ -39,9 +39,13 @@ export default function Header() {
       ) : (
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 rounded-full">
-              <img src={user?.photoURL} alt="user" />
-            </div>
+            {user.photoURL ? (
+              <div className="w-10 rounded-full">
+                <img src={user?.photoURL} alt="user" />
+              </div>
+            ) : (
+              <IconUserCircle size={30} />
+            )}
           </label>
           <ul
             tabIndex={0}

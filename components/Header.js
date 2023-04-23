@@ -17,9 +17,9 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 shadow-lg navbar bg-base-100">
       <div className="flex-1">
-        <a className="gap-2 text-xl normal-case btn btn-ghost">
+        <Link href="/" className="gap-2 text-xl normal-case btn btn-ghost">
           <IconTrees className="text-emerald-500" /> Tree Transparency
-        </a>
+        </Link>
       </div>
       <div className="flex-none">
         <ul className="px-1 menu menu-horizontal">

@@ -42,82 +42,74 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-row max-h-max h-49 p-20 ">
-  <form
-    onSubmit={handleSubmit(onSubmit)}
-    className="flex flex-col max-w-4xl gap-6 min-w-4xl m-auto card px-5 py-16 w-full border-2 shadow-md"
-    style={{ flex: 1 }}
-  >
-    {/* Show error if there is any */}
-    {error !== "" ? (
-      <div
-        className="relative px-4 py-3 my-2 text-red-700 bg-red-100 border border-red-400 rounded-lg"
-        role="alert"
+    <div className="flex flex-row items-center justify-center p-16">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-6 max-w-4xl min-w-4xl m-auto border shadow-xl p-10 rounded-xl"
       >
-        <strong className="font-bold">Error!</strong>
-        <span className="block sm:inline">{" " + error}</span>
-        <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
-          <IconX />
-        </span>
-      </div>
-    ) : (
-      <></>
-    )}
-
-    {emailSent ? (
-      <div
-        className="px-4 py-3 my-2 text-teal-900 bg-teal-100 border-t-4 border-teal-500 rounded-b shadow-md"
-        role="alert"
-      >
-        <div className="flex flex-col">
-          <div className="py-1">
-            <IconAlertCircle />
+        {/* Show error if there is any */}
+        {error !== "" ? (
+          <div
+            className="relative px-4 py-3 my-2 text-red-700 bg-red-100 border border-red-400 rounded-lg"
+            role="alert"
+          >
+            <strong className="font-bold">Error!</strong>
+            <span className="block sm:inline">{" " + error}</span>
+            <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
+              <IconX />
+            </span>
           </div>
-          <div>
-            <p className="font-bold">Email sent successfully!</p>
+        ) : (
+          <></>
+        )}
+
+        {emailSent ? (
+          <div
+            className="px-4 py-3 my-2 text-teal-900 bg-teal-100 border-t-4 border-teal-500 rounded-b shadow-md"
+            role="alert"
+          >
+            <div className="flex flex-col">
+              <div className="py-1">
+                <IconAlertCircle />
+              </div>
+              <div>
+                <p className="font-bold">Email sent successfully!</p>
+                <p className="text-sm">
+                  Login link sent to the above email address. Close this tab
+                  once you click that link.
+                  <br />
+                  (Check your <b>Promotions</b> or <b>Spam folder</b>)
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div
+            className="px-4 py-3 my-2 text-blue-700 bg-blue-100 border border-blue-500 rounded-lg"
+            role="alert"
+          >
+            <p className="font-bold">No need to create an account!</p>
             <p className="text-sm">
-              Login link sent to the above email address. Close this tab once
-              you click that link.
-              <br />
-              (Check your <b>Promotions</b> or <b>Spam folder</b>)
+              We have already taken care of that for you. A login link would be
+              sent to this email.
             </p>
           </div>
+        )}
+        <div className="form-control">
+          <label htmlFor="email" className="label">
+            Email
+          </label>
+          <input
+            type="email"
+            className="input input-bordered"
+            {...register("email")}
+            required
+          />
         </div>
-      </div>
-    ) : (
-      <div
-        className="px-4 py-3 my-2 text-blue-700 bg-blue-100 border border-blue-500 rounded-lg"
-        role="alert"
-      >
-        <p className="font-bold">No need to create an account!</p>
-        <p className="text-sm">
-          We have already taken care of that for you. A login link would be sent
-          to this email.
-        </p>
-      </div>
-    )}
-    <div className="form-control">
-      <label htmlFor="email" className="label">
-        Email
-      </label>
-      <input
-        type="email"
-        className="input input-bordered"
-        {...register("email")}
-        required
-      />
+
+        <button className="btn btn-primary">Submit</button>
+      </form>
+      <Banner className="m-auto"/>
     </div>
-
-    <button className="btn btn-primary">Submit</button>
-  </form>
-
-  
-    <Banner className="my-10 mx-10" />
-  </div>
-
-
-
-
-    
   );
 }

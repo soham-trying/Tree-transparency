@@ -43,7 +43,7 @@ export default function TreeForm() {
 
     uploadTask.on(
       "state_changed",
-      (snapshot) => {},
+      (snapshot) => { },
       (err) => console.log(err),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
@@ -60,96 +60,49 @@ export default function TreeForm() {
   };
 
   return (
-    <div className="container px-4 mx-auto">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-        <div className="form-control">
-          <label htmlFor="name" className="label">
-            Tree Name
-          </label>
-          <input
-            type="text"
-            className="input input-bordered"
-            {...register("name")}
-            required
-          />
+    <div className="container mx-auto py-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+        <div className="mb-6">
+          <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Tree Name</label>
+          <input type="text" className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline" {...register("name")} required />
         </div>
 
-        <div className="form-control">
-          <label className="label" htmlFor="type">
-            Tree Description
-          </label>
-          <input
-            type="text"
-            name="type"
-            className="input input-bordered"
-            {...register("description")}
-            required
-          />
+        <div className="mb-6">
+          <label htmlFor="description" className="block text-gray-700 font-bold mb-2">Tree Description</label>
+          <input type="text" className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline" {...register("description")} required />
         </div>
 
-        <div className="form-control">
-          <label className="label" htmlFor="type">
-            Tree Type
-          </label>
-          <select
-            type="text"
-            name="type"
-            className="select select-bordered"
-            {...register("type")}
-            required
-          >
+        <div className="mb-6">
+          <label htmlFor="type" className="block text-gray-700 font-bold mb-2">Tree Type</label>
+          <select type="text" name="type" className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline" {...register("type")} required>
             {treeType.map((value) => (
               <option value={value}>{value}</option>
             ))}
           </select>
         </div>
 
-        <div className="form-control">
-          <label className="label" htmlFor="species">
-            Tree species
-          </label>
-          <select
-            type="text"
-            name="type"
-            className="select select-bordered"
-            {...register("species")}
-            required
-          >
+        <div className="mb-6">
+          <label htmlFor="species" className="block text-gray-700 font-bold mb-2">Tree species</label>
+          <select type="text" name="species" className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline" {...register("species")} required>
             {treeSpecies.map((value) => (
               <option value={value}>{value}</option>
             ))}
           </select>
         </div>
 
-        <div className="form-control">
-          <label htmlFor="location" className="label">
-            Location
-          </label>
-          <input
-            type="text"
-            className="input input-bordered"
-            {...register("location")}
-            required
-          />
+        <div className="mb-6">
+          <label htmlFor="location" className="block text-gray-700 font-bold mb-2">Location</label>
+          <input type="text" className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline" {...register("location")} required />
         </div>
 
-        <div className="form-control">
-          <label htmlFor="image" className="label">
-            Image
-          </label>
-          <input
-            type="file"
-            className="w-full max-w-xs file-input file-input-bordered"
-            {...register("images")}
-          />
+        <div className="mb-6">
+          <label htmlFor="images" className="block text-gray-700 font-bold mb-2">Image</label>
+          <input type="file" className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline" {...register("images")} />
         </div>
 
-        <div className="form-control">
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
+        <div className="flex items-center justify-center mt-6">
+          <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline">Submit</button>
         </div>
       </form>
-    </div>
-  );
+    </div>);
 }

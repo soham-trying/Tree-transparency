@@ -50,11 +50,11 @@ export default function () {
     <div className="container mx-auto">
       <div className="grid grid-cols-2 gap-4 px-4 md:grid-cols-3">
         {trees.map((tree) => (
-          <div key={tree.id} className="shadow-xl card bg-base-100">
+          <div key={tree.id} className="shadow-xl card bg-base-100 border my-10">
             <figure>
               <img src={tree.imageUrl} alt={tree.name} />
             </figure>
-            <div className="card-body">
+            <div className="card-body  border">
               <h3 className="text-xl font-bold">{tree.name}</h3>
               <p>{tree.description}</p>
               <p>{tree.type}</p>

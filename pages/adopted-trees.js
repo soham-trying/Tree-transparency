@@ -50,7 +50,7 @@ export default function AdoptedTrees() {
     <div className="container mx-auto">
       <div className="grid grid-cols-2 gap-4 px-4 md:grid-cols-3">
         {trees.map((tree) => (
-          <div key={tree.id} className="shadow-xl card bg-base-100">
+          <div key={tree.id} className="shadow-xl card bg-base-100 my-10">
             <figure>
               <img src={tree.imageUrl} alt={tree.name} />
             </figure>

@@ -35,7 +35,7 @@ export default function TreeForm() {
 
     const treeRef = await addDoc(collection(firestore, "Trees"), rest);
 
-    console.log(treeRef.id);
+    console.log(treeRef.data);
 
     const storageRef = ref(storage, `/planted/${treeRef.id}`);
 
@@ -47,10 +47,11 @@ export default function TreeForm() {
       (err) => console.log(err),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+          console.log(url)
           await updateDoc(doc(firestore, "Trees", treeRef.id), {
             imageUrl: url,
           });
-        });
+        }).catch(err => console.error(err));
       }
     );
 

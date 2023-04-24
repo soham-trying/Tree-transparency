@@ -38,14 +38,18 @@ export default function Header() {
         </>
       ) : (
         <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+          <label tabIndex={0} className="btn btn-ghost gap-2">
+            <div className="avatar">
             {user.photoURL ? (
               <div className="w-10 rounded-full">
                 <img src={user?.photoURL} alt="user" />
               </div>
             ) : (
               <IconUserCircle size={30} />
-            )}
+            )} 
+            {console.log(user)}
+            </div>
+            <span>{user?.displayName}</span>
           </label>
           <ul
             tabIndex={0}

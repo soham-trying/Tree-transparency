@@ -42,11 +42,11 @@ export default function Login() {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container">
       <Banner className="my-10" />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col max-w-4xl gap-6 min-w-4xl"
+        className="flex flex-col max-w-4xl gap-6 min-w-4xl m-auto"
       >
         {/* Show error if there is any */}
         {error !== "" ? (

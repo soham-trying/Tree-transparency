@@ -111,7 +111,7 @@ export default function EditProfile() {
       <div className="container w-full mx-auto">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col items-center justify-center w-full max-w-4xl gap-5 px-4"
+          className="flex flex-col items-center justify-center w-full max-w-4xl gap-5 p-5 my-10 mx-auto shadow-xl rounded bg-base-100"
         >
           <div className="w-full form-control">
             <label htmlFor="username" className="label">

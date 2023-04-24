@@ -33,7 +33,7 @@ export default function Header() {
       {!user ? (
         <>
           <div>
-            <button className="btn btn-primary">Sign In</button>
+            <button className="btn btn-primary"> <Link href="/login">Sign In</Link></button>
           </div>
         </>
       ) : (

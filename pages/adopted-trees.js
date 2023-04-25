@@ -13,6 +13,7 @@ import { firestore } from "@/services/firebase";
 import { useUserContext } from "@/services/userContext";
 import { useUserStore } from "@/store/user";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function AdoptedTrees() {
   const [trees, setTrees] = useState([]);
@@ -63,6 +64,12 @@ export default function AdoptedTrees() {
               <p>{tree.description}</p>
               <p>{tree.type}</p>
               <p>{tree.species}</p>
+              <Link
+                href={`https://gateway.pinata.cloud/ipfs/${tree?.ipfsHash}`}
+              >
+                {`https://gateway.pinata.cloud/ipfs/${tree?.ipfsHash}`}
+              </Link>
+              <input className="input input-bordered input-primary" value={tree.transactionHash}></input>
             </div>
           </div>
         ))}

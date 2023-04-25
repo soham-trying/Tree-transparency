@@ -102,7 +102,7 @@ export default function TreeForm() {
     // Add to Firebase
 
     const treeRef = await addDoc(collection(firestore, "Trees"), {
-      rest,
+      ...rest,
       ipfsHash,
     });
 
@@ -130,7 +130,7 @@ export default function TreeForm() {
     );
 
     // reset();
-    alert("Added Tree");
+    // alert("Added Tree");
   };
 
   return (

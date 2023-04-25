@@ -61,6 +61,7 @@ export default function () {
     });
 
     getTrees();
+    alert("Adopted Tree");
   };
 
   const deleteTree = async (id) => {

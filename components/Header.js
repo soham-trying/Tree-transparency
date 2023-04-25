@@ -15,7 +15,7 @@ export default function Header() {
   const { userStore } = useUserStore();
 
   return (
-    <header className="sticky top-0 z-50 shadow-lg navbar bg-base-100">
+    <header className="shadow-lg navbar bg-base-100">
       <div className="flex-1">
         <Link href="/" className="gap-2 text-xl normal-case btn btn-ghost">
           <IconTrees className="text-emerald-500" /> Tree Transparency
@@ -29,54 +29,53 @@ export default function Header() {
             </li>
           ))}
         </ul>
-      </div>
-      {!user ? (
-        <>
+        {!user ? (
           <div>
-            <button className="btn btn-primary"> <Link href="/login">Sign In</Link></button>
+            <button className="btn btn-primary">
+              <Link href="/login">Sign In</Link>
+            </button>
           </div>
-        </>
-      ) : (
-        <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost gap-2">
-            <div className="avatar">
-            {user.photoURL ? (
-              <div className="w-10 rounded-full">
-                <img src={user?.photoURL} alt="user" />
-              </div>
-            ) : (
-              <IconUserCircle size={30} />
-            )} 
-            {console.log(user)}
+        ) : (
+          <div className="dropdown dropdown-end">
+            <label tabIndex={0} className="gap-2 btn btn-ghost">
+              <div className="avatar">
+              {user.photoURL ? (
+                <div className="w-10 rounded-full">
+                  <img src={user?.photoURL} alt="user" />
+                </div>
+              ) : (
+                <IconUserCircle size={30} />
+              )}
             </div>
-            <span>{user?.displayName}</span>
-          </label>
-          <ul
-            tabIndex={0}
-            className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
-          >
-            {userStore.type === "NGOs" &&
-              ngoProfileOptions.map((e) => (
-                <li href={e.href}>
-                  <Link href={e.href}>{e.name}</Link>
-                </li>
-              ))}
+              {user?.displayName}
+            </label>
+            <ul
+              tabIndex={0}
+              className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+            >
+              {userStore.type === "NGOs" &&
+                ngoProfileOptions.map((e) => (
+                  <li href={e.href}>
+                    <Link href={e.href}>{e.name}</Link>
+                  </li>
+                ))}
 
-            <li>
-              <Link href="/adopted-trees">Adopted Trees</Link>
-            </li>
+              <li>
+                <Link href="/adopted-trees">Adopted Trees</Link>
+              </li>
 
-            <li>
-              <Link href="/profile">Profile</Link>
-            </li>
-            <li>
-              <button onClick={() => logOutUser()} className="user">
-                Logout
-              </button>
-            </li>
-          </ul>
-        </div>
-      )}
+              <li>
+                <Link href="/profile">Profile</Link>
+              </li>
+              <li>
+                <button onClick={() => logOutUser()} className="user">
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </div>
+        )}
+      </div>
     </header>
   );
 }

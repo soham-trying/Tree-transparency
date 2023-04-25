@@ -12,19 +12,23 @@ import {
 import { firestore } from "@/services/firebase";
 import { useUserContext } from "@/services/userContext";
 import { useUserStore } from "@/store/user";
+import { useRouter } from "next/router";
 
 export default function AdoptedTrees() {
   const [trees, setTrees] = useState([]);
+  const router = useRouter();
 
   const { user } = useUserContext();
   const { userStore } = useUserStore();
 
   useEffect(() => {
+    !user && router.push("/");
     getTrees();
   }, []);
 
   const getTrees = () => {
-    // console.log(user.email)
+    if (!user) return;
+
     getDocs(
       query(
         collection(firestore, "Trees"),

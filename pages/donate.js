@@ -10,13 +10,16 @@ import {
 } from "firebase/firestore";
 import { auth } from "../services/firebase.js";
 import { firestore } from "../services/firebase.js";
-import { clcik } from "../services/transactweb3.js";
+import { clcik, contract } from "../services/transactweb3.js";
 import Web3 from "web3";
 import { abi } from "../services/transactweb3.js";
 import { doc } from "firebase/firestore";
 import { useUserContext } from "../services/userContext.js";
 import { async } from "@firebase/util";
 import { useRouter } from "next/router";
+import { Signer, ethers } from "ethers";
+import { transactionDataContractAddress } from "@/constants/contract-address.js";
+import TransactionData from "../artifacts/contracts/transact.sol/TransactionData.json";
 
 export default function pay() {
   const [name, setName] = useState("");
@@ -29,29 +32,16 @@ export default function pay() {
   const { user } = useUserContext();
   const [localData, setLocalData] = useState();
   const [orgs, setOrgs] = useState([]);
+  const [connection, setConnection] = useState();
   const router = useRouter();
 
-  function connect() {
-    web3 = new Web3(window.ethereum);
-    window.ethereum.enable().catch((error) => {
-      // User denied account access
-      console.log(error);
-    });
-    const AgentContract = new web3.eth.Contract(abi);
-    web3.eth.defaultAccount = web3.currentProvider.selectedAddress;
-    setdefaultacc(web3.eth.defaultAccount);
-    return web3.currentProvider.selectedAddress;
-  }
-
   useEffect(() => {
-    connect();
     fetchNGO();
   }, []);
 
   function fetchNGO() {
     const docRef = collection(firestore, "Users");
     const q = query(docRef, where("type", "==", "NGOs"));
-    // alert()
     getDocs(q)
       .then((snapshot) => {
         snapshot.forEach((doc) => {
@@ -89,8 +79,33 @@ export default function pay() {
       document.body.appendChild(script);
     });
   };
+
+  const addToChain = async (value) => {
+    // Create Contract
+    const [account] = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // const balance = await provider.getBalance(account);
+    await provider.send("eth_requestAccounts", []);
+    const signer = provider.getSigner();
+
+    const contract = new ethers.Contract(
+      transactionDataContractAddress,
+      TransactionData.abi,
+      signer
+    );
+
+    const connection = contract.connect(signer);
+
+    const result = await contract.addTransaction(connection.address, value);
+
+    return result.hash;
+  };
+
   const displayRazorpay = async (amount) => {
     var myHeaders = new Headers();
+
     myHeaders.append(
       "Authorization",
       "Basic cnpwX3Rlc3RfRDRzRHVKNWEzZkVMeDE6d1ZnMVRMYzJpZEtkZDc1QlZEVFRRaVow"
@@ -128,23 +143,27 @@ export default function pay() {
           name: "",
           description: "Test Transaction",
           handler: function (res) {
-            clcik(defaultacc, amount, (hash) => {
-              settranshash(hash);
-              addDoc(collection(firestore, "payments"), {
-                id,
-                amount,
-                hash,
-                fromname: auth.currentUser.displayName,
-                ...res,
+            const transactionHash = addToChain(amount)
+              .then(() => {
+                addDoc(collection(firestore, "payments"), {
+                  id,
+                  amount,
+                  hash,
+                  fromname: auth.currentUser.displayName,
+                  ...res,
+                })
+                  .then(() => console.log("Document was saved"))
+                  .catch((e) => alert(`Error occured : ${JSON.stringify(e)}`));
               })
-                .then(() => console.log("Document was saved"))
-                .catch((e) => alert(`Error occured : ${JSON.stringify(e)}`));
-            });
+              .catch((err) => console.error(err));
+            console.log(transactionHash);
+
             setPaySuccess(true);
             setPaymentDetails({
               ...res,
               amount,
             });
+
           },
           // "order_id": "order_KTL3lGufa5nvgB", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
           order_id: result.order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1

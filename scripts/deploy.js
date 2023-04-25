@@ -30,9 +30,21 @@ async function deployTreeToken() {
   console.log("Tree Token deployed to: ", treeToken.address);
 }
 
+async function deployTransact() {
+  const TransactionData = await hre.ethers.getContractFactory(
+    "TransactionData"
+  );
+  const transactionData = await TransactionData.deploy();
+
+  await transactionData.deployed();
+
+  console.log("Transaction Data deployed to: ", transactionData.address);
+}
+
 async function main() {
   // await deployLock();
   await deployTreeToken();
+  await deployTransact();
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -15,7 +15,7 @@ import { useUserContext } from "@/services/userContext";
 import { contract } from "@/services/transactweb3";
 import TreeToken from "../artifacts/contracts/TreeNFT.sol/TreeToken.json";
 import Link from "next/link";
-import { treeContractAddress } from "@/constants/tree-contract-address";
+import { treeContractAddress } from "@/constants/contract-address";
 
 export default function () {
   const [trees, setTrees] = useState([]);

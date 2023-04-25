@@ -144,7 +144,9 @@ export default function pay() {
           description: "Test Transaction",
           handler: function (res) {
             const transactionHash = addToChain(amount)
-              .then(() => {
+              .then((hash) => {
+                console.log(hash);
+                settranshash(hash)
                 addDoc(collection(firestore, "payments"), {
                   id,
                   amount,
@@ -156,14 +158,12 @@ export default function pay() {
                   .catch((e) => alert(`Error occured : ${JSON.stringify(e)}`));
               })
               .catch((err) => console.error(err));
-            console.log(transactionHash);
 
             setPaySuccess(true);
             setPaymentDetails({
               ...res,
               amount,
             });
-
           },
           // "order_id": "order_KTL3lGufa5nvgB", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
           order_id: result.order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1

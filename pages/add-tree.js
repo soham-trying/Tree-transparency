@@ -30,7 +30,6 @@ export default function TreeForm() {
     if (!window.ethereum) alert("Install Metamask") && router.push("/");
 
     connectToWallet();
-    // getTrees();
   }, []);
 
   const connectToWallet = async () => {

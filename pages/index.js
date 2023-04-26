@@ -28,7 +28,7 @@ function Hero() {
         </div>
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-base-content sm:text-6xl">
-            Maintain Trees Around You
+            Maintain <span className="text-primary">Trees</span> Around You
           </h1>
           <p className="mt-6 text-lg leading-8 text-base-content">
             A web 3.0 platform for maintaining tree transparency

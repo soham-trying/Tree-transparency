@@ -66,11 +66,10 @@ function Promo() {
         <div className="relative px-4 mx-auto max-w-7xl sm:static sm:px-6 lg:px-8">
           <div className="sm:max-w-lg">
             <h1 className="text-4xl font-bold tracking-tight text-base-content font sm:text-6xl">
-              The Trees are here
+              ADOPT TREES HERE !!!
             </h1>
             <p className="mt-4 text-xl opacity-70">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Reprehenderit, natus?
+            The best time to plant a tree was 20 years ago. The second best time is now.
             </p>
           </div>
           <div>
@@ -145,7 +144,7 @@ function Promo() {
                 href="/adopt"
                 className="inline-block px-8 py-3 font-medium text-center text-white duration-300 border border-transparent rounded-md bg-primary hover:opacity-90"
               >
-                Shop Collection
+                <p class="italic..."> Click here to adopt</p>
               </a>
             </div>
           </div>

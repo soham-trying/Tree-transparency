@@ -30,7 +30,7 @@ export const UserContextProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState();
-  const [error, setError] = useState("");
+  const [error, setError] = useState();
   const [emailSent, setEmailSent] = useState(false);
   const [readyToRedirect, setReadyToRedirect] = useState(false);
 
@@ -38,60 +38,12 @@ export const UserContextProvider = ({ children }) => {
     setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, (res) => {
       res ? setUser(res) : setUser(null);
-      setError("");
+      setError();
       setLoading(false);
     });
 
     return unsubscribe;
   }, []);
-
-  // const signUpUser = (email, name, password) => {
-  //     setLoading(true);
-  //     createUserWithEmailAndPassword(auth, email, password)
-  //         .then(() => {
-  //             return updateProfile(auth.currentUser, {
-  //                 displayName: name,
-  //             })
-  //         })
-  //         .then(async (res) => {
-  //             // Send verification email
-  //             const loggedUser = res.user;
-  //             let userId = getUserId(loggedUser);
-  //             let data = {
-  //                 "userId": userId,
-  //                 "name": loggedUser.displayName,
-  //                 "email": loggedUser.email,
-  //                 "photoURL": loggedUser.photoURL,
-  //                 "createdAt": loggedUser.metadata.createdAt,
-  //                 "creationDate": loggedUser.metadata.creationTime,
-  //                 "lastLogin": loggedUser.metadata.lastSignInTime
-  //             };
-
-  //             const doc = await setDoc(doc(db, "cities", "new-city-id"), data);
-  //             console.log(doc.id)
-
-  //         })
-  //         .catch((err) => setError(err.message))
-  //         .finally(() => setLoading(false));
-  // }
-
-  // const loginUser = (email, password) => {
-  //     setLoading(true);
-  //     signInWithEmailAndPassword(auth, email, password)
-  //         .then((res) => {
-  //             // Check if email is verified
-  //             // if (!res.user.emailVerified)
-  //             // {
-  //             //     sendEmailVerification(res.user)
-  //             // }
-  //         })
-  //         .catch((err) => setError(err.message))
-  //         .finally(() => setLoading(false));
-  // }
-  //
-  // const forgotPassword = (email) => {
-  //     return sendPasswordResetEmail(auth, email);
-  // }
 
   const loginWithGoogle = async () => {
     setLoading(true);
@@ -124,6 +76,7 @@ export const UserContextProvider = ({ children }) => {
           await setDoc(docRef, data, { merge: true });
           // window.localStorage.setItem("userData", JSON.stringify(data));
           setUserStore(user);
+          setUser({ ...user });
         } catch (e) {
           // console.error("Error saving the data: ", e);
         }
@@ -148,6 +101,7 @@ export const UserContextProvider = ({ children }) => {
   };
 
   const passwordLessLogin = (email) => {
+    setLoading(true);
     const actionCodeSettings = {
       // URL you want to redirect back to. The domain (www.example.com) for this
       // URL must be in the authorized domains list in the Firebase Console.
@@ -184,12 +138,14 @@ export const UserContextProvider = ({ children }) => {
       // Get the email if available. This should be available if the user completes
       // the flow on the same device where they started it.
       let email = window.localStorage.getItem("emailForSignIn");
+
       if (!email) {
         // User opened the link on a different device. To prevent session fixation
         // attacks, ask the user to provide the associated email again. For example:
         email = window.prompt("Please provide your email for confirmation");
         // console.log(email);
       }
+
       // The client SDK will parse the code from the link for you.
       signInWithEmailLink(auth, email, url)
         .then(async (result) => {
@@ -224,7 +180,8 @@ export const UserContextProvider = ({ children }) => {
 
             await setDoc(docRef, data, { merge: true });
             // window.localStorage.setItem("userData", JSON.stringify(data));
-            setUser({ data});
+            setUserStore(user);
+            setUser({ data });
           } catch (e) {
             // console.error("Error saving the data: ", e);
           }

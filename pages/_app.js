@@ -1,15 +1,14 @@
 import "@/styles/globals.css";
 import { UserContextProvider } from "@/services/userContext";
-import Drawer from "@/components/Drawer";
+import Navbar from "@/components/Navbar";
 
 export default function App({ Component, pageProps }) {
   return (
     <UserContextProvider>
-      <Drawer>
-        <main className="h-screen">
-          <Component {...pageProps} />
-        </main>
-      </Drawer>
+      <main className="h-screen">
+        <Navbar />
+        <Component {...pageProps} />
+      </main>
     </UserContextProvider>
   );
 }

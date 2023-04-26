@@ -1,13 +1,28 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { IconX, IconAlertCircle } from "@tabler/icons-react";
+import {
+  IconX,
+  IconAlertCircle,
+  IconTrees,
+  IconBrandGoogle,
+  IconBrandTwitter,
+  IconCircleCheck,
+  IconAlertTriangle,
+} from "@tabler/icons-react";
 
 import { useUserContext } from "@/services/userContext";
 
 import Banner from "@/components/Banner";
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { auth } from "@/services/firebase";
+import { useUserStore } from "@/store/user";
 
 export default function Login() {
+  const [signInWithGoogle, googleUser, googleLoading, googleError] =
+    useSignInWithGoogle(auth);
+  const { userStore, setUser } = useUserStore();
+
   const { register, handleSubmit } = useForm();
   const router = useRouter();
 
@@ -30,7 +45,7 @@ export default function Login() {
   };
 
   useEffect(() => {
-    user ? redirectUser() : null;
+    user || googleUser ? redirectUser() : null;
 
     if (window.location.href.includes("apiKey"))
       handlePasswordlessRedirect(window.location.href);
@@ -42,74 +57,147 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-row items-center justify-center p-16">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-6 max-w-4xl min-w-4xl m-auto border shadow-xl p-10 rounded-xl"
-      >
-        {/* Show error if there is any */}
-        {error !== "" ? (
-          <div
-            className="relative px-4 py-3 my-2 text-red-700 bg-red-100 border border-red-400 rounded-lg"
-            role="alert"
-          >
-            <strong className="font-bold">Error!</strong>
-            <span className="block sm:inline">{" " + error}</span>
-            <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
-              <IconX />
-            </span>
-          </div>
-        ) : (
-          <></>
-        )}
+    <div className="flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="flex justify-center">
+          <IconTrees size={80} />
+        </div>
+        <h2 className="mt-10 text-2xl font-bold leading-9 tracking-tight text-center text-base-content">
+          Sign in to your account
+        </h2>
+      </div>
 
-        {emailSent ? (
-          <div
-            className="px-4 py-3 my-2 text-teal-900 bg-teal-100 border-t-4 border-teal-500 rounded-b shadow-md"
-            role="alert"
-          >
-            <div className="flex flex-col">
-              <div className="py-1">
-                <IconAlertCircle />
-              </div>
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+          {/* Show error if there is any */}
+          {error && (
+            <div className="alert alert-error">
               <div>
-                <p className="font-bold">Email sent successfully!</p>
-                <p className="text-sm">
-                  Login link sent to the above email address. Close this tab
-                  once you click that link.
-                  <br />
-                  (Check your <b>Promotions</b> or <b>Spam folder</b>)
-                </p>
+                <IconAlertTriangle size={20} className="mr-2" />
+                <div>
+                  <strong className="font-bold">Error!</strong>
+                  <span className="block sm:inline">{" " + error}</span>
+                  <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
+                    <IconX />
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div
-            className="px-4 py-3 my-2 text-blue-700 bg-blue-100 border border-blue-500 rounded-lg"
-            role="alert"
-          >
-            <p className="font-bold">No need to create an account!</p>
-            <p className="text-sm">
-              We have already taken care of that for you. A login link would be
-              sent to this email.
-            </p>
-          </div>
-        )}
-        <div className="form-control">
-          <label htmlFor="email" className="label">
-            Email
-          </label>
-          <input
-            type="email"
-            className="input input-bordered"
-            {...register("email")}
-            required
-          />
-        </div>
+          )}
 
-        <button className="btn btn-primary">Submit</button>
-      </form>
-      <Banner className="m-auto"/>
+          {emailSent ? (
+            <div className="alert alert-success">
+              <div>
+                <IconCircleCheck size={30} className="mr-2" />
+                <div>
+                  <h3 className="font-bold">Email sent successfully!</h3>
+                  <span className="text-xs">
+                    Login link sent to the above email address. Close this tab
+                    once you click that link.
+                  </span>
+                  <p className="text-xs">
+                    (Check your <b>Promotions</b> or <b>Spam folder</b>)
+                  </p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="alert">
+              <div>
+                <IconAlertCircle size={30} className="mr-2" />
+                <div>
+                  <h3 className="font-bold">No need to create an account!</h3>
+                  <span className="text-sm">
+                    We have already taken care of that for you. A login link
+                    would be sent to this email.
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Email */}
+          <div className="form-control">
+            <label htmlFor="email" className="label">
+              Email address
+            </label>
+            <input
+              className="input input-bordered"
+              autoComplete="email"
+              type="email"
+              required
+              {...register("email")}
+            />
+          </div>
+
+          {/* Password */}
+          {/* <div className="form-control">
+            <label className="label">
+              <span
+                className="label-text"
+                htmlFor="password"
+                // className="block text-sm font-medium leading-6 text-base-content"
+              >
+                Password
+              </span>
+              <span className="label-text-alt">
+                <a
+                  href="#"
+                  className="font-semibold text-primary hover:text-secondary"
+                >
+                  Forgot password?
+                </a>
+              </span>
+            </label>
+            <input
+              type="password"
+              autoComplete="current-password"
+              required
+              className="input input-bordered"
+            />
+          </div> */}
+
+          <div className="form-control">
+            <button type="submit" className="btn btn-primary">
+              Sign in
+            </button>
+          </div>
+
+          <div className="divider">Or continue with</div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <button
+              onClick={() => {
+                signInWithGoogle()
+                  .then((res) => {
+                    console.log("Success");
+                    console.log(res);
+
+                    setUser(res);
+                    router.push("/profile");
+                  })
+                  .catch((err) => console.error(err));
+              }}
+              className="gap-2 btn btn-white"
+            >
+              <IconBrandGoogle /> Google
+            </button>
+            <button className="gap-2 btn btn-white">
+              <IconBrandTwitter /> Twitter
+            </button>
+          </div>
+        </form>
+
+        <p className="mt-10 text-sm text-center text-gray-500">
+          Not a member?
+          <a
+            href="#"
+            className="ml-2 font-semibold leading-6 text-primary hover:text-secondary"
+          >
+            Start a free trial
+          </a>
+        </p>
+      </div>
     </div>
   );
 }

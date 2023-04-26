@@ -8,6 +8,8 @@ import { firestore } from "@/services/firebase.js";
 import { useUserContext } from "@/services/userContext";
 import { useUserStore } from "@/store/user";
 import GuardedPage from "@/components/GuardedPage";
+import { IconEdit, IconPaperclip } from "@tabler/icons-react";
+import Header from "@/components/Header";
 
 export default function Profile() {
   const router = useRouter();
@@ -15,15 +17,11 @@ export default function Profile() {
   const { user } = useUserContext();
   const { userStore, setUser } = useUserStore();
 
-  // const setUser = () => {};
-  // const userStore = {};
-
   const [loading, setLoading] = useState();
 
   useEffect(() => {
     const redirectToLogin = () => {
-      window.localStorage.setItem("redirectAfterLogin", "/profile");
-      router.push("/login");
+      router.push("/dashboard");
       return <Loading />;
     };
 
@@ -46,57 +44,107 @@ export default function Profile() {
     setLoading(false);
   }, [user]);
 
-  return loading ? (
-    <Loading />
-  ) : (
-    <GuardedPage>
-      <div className="container px-4 mx-auto">
-        <div className="shadow-2xl card">
-          <div className="card-body">
-            {/* <pre>{JSON.stringify(userStore, null, 2)}</pre> */}
-            <table className="table tabler-zebra">
-              <tbody>
-                <tr>
-                  <td>Username</td>
-                  <td>{userStore?.username}</td>
-                </tr>
-                <tr>
-                  <td>Type</td>
-                  <td>{userStore?.type}</td>
-                </tr>
-                <tr>
-                  <td>Pin Code</td>
-                  <td>{userStore?.pinCode}</td>
-                </tr>
-                <tr>
-                  <td>Phone</td>
-                  <td>{userStore?.phone}</td>
-                </tr>
-                {userStore?.type === "NGOs" ? (
-                  <>
-                    <tr>
-                      <td>NGO Id</td>
-                      <td>{userStore?.ngoId}</td>
-                    </tr>
-                    <tr>
-                      <td>NGO Address</td>
-                      <td>{userStore?.ngoAddress}</td>
-                    </tr>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </tbody>
-            </table>
+  const profileFields = [
+    {
+      label: "Name",
+      value: userStore?.username,
+    },
+    {
+      label: "Type",
+      value: userStore?.type,
+    },
+    {
+      label: "Pin Code",
+      value: userStore?.pinCode,
+    },
+    {
+      label: "Phone",
+      value: userStore?.phone,
+    },
+  ];
 
-            <div className="mt-5 card-actions">
-              <Link href={"/profile/edit"} className="btn btn-secondary">
-                Edit Profile
-              </Link>
+  const ngoProfileFields = [
+    {
+      label: "NGO Id",
+      value: userStore?.ngoId,
+    },
+    {
+      label: "NGO Address",
+      value: userStore?.ngoAddress,
+    },
+  ];
+
+  return (
+    <GuardedPage>
+      <Header title="Profile" />
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="container px-4 py-6 mx-auto">
+          <Link href="/profile/edit" className="flex justify-end w-full">
+            <div className="btn btn-primary btn-circle">
+              <IconEdit />
             </div>
-          </div>
+          </Link>
+          <ProfileInformationSection
+            className="py-6"
+            title="Your Profile"
+            subtitle="Personal details and information."
+          >
+            {profileFields.map((field) => (
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-base-content">
+                  {field.label}
+                </dt>
+                <dd className="mt-1 text-sm leading-6 opacity-80 sm:col-span-2 sm:mt-0">
+                  {field.value}
+                </dd>
+              </div>
+            ))}
+          </ProfileInformationSection>
+          {userStore?.type === "NGOs" && (
+            <ProfileInformationSection
+              className="py-6"
+              title="Your NGO"
+              subtitle="NGO details and information"
+            >
+              {ngoProfileFields.map((field) => (
+                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                  <dt className="text-sm font-medium leading-6 text-base-content">
+                    {field.label}
+                  </dt>
+                  <dd className="mt-1 text-sm leading-6 opacity-80 sm:col-span-2 sm:mt-0">
+                    {field.value}
+                  </dd>
+                </div>
+              ))}
+            </ProfileInformationSection>
+          )}
         </div>
-      </div>
+      )}
     </GuardedPage>
+  );
+}
+
+export function ProfileInformationSection({
+  title,
+  subtitle,
+  className,
+  children,
+}) {
+  return (
+    <div className={className}>
+      <div className="px-4 sm:px-0">
+        <h3 className="text-2xl font-semibold leading-7 text-base-content">
+          {title}
+        </h3>
+        <p className="max-w-2xl mt-1 text-sm leading-6 opacity-70">
+          {subtitle}
+        </p>
+      </div>
+      <div className="mt-6 border-t border-base-content">
+        <dl className="divide-y divide-base-content">{children}</dl>
+      </div>
+    </div>
   );
 }

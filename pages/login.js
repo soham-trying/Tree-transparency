@@ -18,6 +18,8 @@ import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { auth } from "@/services/firebase";
 import { useUserStore } from "@/store/user";
 
+
+
 export default function Login() {
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
@@ -30,6 +32,7 @@ export default function Login() {
     error,
     user,
     handlePasswordlessRedirect,
+    loginWithGoogle,
     passwordLessLogin,
     emailSent,
   } = useUserContext();

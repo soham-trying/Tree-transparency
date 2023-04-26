@@ -4,6 +4,8 @@ import { IconBell, IconMenu2, IconTrees, IconX } from "@tabler/icons-react";
 import clsx from "clsx";
 import Link from "next/link";
 import { useUserStore } from "@/store/user";
+import { auth } from "firebase/auth";
+
 
 const navigation = [
   //   { name: "Product", href: "#" },
@@ -13,6 +15,8 @@ const navigation = [
   { name: "Adopt", href: "adopt" },
   { name: "Donate", href: "donate" },
 ];
+
+
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -104,11 +108,16 @@ function ProfileDropdown() {
         {console.log(userStore)}
         <Menu.Button className="flex items-center gap-2 p-1 text-sm rounded-lg focus:ring-2 focus:ring-primary focus:outline-none">
           <span className="sr-only">Open user menu</span>
-          <img
-            className="w-8 h-8 rounded-full"
-            src={userStore?.photoURL}
-            alt=""
-          />
+          {userStore.photoURL ?
+            <img
+              className="w-8 h-8 rounded-full"
+              src={userStore.photoURL}
+              alt=""
+            /> :
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          }
           <span>{userStore.username}</span>
         </Menu.Button>
       </div>
@@ -145,8 +154,20 @@ function ProfileDropdown() {
           <Menu.Item>
             {({ active }) => (
               <Link
+                href="/adopted-trees"
+                className={clsx(active && "bg-base-100", "block px-4 py-2 ")}
+              >
+                Adopted Trees
+              </Link>
+            )}
+          </Menu.Item>
+          <Menu.Item>
+            {({ active }) => (
+              <Link
                 href="#"
                 className={clsx(active && "bg-base-100", "block px-4 py-2 ")}
+                
+
               >
                 Sign out
               </Link>

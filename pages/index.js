@@ -68,7 +68,7 @@ function Promo() {
             <h1 className="text-4xl font-bold tracking-tight text-base-content font sm:text-6xl">
               The Trees are here
             </h1>
-            <p className="mt-4 text-xl text-neutral-content">
+            <p className="mt-4 text-xl opacity-70">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Reprehenderit, natus?
             </p>

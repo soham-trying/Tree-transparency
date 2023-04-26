@@ -97,6 +97,7 @@ export default function Navbar() {
 
 function ProfileDropdown() {
   const { userStore, clear} = useUserStore();
+  const router = useRouter();
   const {
     logOutUser,
     loginWithGoogle,
@@ -111,6 +112,7 @@ function ProfileDropdown() {
     try {
       await logOutUser(user);
       clear();
+      router.push("/");
     } catch (error) {
       console.error("Error signing out:", error);
     }

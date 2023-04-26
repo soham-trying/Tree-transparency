@@ -163,13 +163,18 @@ function Statistics() {
   ];
 
   return (
-    <div className="flex pb-32 sm:pb-40 justify-content-center">
+    <div className="pb-24 sm:pb-32">
       <div className="px-6 mx-auto max-w-7xl lg:px-8">
-        <dl className="p-5 shadow-lg stats">
+        <dl className="grid grid-cols-1 text-center gap-x-8 gap-y-16 lg:grid-cols-3">
           {stats.map((stat) => (
-            <div key={stat.id} className="stat place-items-center">
-              <dt className="stat-title">{stat.name}</dt>
-              <dd className="stat-value">{stat.value}</dd>
+            <div
+              key={stat.id}
+              className="flex flex-col max-w-xs mx-auto gap-y-4"
+            >
+              <dt className="leading-7 text-base-content opacity-70">{stat.name}</dt>
+              <div className="order-first text-3xl font-semibold tracking-tight text-base-content sm:text-5xl">
+                {stat.value}
+              </div>
             </div>
           ))}
         </dl>

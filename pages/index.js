@@ -28,7 +28,7 @@ function Hero() {
         </div>
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-base-content sm:text-6xl">
-            Maintain Trees Around You
+            Maintain <span className="text-primary">Trees</span> Around You
           </h1>
           <p className="mt-6 text-lg leading-8 text-base-content">
             A web 3.0 platform for maintaining tree transparency
@@ -66,11 +66,10 @@ function Promo() {
         <div className="relative px-4 mx-auto max-w-7xl sm:static sm:px-6 lg:px-8">
           <div className="sm:max-w-lg">
             <h1 className="text-4xl font-bold tracking-tight text-base-content font sm:text-6xl">
-              The Trees are here
+              ADOPT TREES HERE !!!
             </h1>
-            <p className="mt-4 text-xl text-neutral-content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Reprehenderit, natus?
+            <p className="mt-4 text-xl opacity-70">
+            The best time to plant a tree was 20 years ago. The second best time is now.
             </p>
           </div>
           <div>
@@ -85,37 +84,14 @@ function Promo() {
                     <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="h-64 overflow-hidden rounded-lg w-44 sm:opacity-0 lg:opacity-100">
                         <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-01.jpg"
+                          src="https://images.unsplash.com/photo-1565721567189-72a61209bb81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjI2fHx0cmVlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
                           alt=""
                           className="object-cover object-center w-full h-full"
                         />
                       </div>
                       <div className="h-64 overflow-hidden rounded-lg w-44">
                         <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-02.jpg"
-                          alt=""
-                          className="object-cover object-center w-full h-full"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 overflow-hidden rounded-lg w-44">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-03.jpg"
-                          alt=""
-                          className="object-cover object-center w-full h-full"
-                        />
-                      </div>
-                      <div className="h-64 overflow-hidden rounded-lg w-44">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-04.jpg"
-                          alt=""
-                          className="object-cover object-center w-full h-full"
-                        />
-                      </div>
-                      <div className="h-64 overflow-hidden rounded-lg w-44">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg"
+                          src="https://images.unsplash.com/photo-1599940824399-b87987ceb72a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1854&q=80"
                           alt=""
                           className="object-cover object-center w-full h-full"
                         />
@@ -124,14 +100,37 @@ function Promo() {
                     <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="h-64 overflow-hidden rounded-lg w-44">
                         <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg"
+                          src="https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
                           alt=""
                           className="object-cover object-center w-full h-full"
                         />
                       </div>
                       <div className="h-64 overflow-hidden rounded-lg w-44">
                         <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg"
+                          src="https://images.unsplash.com/photo-1533579286939-3e7b8bec52f0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=876&q=80"
+                          alt=""
+                          className="object-cover object-center w-full h-full"
+                        />
+                      </div>
+                      <div className="h-64 overflow-hidden rounded-lg w-44">
+                        <img
+                          src="https://images.unsplash.com/photo-1528027575047-56782a87e021?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                          alt=""
+                          className="object-cover object-center w-full h-full"
+                        />
+                      </div>
+                    </div>
+                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                      <div className="h-64 overflow-hidden rounded-lg w-44">
+                        <img
+                          src="https://images.unsplash.com/photo-1614183733044-a2bbd68e0b5d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                          alt=""
+                          className="object-cover object-center w-full h-full"
+                        />
+                      </div>
+                      <div className="h-64 overflow-hidden rounded-lg w-44">
+                        <img
+                          src="https://images.unsplash.com/photo-1603976328262-4c1b46d7e6e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
                           alt=""
                           className="object-cover object-center w-full h-full"
                         />
@@ -142,10 +141,10 @@ function Promo() {
               </div>
 
               <a
-                href="#"
+                href="/adopt"
                 className="inline-block px-8 py-3 font-medium text-center text-white duration-300 border border-transparent rounded-md bg-primary hover:opacity-90"
               >
-                Shop Collection
+                <p class="italic..."> Click here to adopt</p>
               </a>
             </div>
           </div>

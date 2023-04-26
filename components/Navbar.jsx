@@ -4,8 +4,8 @@ import { IconBell, IconMenu2, IconTrees, IconX } from "@tabler/icons-react";
 import clsx from "clsx";
 import Link from "next/link";
 import { useUserStore } from "@/store/user";
-import { auth } from "firebase/auth";
-
+import { useUserContext } from "@/services/userContext";
+import { useRouter } from "next/router";
 
 const navigation = [
   //   { name: "Product", href: "#" },
@@ -20,7 +20,7 @@ const navigation = [
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+ 
   return (
     <Disclosure as="nav" className="bg-base-200">
       {({ open }) => (
@@ -96,7 +96,25 @@ export default function Navbar() {
 }
 
 function ProfileDropdown() {
-  const { userStore } = useUserStore();
+  const { userStore, clear} = useUserStore();
+  const {
+    logOutUser,
+    loginWithGoogle,
+    setError,
+    user,
+    loading,
+    error
+  } = useUserContext();
+
+
+  const handleSignOut = async () => {
+    try {
+      await logOutUser(user);
+      clear();
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
 
   return !userStore.id ? (
     <Link href="/login" className="btn btn-primary">
@@ -166,8 +184,7 @@ function ProfileDropdown() {
               <Link
                 href="#"
                 className={clsx(active && "bg-base-100", "block px-4 py-2 ")}
-                
-
+                onClick={handleSignOut}
               >
                 Sign out
               </Link>

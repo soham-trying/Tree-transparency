@@ -5,4 +5,7 @@ export const useUserStore = create((set) => ({
   setUser: (user) => {
     set((state) => ({ userStore: { ...state.userStore, ...user } }));
   },
+  clear: () => {
+    set({ userStore: { username: "", phone: "", type: "", email: "" } });
+  },
 }));

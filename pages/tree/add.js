@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { Signer, ethers } from "ethers";
 import { getContractAddress } from "ethers/lib/utils";
-import TreeToken from "../artifacts/contracts/TreeNFT.sol/TreeToken.json";
+import TreeToken from "@/artifacts/contracts/TreeNFT.sol/TreeToken.json";
 import { contract } from "@/services/transactweb3";
 import { treeContractAddress } from "@/constants/contract-address";
 

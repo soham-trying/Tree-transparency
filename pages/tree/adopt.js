@@ -13,7 +13,7 @@ import { getContractAddress } from "ethers/lib/utils";
 import { firestore } from "@/services/firebase";
 import { useUserContext } from "@/services/userContext";
 import { contract } from "@/services/transactweb3";
-import TreeToken from "../artifacts/contracts/TreeNFT.sol/TreeToken.json";
+import TreeToken from "@/artifacts/contracts/TreeNFT.sol/TreeToken.json";
 import Link from "next/link";
 import { treeContractAddress } from "@/constants/contract-address";
 

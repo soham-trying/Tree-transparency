@@ -4,19 +4,19 @@ import { IconBell, IconMenu2, IconTrees, IconX } from "@tabler/icons-react";
 import clsx from "clsx";
 import Link from "next/link";
 import { useUserStore } from "@/store/user";
-import { useUserContext } from "@/services/userContext";
-import { useRouter } from "next/router";
+import { signOut } from "firebase/auth";
 
 const navigation = [
-  //   { name: "Product", href: "#" },
-  //   { name: "Features", href: "#" },
-  //   { name: "Marketplace", href: "#" },
-  //   { name: "Company", href: "#" },
   { name: "Adopt", href: "adopt" },
   { name: "Donate", href: "donate" },
 ];
 
+const commonProfileOptions = [
+  { name: "Profile", href: "/profile" },
+  { name: "My Trees", href: "/tree/adopted" },
+];
 
+const ngoProfileOptions = [{ name: "Add Tree", href: "/tree/add" }];
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -151,46 +151,34 @@ function ProfileDropdown() {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 text-sm origin-top-right rounded-md shadow-lg bg-base-300 ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <Menu.Item>
-            {({ active }) => (
+          {userStore?.type === "NGOs" &&
+            ngoProfileOptions.map((item) => (
+              <Menu.Item>
+                <Link
+                  href={item.href}
+                  className="block px-4 py-2 duration-200 hover:bg-base-100"
+                >
+                  {item.name}
+                </Link>
+              </Menu.Item>
+            ))}
+          {commonProfileOptions.map((item) => (
+            <Menu.Item>
               <Link
-                href="/profile"
-                className={clsx(active && "bg-base-100", "block px-4 py-2 ")}
+                href={item.href}
+                className="block px-4 py-2 duration-200 hover:bg-base-100"
               >
-                Your Profile
+                {item.name}
               </Link>
-            )}
-          </Menu.Item>
+            </Menu.Item>
+          ))}
           <Menu.Item>
-            {({ active }) => (
-              <Link
-                href="#"
-                className={clsx(active && "bg-base-100", "block px-4 py-2 ")}
-              >
-                Settings
-              </Link>
-            )}
-          </Menu.Item>
-          <Menu.Item>
-            {({ active }) => (
-              <Link
-                href="/adopted-trees"
-                className={clsx(active && "bg-base-100", "block px-4 py-2 ")}
-              >
-                Adopted Trees
-              </Link>
-            )}
-          </Menu.Item>
-          <Menu.Item>
-            {({ active }) => (
-              <Link
-                href="#"
-                className={clsx(active && "bg-base-100", "block px-4 py-2 ")}
-                onClick={handleSignOut}
-              >
-                Sign out
-              </Link>
-            )}
+            <div
+              onClick={() => signOut()}
+              className="block px-4 py-2 duration-200 hover:bg-base-100"
+            >
+              Sign out
+            </div>
           </Menu.Item>
         </Menu.Items>
       </Transition>

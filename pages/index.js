@@ -37,7 +37,7 @@ function Hero() {
             <a href="#" className="btn btn-primary">
               Get started
             </a>
-            <a href="#" className="gap-2 btn btn-ghost">
+            <a href="/aboutus" className="gap-2 btn btn-ghost">
               Learn more <IconChevronRight />
             </a>
           </div>

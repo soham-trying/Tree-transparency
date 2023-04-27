@@ -14,6 +14,7 @@ import { useUserContext } from "@/services/userContext";
 import { useUserStore } from "@/store/user";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function AdoptedTrees() {
   const [trees, setTrees] = useState([]);
@@ -52,6 +53,10 @@ export default function AdoptedTrees() {
   };
 
   return (
+    <>
+    <Head>
+        <title>My Trees</title>
+    </Head>
     <div className="container mx-auto">
       <div className="grid grid-cols-2 gap-4 px-4 md:grid-cols-3">
         {trees.map((tree) => (
@@ -75,5 +80,6 @@ export default function AdoptedTrees() {
         ))}
       </div>
     </div>
+    </>
   );
 }

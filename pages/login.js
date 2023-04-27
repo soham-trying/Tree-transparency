@@ -10,15 +10,12 @@ import {
   IconCircleCheck,
   IconAlertTriangle,
 } from "@tabler/icons-react";
-
 import { useUserContext } from "@/services/userContext";
-
 import Banner from "@/components/Banner";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { auth } from "@/services/firebase";
 import { useUserStore } from "@/store/user";
-
-
+import Head from "next/head";
 
 export default function Login() {
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
@@ -60,6 +57,10 @@ export default function Login() {
   };
 
   return (
+    <>
+    <Head>
+        <title>Login Page</title>
+    </Head>
     <div className="flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="flex justify-center">
@@ -202,5 +203,6 @@ export default function Login() {
         </p>
       </div>
     </div>
+    </>
   );
 }

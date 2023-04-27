@@ -18,6 +18,7 @@ import { getContractAddress } from "ethers/lib/utils";
 import TreeToken from "@/artifacts/contracts/TreeNFT.sol/TreeToken.json";
 import { contract } from "@/services/transactweb3";
 import { treeContractAddress } from "@/constants/contract-address";
+import Head from "next/head";
 
 export default function TreeForm() {
   const { register, handleSubmit, reset } = useForm();
@@ -133,6 +134,10 @@ export default function TreeForm() {
   };
 
   return (
+    <>
+    <Head>
+        <title>Add Trees</title>
+    </Head>
     <div className="container py-8 mx-auto">
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -241,5 +246,6 @@ export default function TreeForm() {
         </div>
       </form>
     </div>
+    </>
   );
 }

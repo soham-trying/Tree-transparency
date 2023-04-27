@@ -16,6 +16,7 @@ import { contract } from "@/services/transactweb3";
 import TreeToken from "@/artifacts/contracts/TreeNFT.sol/TreeToken.json";
 import Link from "next/link";
 import { treeContractAddress } from "@/constants/contract-address";
+import Head from "next/head";
 
 export default function () {
   const [trees, setTrees] = useState([]);
@@ -69,6 +70,10 @@ export default function () {
   };
 
   return (
+    <>
+    <Head>
+        <title>Adopt Trees</title>
+    </Head>
     <div className="container mx-auto">
       <div className="grid grid-cols-2 gap-4 px-4 md:grid-cols-3">
         {trees.map((tree) => (
@@ -111,5 +116,6 @@ export default function () {
         ))}
       </div>
     </div>
+    </>
   );
 }

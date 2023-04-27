@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
-
 import Loading from "@/components/Loading";
 import { firestore } from "@/services/firebase.js";
 import { useUserContext } from "@/services/userContext";
@@ -10,6 +9,7 @@ import { useUserStore } from "@/store/user";
 import GuardedPage from "@/components/GuardedPage";
 import { IconEdit, IconPaperclip } from "@tabler/icons-react";
 import Header from "@/components/Header";
+import Head from "next/head";
 
 export default function Profile() {
   const router = useRouter();
@@ -75,6 +75,10 @@ export default function Profile() {
   ];
 
   return (
+    <>
+    <Head>
+        <title>Your Profile</title>
+    </Head>
     <GuardedPage>
       <Header title="Profile" />
       {loading ? (
@@ -123,6 +127,7 @@ export default function Profile() {
         </div>
       )}
     </GuardedPage>
+    </>
   );
 }
 

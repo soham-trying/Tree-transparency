@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import {
   doc,
@@ -106,6 +107,10 @@ export default function EditProfile() {
   };
 
   return (
+    <>
+    <Head>
+        <title>Edit Profile</title>
+    </Head>
     <GuardedPage>
       <div className="container w-full mx-auto">
         <form
@@ -169,6 +174,7 @@ export default function EditProfile() {
         </form>
       </div>
     </GuardedPage>
+    </>
   );
 
   function VolunteerFields({ register, ngos }) {

@@ -1,12 +1,18 @@
 import { IconChevronRight, IconTrees } from "@tabler/icons-react";
+import Head from 'next/head';
 
 export default function Home() {
   return (
-    <main>
-      <Hero />
-      <Statistics />
-      <Promo />
-    </main>
+    <>
+      <Head>
+        <title>Tree Transparency</title>
+      </Head>
+      <main>
+        <Hero />
+        <Statistics />
+        <Promo />
+      </main>
+    </>
   );
 }
 

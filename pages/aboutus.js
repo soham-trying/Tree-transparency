@@ -1,7 +1,14 @@
 import React from "react";
+import Head from "next/head";
 
 const ContactUs = () => {
     return (
+        <>
+        <Head>
+            <title>
+                About Us
+            </title>
+        </Head>
         <div className="bg-gray-100">
             {/* Header */}
             <header className="bg-white border-b border-gray-200">
@@ -104,6 +111,7 @@ const ContactUs = () => {
                 </div>
             </main>
         </div>
+        </>
     );
 };
 

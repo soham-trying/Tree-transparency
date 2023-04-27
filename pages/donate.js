@@ -271,24 +271,24 @@ export default function pay() {
 
 function SuccessPage({ payment_id, amount, transhash }) {
   return (
-    <div class="bg-gray-100 min-h-screen py-12">
-      <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="bg-green-500 px-6 py-8">
-          <h2 class="text-4xl font-bold text-white">Payment Successful</h2>
+    <div className="bg-gray-100 min-h-screen py-12">
+      <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="bg-green-500 px-6 py-8">
+          <h2 className="text-4xl font-bold text-white">Payment Successful</h2>
         </div>
-        <div class="p-8">
-          <div class="flex flex-col gap-4">
-            <div class="flex justify-between border-b-2 border-gray-300 pb-4">
-              <p class="text-lg font-medium text-gray-700">Payment ID:</p>
-              <p class="text-lg font-medium text-gray-900">{payment_id}</p>
+        <div className="p-8">
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-between border-b-2 border-gray-300 pb-4">
+              <p className="text-lg font-medium text-gray-700">Payment ID:</p>
+              <p className="text-lg font-medium text-gray-900">{payment_id}</p>
             </div>
-            <div class="flex justify-between border-b-2 border-gray-300 pb-4">
-              <p class="text-lg font-medium text-gray-700">Amount:</p>
-              <p class="text-lg font-medium text-green-500">${amount}</p>
+            <div className="flex justify-between border-b-2 border-gray-300 pb-4">
+              <p className="text-lg font-medium text-gray-700">Amount:</p>
+              <p className="text-lg font-medium text-green-500">${amount}</p>
             </div>
-            <div class="flex justify-between gap-5">
-              <p class="text-lg font-medium text-gray-700 gap-3">Transaction Hash:</p>
-              <p class="text-lg font-medium text-gray-900 break-all overflow-x-auto py-2 px-4 rounded-lg bg-gray-200 gap-8">{ transhash }</p>
+            <div className="flex justify-between gap-5">
+              <p className="text-lg font-medium text-gray-700 gap-3">Transaction Hash:</p>
+              <p className="text-lg font-medium text-gray-900 break-all overflow-x-auto py-2 px-4 rounded-lg bg-gray-200 gap-8">{ transhash }</p>
             </div>
           </div>
         </div>

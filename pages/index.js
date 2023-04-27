@@ -150,7 +150,7 @@ function Promo() {
                 href="/adopt"
                 className="inline-block px-8 py-3 font-medium text-center text-white duration-300 border border-transparent rounded-md bg-primary hover:opacity-90"
               >
-                <p class="italic..."> Click here to adopt</p>
+                <p className="italic..."> Click here to adopt</p>
               </a>
             </div>
           </div>

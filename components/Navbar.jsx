@@ -176,7 +176,7 @@ function ProfileDropdown() {
           ))}
           <Menu.Item>
             <div
-              onClick={() => signOut()}
+              onClick={() => handleSignOut()}
               className="block px-4 py-2 duration-200 hover:bg-base-100"
             >
               Sign out

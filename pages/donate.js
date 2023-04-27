@@ -46,14 +46,18 @@ export default function pay() {
       .then((snapshot) => {
         snapshot.forEach((doc) => {
           const { username, ngoId } = doc.data();
-          setOrgs([...orgs, { id: doc.id, username, ngoId }]);
+          console.log("HEEERREE")
+          // console.log(doc.data())
+          setOrgs(prevOrgs => [...prevOrgs, { id: doc.id, username, ngoId }]);
+          console.log(orgs);
         });
       })
       .catch((e) => {
         console.log(e);
       });
   }
-
+  console.log("NOWW")
+  console.log(orgs);
   function validateFormWithJS() {
     const amount = document.getElementById("amount").value;
 

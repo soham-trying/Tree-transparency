@@ -48,7 +48,14 @@ export default function pay() {
           const { username, ngoId } = doc.data();
           console.log("HEEERREE")
           // console.log(doc.data())
-          setOrgs(prevOrgs => [...prevOrgs, { id: doc.id, username, ngoId }]);
+          setOrgs(prevOrgs => {
+            const newOrg = { id: doc.id, username, ngoId };
+            if (prevOrgs.some(org => org.id === newOrg.id)) {
+              return prevOrgs; // Element already exists, return previous state
+            } else {
+              return [...prevOrgs, newOrg]; // Add new element to the array
+            }
+          });
           console.log(orgs);
         });
       })

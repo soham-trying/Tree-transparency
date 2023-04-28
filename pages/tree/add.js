@@ -129,7 +129,7 @@ export default function TreeForm() {
       }
     );
 
-    // reset();
+    reset();
     // alert("Added Tree");
   };
 
@@ -182,7 +182,7 @@ export default function TreeForm() {
             required
           >
             {treeType.map((value) => (
-              <option value={value}>{value}</option>
+              <option key={value} value={value}>{value}</option>
             ))}
           </select>
         </div>
@@ -202,7 +202,7 @@ export default function TreeForm() {
             required
           >
             {treeSpecies.map((value) => (
-              <option value={value}>{value}</option>
+              <option key={value} value={value}>{value}</option>
             ))}
           </select>
         </div>

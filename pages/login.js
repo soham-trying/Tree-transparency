@@ -169,7 +169,7 @@ export default function Login() {
 
           <div className="divider">Or continue with</div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="gap-4 flex items-center justify justify-center">
             <button
               onClick={() => {
                 signInWithGoogle()
@@ -182,13 +182,11 @@ export default function Login() {
                   })
                   .catch((err) => console.error(err));
               }}
-              className="gap-2 btn btn-white"
+              className="gap-2 btn btn-white flex jus flex-row justify items-center justify-center"
             >
               <IconBrandGoogle /> Google
             </button>
-            <button className="gap-2 btn btn-white">
-              <IconBrandTwitter /> Twitter
-            </button>
+            
           </div>
         </form>
 
@@ -198,7 +196,7 @@ export default function Login() {
             href="#"
             className="ml-2 font-semibold leading-6 text-primary hover:text-secondary"
           >
-            Start a free trial
+            Join and Donate us Now
           </a>
         </p>
       </div>

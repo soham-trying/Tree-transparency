@@ -20,6 +20,8 @@ const commonProfileOptions = [
 
 const ngoProfileOptions = [{ name: "Add Tree", href: "/tree/add" }];
 
+const volunteerProfileOptions = [{ name: "Verify Tree", href: "/tree/verify" }];
+
 export default function Navbar() {
   const router = useRouter();
 
@@ -158,6 +160,17 @@ function ProfileDropdown() {
         <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 text-sm origin-top-right rounded-md shadow-lg bg-base-300 ring-1 ring-black ring-opacity-5 focus:outline-none">
           {userStore?.type === "NGOs" &&
             ngoProfileOptions.map((item) => (
+              <Menu.Item>
+                <Link
+                  href={item.href}
+                  className="block px-4 py-2 duration-200 hover:bg-base-100"
+                >
+                  {item.name}
+                </Link>
+              </Menu.Item>
+            ))}
+          {userStore?.type === "Volunteers" &&
+            volunteerProfileOptions.map((item) => (
               <Menu.Item>
                 <Link
                   href={item.href}

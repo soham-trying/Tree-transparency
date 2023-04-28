@@ -13,15 +13,13 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import { Signer, ethers } from "ethers";
-import { getContractAddress } from "ethers/lib/utils";
-import TreeToken from "@/artifacts/contracts/TreeNFT.sol/TreeToken.json";
-import { contract } from "@/services/transactweb3";
-import { treeContractAddress } from "@/constants/contract-address";
+import { ethers } from "ethers";
 import Head from "next/head";
+import { useUserContext } from "@/services/userContext";
 
 export default function TreeForm() {
   const { register, handleSubmit, reset } = useForm();
+  const { user } = useUserContext();
   const [trees, setTrees] = useState([]);
   const [balance, setBalance] = useState();
 
@@ -103,6 +101,7 @@ export default function TreeForm() {
 
     const treeRef = await addDoc(collection(firestore, "Trees"), {
       ...rest,
+      ngo: doc(firestore, `Users/${user.email}`),
       ipfsHash,
     });
 
@@ -135,117 +134,127 @@ export default function TreeForm() {
 
   return (
     <>
-    <Head>
+      <Head>
         <title>Add Trees</title>
-    </Head>
-    <div className="container py-8 mx-auto">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="max-w-lg p-6 mx-auto bg-white rounded-lg shadow-md"
-      >
-        <div className="mb-6">
-          <label htmlFor="name" className="block mb-2 font-bold text-gray-700">
-            Tree Name
-          </label>
-          <input
-            type="text"
-            className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
-            {...register("name")}
-            required
-          />
-        </div>
+      </Head>
+      <div className="container py-8 mx-auto">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="max-w-lg p-6 mx-auto bg-white rounded-lg shadow-md"
+        >
+          <div className="mb-6">
+            <label
+              htmlFor="name"
+              className="block mb-2 font-bold text-gray-700"
+            >
+              Tree Name
+            </label>
+            <input
+              type="text"
+              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
+              {...register("name")}
+              required
+            />
+          </div>
 
-        <div className="mb-6">
-          <label
-            htmlFor="description"
-            className="block mb-2 font-bold text-gray-700"
-          >
-            Tree Description
-          </label>
-          <input
-            type="text"
-            className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
-            {...register("description")}
-            required
-          />
-        </div>
+          <div className="mb-6">
+            <label
+              htmlFor="description"
+              className="block mb-2 font-bold text-gray-700"
+            >
+              Tree Description
+            </label>
+            <input
+              type="text"
+              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
+              {...register("description")}
+              required
+            />
+          </div>
 
-        <div className="mb-6">
-          <label htmlFor="type" className="block mb-2 font-bold text-gray-700">
-            Tree Type
-          </label>
-          <select
-            type="text"
-            name="type"
-            className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
-            {...register("type")}
-            required
-          >
-            {treeType.map((value) => (
-              <option key={value} value={value}>{value}</option>
-            ))}
-          </select>
-        </div>
+          <div className="mb-6">
+            <label
+              htmlFor="type"
+              className="block mb-2 font-bold text-gray-700"
+            >
+              Tree Type
+            </label>
+            <select
+              type="text"
+              name="type"
+              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
+              {...register("type")}
+              required
+            >
+              {treeType.map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="mb-6">
-          <label
-            htmlFor="species"
-            className="block mb-2 font-bold text-gray-700"
-          >
-            Tree species
-          </label>
-          <select
-            type="text"
-            name="species"
-            className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
-            {...register("species")}
-            required
-          >
-            {treeSpecies.map((value) => (
-              <option key={value} value={value}>{value}</option>
-            ))}
-          </select>
-        </div>
+          <div className="mb-6">
+            <label
+              htmlFor="species"
+              className="block mb-2 font-bold text-gray-700"
+            >
+              Tree species
+            </label>
+            <select
+              type="text"
+              name="species"
+              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
+              {...register("species")}
+              required
+            >
+              {treeSpecies.map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="mb-6">
-          <label
-            htmlFor="location"
-            className="block mb-2 font-bold text-gray-700"
-          >
-            Location
-          </label>
-          <input
-            type="text"
-            className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
-            {...register("location")}
-            required
-          />
-        </div>
+          <div className="mb-6">
+            <label
+              htmlFor="location"
+              className="block mb-2 font-bold text-gray-700"
+            >
+              Location
+            </label>
+            <input
+              type="text"
+              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
+              {...register("location")}
+              required
+            />
+          </div>
 
-        <div className="mb-6">
-          <label
-            htmlFor="images"
-            className="block mb-2 font-bold text-gray-700"
-          >
-            Image
-          </label>
-          <input
-            type="file"
-            className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
-            {...register("images")}
-          />
-        </div>
+          <div className="mb-6">
+            <label
+              htmlFor="images"
+              className="block mb-2 font-bold text-gray-700"
+            >
+              Image
+            </label>
+            <input
+              type="file"
+              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
+              {...register("images")}
+            />
+          </div>
 
-        <div className="flex items-center justify-center mt-6">
-          <button
-            type="submit"
-            className="px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline"
-          >
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+          <div className="flex items-center justify-center mt-6">
+            <button
+              type="submit"
+              className="px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
     </>
   );
 }

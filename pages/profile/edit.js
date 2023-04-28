@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import Head from "next/head";
 
 import {
   doc,
@@ -13,14 +12,20 @@ import {
   collection,
   where,
   setDoc,
-  deleteDoc,
 } from "firebase/firestore";
 
 import { userType } from "@/constants/user-type";
 import { useUserContext } from "@/services/userContext";
-import { firestore } from "@/services/firebase";
+import { auth, firestore } from "@/services/firebase";
 import { useUserStore } from "@/store/user";
 import GuardedPage from "@/components/GuardedPage";
+import Header from "@/components/Header";
+import {
+  IconCurrentLocation,
+  IconMail,
+  IconPhone,
+  IconWorld,
+} from "@tabler/icons-react";
 
 export default function EditProfile() {
   const router = useRouter();
@@ -34,10 +39,10 @@ export default function EditProfile() {
   useEffect(() => {
     fetchUser();
     fetchNgos();
-  }, [user]);
+  }, []);
 
   async function fetchUser() {
-    const docRef = doc(firestore, "Users", user.email);
+    const docRef = doc(firestore, "Users", auth.currentUser.email);
     const docSnap = getDoc(docRef)
       .then(async (docSnap) => {
         setValue("email", user.email ?? "");
@@ -106,153 +111,202 @@ export default function EditProfile() {
     router.push("/profile");
   };
 
+  function EditProfileSection({ title, description, children }) {
+    return (
+      <div className="pb-12 border-b border-gray-900/10">
+        <h2 className="text-base font-semibold leading-7 text-gray-900">
+          {title}
+        </h2>
+        <p className="mt-1 text-sm leading-6 text-gray-600">{description}</p>
+        <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
+          {children}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <>
-    <Head>
-        <title>Edit Profile</title>
-    </Head>
     <GuardedPage>
-      <div className="container w-full mx-auto">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="grid w-full max-w-4xl gap-5 mx-auto my-10 shadow-xl rounded-xl p-7 bg-base-200"
-        >
-          <div className="form-control">
-            <label htmlFor="username" className="text-base-content label">
-              {watch("type") === "NGOs"
-                ? "NGO Name"
-                : watch("type") === "Private Companies"
-                ? "Company Name"
-                : "Username"}
-            </label>
-            <input className="input input-bordered" {...register("username")} />
-          </div>
+      <Header title="Edit Profile" />
 
-          <div className="form-control">
-            <label htmlFor="pinCode" className="text-base-content label">
-              Pin Code
-            </label>
-            <input className="input input-bordered" {...register("pinCode")} />
-          </div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="container px-4 pt-12 mx-auto"
+      >
+        <div className="space-y-12">
+          <EditProfileSection
+            title="Personal Information"
+            description="Your personal information and details"
+          >
+            <div className="form-control sm:col-span-full">
+              <label htmlFor="username" className="text-base-content label">
+                {watch("type") === "NGOs"
+                  ? "NGO Name"
+                  : watch("type") === "Private Companies"
+                  ? "Company Name"
+                  : "Username"}
+              </label>
+              <input
+                className="input input-bordered"
+                {...register("username")}
+              />
+            </div>
 
-          <div className="form-control">
-            <label htmlFor="phone" className="text-base-content label">
-              Phone
-            </label>
-            <input className="input input-bordered" {...register("phone")} />
-          </div>
+            <div className="form-control sm:col-span-3">
+              <label htmlFor="pinCode" className="text-base-content label">
+                Pin Code
+              </label>
+              <div className="input-group">
+                <span>
+                  <IconCurrentLocation />
+                </span>
+                <input
+                  className="w-full input input-bordered"
+                  {...register("pinCode")}
+                />
+              </div>
+            </div>
 
-          <div className="form-control">
-            <label htmlFor="type" className="text-base-content label">
-              Type
-            </label>
-            <select
-              className="mt-1 select select-bordered"
-              {...register("type")}
-            >
-              {userType.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
-          </div>
+            <div className="form-control sm:col-span-3">
+              <label htmlFor="phone" className="text-base-content label">
+                Phone
+              </label>
+              <div className="input-group">
+                <span>
+                  <IconPhone />
+                </span>
+                <input
+                  className="input input-bordered"
+                  {...register("phone")}
+                />
+              </div>
+            </div>
 
-          {watch("type") === "NGOs" && <NGOFields register={register} />}
+            <div className="form-control sm:col-span-3">
+              <label htmlFor="type" className="text-base-content label">
+                Type
+              </label>
+              <select
+                className="mt-1 select select-bordered"
+                {...register("type")}
+              >
+                {userType.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </EditProfileSection>
+
           {watch("type") === "Volunteers" && (
-            <VolunteerFields register={register} ngos={ngos} />
+            <EditProfileSection
+              title="NGO Information"
+              description="Your NGO information and details"
+            >
+              <div className="col-span-3 form-control">
+                <label
+                  htmlFor="volunteerNgo"
+                  className="text-base-content label"
+                >
+                  NGO
+                </label>
+                <select
+                  {...register("volunteerNgo")}
+                  className="mt-1 select select-bordered"
+                >
+                  {ngos.map((ngo) => (
+                    <option value={ngo.id} key={ngo.id}>{ngo.username}</option>
+                  ))}
+                </select>
+              </div>
+            </EditProfileSection>
           )}
 
-          <div className="form-control">
-            <button
-              type="submit"
-              className="text-white btn btn-primary bg-primary hover:bg-primary-dark"
+          {watch("type") === "NGOs" && (
+            <EditProfileSection
+              title="NGO Information"
+              description="Your NGO information and details"
             >
-              Submit
-            </button>
-          </div>
-        </form>
-      </div>
+              <div className="col-span-3 form-control">
+                <label htmlFor="ngoId" className="text-base-content label">
+                  Id
+                </label>
+                <input
+                  {...register("ngoId")}
+                  type="text"
+                  className="input input-bordered"
+                />
+              </div>
+
+              <div className="col-span-3 form-control">
+                <label htmlFor="ngoPhone" className="text-base-content label">
+                  Phone
+                </label>
+                <div className="input-group">
+                  <span>
+                    <IconPhone />
+                  </span>
+                  <input
+                    {...register("ngoPhone")}
+                    type="text"
+                    className="w-full input input-bordered"
+                  />
+                </div>
+              </div>
+
+              <div className="col-span-3 form-control">
+                <label htmlFor="ngoEmail" className="text-base-content label">
+                  Email
+                </label>
+                <div className="input-group">
+                  <span>
+                    <IconMail />
+                  </span>
+                  <input
+                    {...register("ngoEmail")}
+                    type="email"
+                    className="w-full input input-bordered"
+                  />
+                </div>
+              </div>
+
+              <div className="col-span-3 form-control">
+                <label htmlFor="ngoWebsite" className="text-base-content label">
+                  Website
+                </label>
+                <div className="input-group">
+                  <span>
+                    <IconWorld />
+                  </span>
+                  <input
+                    {...register("ngoWebsite")}
+                    type="text"
+                    className="w-full input input-bordered"
+                  />
+                </div>
+              </div>
+
+              <div className="col-span-full form-control">
+                <label htmlFor="ngoAddress" className="text-base-content label">
+                  Address
+                </label>
+                <input
+                  {...register("ngoAddress")}
+                  type="text"
+                  className="input input-bordered"
+                />
+              </div>
+            </EditProfileSection>
+          )}
+        </div>
+
+        <div className="flex items-center justify-end mt-6 gap-x-6">
+          <button type="submit" className="btn btn-primary">
+            Save
+          </button>
+        </div>
+      </form>
     </GuardedPage>
-    </>
   );
-
-  function VolunteerFields({ register, ngos }) {
-    return (
-      <>
-        <div className="form-control">
-          <label htmlFor="volunteerNgo" className="text-base-content label">
-            NGO
-          </label>
-          <select
-            {...register("volunteerNgo")}
-            className="mt-1 select select-bordered"
-          >
-            {ngos.map((ngo) => (
-              <option key={ngo.id}>{ngo.username}</option>
-            ))}
-          </select>
-        </div>
-      </>
-    );
-  }
-
-  function NGOFields({ register }) {
-    return (
-      <>
-        <div className="form-control">
-          <label htmlFor="ngoId" className="text-base-content label">
-            NGO Id
-          </label>
-          <input
-            {...register("ngoId")}
-            type="text"
-            className="input input-bordered"
-          />
-        </div>
-
-        <div className="form-control">
-          <label htmlFor="ngoAddress" className="text-base-content label">
-            NGO Address
-          </label>
-          <input
-            {...register("ngoAddress")}
-            type="text"
-            className="input input-bordered"
-          />
-        </div>
-        <div className="form-control">
-          <label htmlFor="ngoPhone" className="text-base-content label">
-            NGO Phone
-          </label>
-          <input
-            {...register("ngoPhone")}
-            type="text"
-            className="input input-bordered"
-          />
-        </div>
-        <div className="form-control">
-          <label htmlFor="ngoEmail" className="text-base-content label">
-            NGO Email
-          </label>
-          <input
-            {...register("ngoEmail")}
-            type="email"
-            className="input input-bordered"
-          />
-        </div>
-
-        <div className="form-control">
-          <label htmlFor="ngoWebsite" className="text-base-content label">
-            NGO Website
-          </label>
-          <input
-            {...register("ngoWebsite")}
-            type="text"
-            className="input input-bordered"
-          />
-        </div>
-      </>
-    );
-  }
 }

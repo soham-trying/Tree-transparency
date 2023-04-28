@@ -15,6 +15,7 @@ import { useUserStore } from "@/store/user";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
+import TreeCard from "@/components/TreeCard";
 
 export default function AdoptedTrees() {
   const [trees, setTrees] = useState([]);
@@ -54,32 +55,16 @@ export default function AdoptedTrees() {
 
   return (
     <>
-    <Head>
+      <Head>
         <title>My Trees</title>
-    </Head>
-    <div className="container mx-auto">
-      <div className="grid grid-cols-2 gap-4 px-4 md:grid-cols-3">
-        {trees.map((tree) => (
-          <div key={tree.id} className="shadow-xl card bg-base-100 my-10">
-            <figure>
-              <img src={tree.imageUrl} alt={tree.name} />
-            </figure>
-            <div className="card-body">
-              <h3 className="text-xl font-bold">{tree.name}</h3>
-              <p>{tree.description}</p>
-              <p>{tree.type}</p>
-              <p>{tree.species}</p>
-              <Link
-                href={`https://gateway.pinata.cloud/ipfs/${tree?.ipfsHash}`}
-              >
-                {`https://gateway.pinata.cloud/ipfs/${tree?.ipfsHash}`}
-              </Link>
-              <input className="input input-bordered input-primary" value={tree.transactionHash}></input>
-            </div>
-          </div>
-        ))}
+      </Head>
+      <div className="container mx-auto">
+        <div className="grid grid-cols-2 gap-4 px-4 md:grid-cols-3">
+          {trees.map((tree) => (
+            <TreeCard key={tree.id} {...tree} />
+          ))}
+        </div>
       </div>
-    </div>
     </>
   );
 }

@@ -75,8 +75,8 @@ export const UserContextProvider = ({ children }) => {
           const docRef = doc(firestore, "Users", loggedUser.email);
           await setDoc(docRef, data, { merge: true });
           // window.localStorage.setItem("userData", JSON.stringify(data));
-          setUserStore(user);
-          setUser({ ...user });
+          setUserStore(data);
+          setUser({ ...data });
         } catch (e) {
           // console.error("Error saving the data: ", e);
         }

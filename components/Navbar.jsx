@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react"
+import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { IconBell, IconMenu2, IconTrees, IconX } from "@tabler/icons-react";
 import clsx from "clsx";
@@ -21,8 +21,8 @@ const commonProfileOptions = [
 const ngoProfileOptions = [{ name: "Add Tree", href: "/tree/add" }];
 
 export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
- 
+  const router = useRouter();
+
   return (
     <Disclosure as="nav" className="bg-base-200">
       {({ open }) => (
@@ -51,12 +51,11 @@ export default function Navbar() {
                         key={item.name}
                         href={item.href}
                         className={clsx(
-                          item.current
-                            ? "bg-base-content text-base-content"
+                          item.href === router.pathname
+                            ? "bg-primary text-primary-content"
                             : "hover:bg-primary hover:text-primary-content",
                           "rounded-md px-3 py-2 text-sm font-medium duration-200"
                         )}
-                        aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
                       </Link>
@@ -79,12 +78,11 @@ export default function Navbar() {
                   as="a"
                   href={item.href}
                   className={clsx(
-                    item.current
-                      ? "bg-base-content text-base-content"
-                      : "text-neutral-content hover:bg-primary hover:text-white",
+                    item.href === router.pathname
+                      ? "bg-primary text-primary-content"
+                      : "hover:bg-primary hover:text-primary-content",
                     "duration-200 block rounded-md px-3 py-3 text-base font-medium"
                   )}
-                  aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
@@ -98,17 +96,10 @@ export default function Navbar() {
 }
 
 function ProfileDropdown() {
-  const { userStore, clear} = useUserStore();
+  const { userStore, clear } = useUserStore();
   const router = useRouter();
-  const {
-    logOutUser,
-    loginWithGoogle,
-    setError,
-    user,
-    loading,
-    error
-  } = useUserContext();
-
+  const { logOutUser, loginWithGoogle, setError, user, loading, error } =
+    useUserContext();
 
   const handleSignOut = async () => {
     try {
@@ -130,16 +121,28 @@ function ProfileDropdown() {
         {console.log(userStore)}
         <Menu.Button className="flex items-center gap-2 p-1 text-sm rounded-lg focus:ring-2 focus:ring-primary focus:outline-none">
           <span className="sr-only">Open user menu</span>
-          {userStore.photoURL ?
+          {userStore.photoURL ? (
             <img
               className="w-8 h-8 rounded-full"
               src={userStore.photoURL}
               alt=""
-            /> :
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+            />
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+              />
             </svg>
-          }
+          )}
           <span>{userStore.username}</span>
         </Menu.Button>
       </div>

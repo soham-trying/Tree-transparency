@@ -15,7 +15,7 @@ export default function pay() {
   const [paySuccess, setPaySuccess] = useState(false);
   const [paymentDetails, setPaymentDetails] = useState("");
   let web3;
-  const [transhash, settranshash] = useState("");
+  const [transactionHash, setTransactionHash] = useState("");
   const { user } = useUserContext();
   const [orgs, setOrgs] = useState([]);
   const router = useRouter();
@@ -140,7 +140,7 @@ export default function pay() {
             addToChain(amount)
               .then((hash) => {
                 console.log(hash);
-                settranshash(hash);
+                setTransactionHash(hash);
                 addDoc(collection(firestore, "payments"), {
                   amount,
                   hash,
@@ -190,7 +190,7 @@ export default function pay() {
         <SuccessPage
           payment_id={paymentDetails.razorpay_payment_id}
           amount={paymentDetails.amount}
-          transhash={transhash}
+          transactionHash={transactionHash}
         />
       ) : (
         <div className="px-4">
@@ -258,7 +258,7 @@ export default function pay() {
   );
 }
 
-function SuccessPage({ payment_id, amount, transhash }) {
+function SuccessPage({ payment_id, amount, transactionHash }) {
   return (
     <div className="min-h-screen py-12 bg-gray-100">
       <div className="max-w-md mx-auto overflow-hidden bg-white rounded-lg shadow-lg">
@@ -280,7 +280,7 @@ function SuccessPage({ payment_id, amount, transhash }) {
                 Transaction Hash:
               </p>
               <p className="gap-8 px-4 py-2 overflow-x-auto text-lg font-medium text-gray-900 break-all bg-gray-200 rounded-lg">
-                {transhash}
+                {transactionHash}
               </p>
             </div>
           </div>

@@ -1,16 +1,8 @@
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import {
-  addDoc,
-  collection,
-  getDocs,
-  query,
-  where,
-  getDoc,
-} from "firebase/firestore";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { auth } from "../services/firebase.js";
 import { firestore } from "../services/firebase.js";
-import { doc } from "firebase/firestore";
 import { useUserContext } from "../services/userContext.js";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
@@ -39,7 +31,6 @@ export default function pay() {
       .then((snapshot) => {
         snapshot.forEach((doc) => {
           const { username, ngoId } = doc.data();
-          console.log("HEEERREE");
           // console.log(doc.data())
           setOrgs((prevOrgs) => {
             const newOrg = { id: doc.id, username, ngoId };
@@ -56,8 +47,7 @@ export default function pay() {
         console.log(e);
       });
   }
-  console.log("NOWW");
-  console.log(orgs);
+
   function validateFormWithJS() {
     const amount = document.getElementById("amount").value;
 
@@ -65,8 +55,8 @@ export default function pay() {
       alert("Please enter Amount.");
       return false;
     }
-    // displayRazorpay(Amount)
   }
+
   const loadScript = (src) => {
     return new Promise((resolve) => {
       const script = document.createElement("script");
@@ -147,15 +137,14 @@ export default function pay() {
           name: "",
           description: "Test Transaction",
           handler: function (res) {
-            const transactionHash = addToChain(amount)
+            addToChain(amount)
               .then((hash) => {
                 console.log(hash);
                 settranshash(hash);
                 addDoc(collection(firestore, "payments"), {
-                  id,
                   amount,
                   hash,
-                  fromname: auth.currentUser.displayName,
+                  fromUser: auth.currentUser.uid,
                   ...res,
                 })
                   .then(() => console.log("Document was saved"))

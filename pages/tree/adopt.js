@@ -45,7 +45,7 @@ export default function () {
     const anotherResult = await result.wait();
     console.log(anotherResult);
 
-    const treeRef = await updateDoc(doc(firestore, "Trees", id), {
+    await updateDoc(doc(firestore, "Trees", id), {
       adoptedBy: doc(firestore, `Users/${user.email}`),
       transactionHash: result.hash,
     });

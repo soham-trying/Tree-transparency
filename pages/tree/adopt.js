@@ -5,26 +5,28 @@ import {
   deleteDoc,
   doc,
   updateDoc,
-  query,
-  where,
 } from "firebase/firestore";
 import { ethers } from "ethers";
-import { getContractAddress } from "ethers/lib/utils";
 import { firestore } from "@/services/firebase";
 import { useUserContext } from "@/services/userContext";
-import { contract } from "@/services/transactweb3";
 import TreeToken from "@/artifacts/contracts/TreeNFT.sol/TreeToken.json";
 import Link from "next/link";
 import { treeContractAddress } from "@/constants/contract-address";
 import Head from "next/head";
+import Image from "next/image";
+import { useCollection } from "react-firebase-hooks/firestore";
+import Loading from "@/components/Loading";
 
 export default function () {
-  const [trees, setTrees] = useState([]);
+  // const [trees, setTrees] = useState([]);
+  const [trees, loadingTrees, errorTrees] = useCollection(
+    collection(firestore, "Trees")
+  );
 
   const { user } = useUserContext();
 
   useEffect(() => {
-    getTrees();
+    // getTrees();
   }, []);
 
   const getTrees = async () => {
@@ -47,18 +49,18 @@ export default function () {
     await provider.send("eth_requestAccounts", []);
     const signer = provider.getSigner();
 
-
-    const contract = new ethers.Contract(treeContractAddress, TreeToken.abi, signer);
-    console.log(contract);
+    const contract = new ethers.Contract(
+      treeContractAddress,
+      TreeToken.abi,
+      signer
+    );
     const connection = contract.connect(signer);
     const result = await contract.mint(connection.address, metadataURI);
     const anotherResult = await result.wait();
 
-    console.log(result, anotherResult);
-
     const treeRef = await updateDoc(doc(firestore, "Trees", id), {
       adoptedBy: doc(firestore, `Users/${user.email}`),
-      transactionHash: result.hash
+      transactionHash: result.hash,
     });
 
     getTrees();
@@ -71,51 +73,73 @@ export default function () {
 
   return (
     <>
-    <Head>
+      <Head>
         <title>Adopt Trees</title>
-    </Head>
-    <div className="container mx-auto">
-      <div className="grid grid-cols-2 gap-4 px-4 md:grid-cols-3">
-        {trees.map((tree) => (
-          <div
-            key={tree.id}
-            className="my-10 border shadow-xl card bg-base-100"
-          >
-            <figure>
-              <img src={tree.imageUrl} alt={tree.name} />
-            </figure>
-            <div className="border card-body">
-              <h3 className="text-xl font-bold">{tree.name}</h3>
-              <p>{tree.description}</p>
-              <p>{tree.type}</p>
-              <p>{tree.species}</p>
+      </Head>
+      <div className="container px-4 mx-auto sm:px-6">
+        <div className="grid grid-cols-1 mt-6 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+          {errorTrees && <strong>Error: {JSON.stringify(error)}</strong>}
+          {loadingTrees && <Loading />}
+          {trees &&
+            trees.docs.map((tree) => (
               <Link
-                href={`https://gateway.pinata.cloud/ipfs/${tree?.ipfsHash}`}
+                href={`/tree/${tree.id}`}
+                className="relative group"
+                key={tree.data().id}
               >
-                {`https://gateway.pinata.cloud/ipfs/${tree?.ipfsHash}`}
-              </Link>
-              <div className="card-actions">
-                {tree.adoptedBy ? (
-                  `Adopted`
-                ) : (
-                  <div
-                    onClick={() =>
-                      adoptTree(
-                        tree.id,
-                        `https://gateway.pinata.cloud/ipfs/${tree?.ipfsHash}`
-                      )
-                    }
-                    className="btn btn-primary"
-                  >
-                    Adopt
+                <div className="w-full overflow-hidden bg-gray-200 rounded-md min-h-80 aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                  <Image
+                    width={200}
+                    height={320}
+                    src={tree.data().imageUrl}
+                    alt={tree.data().name}
+                    className="object-cover object-center w-full h-full lg:h-full lg:w-full"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <div className="flex justify-between mt-4">
+                    <div>
+                      <h3 className="text-sm font-bold text-base-content">
+                        <a href="#">
+                          <span
+                            aria-hidden="true"
+                            className="absolute inset-0"
+                          ></span>
+                          {tree.data().name}
+                        </a>
+                      </h3>
+                      <p className="mt-1 text-sm text-base-content opacity-70">
+                        {tree.data().species} &middot; {tree.data().type}
+                      </p>
+                      <p className="mt-1 text-sm text-base-content opacity-70">
+                        {tree.data().ipfsHash}
+                      </p>
+                    </div>
+                    {/* <p className="text-sm font-medium">$35</p> */}
                   </div>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
+
+                  {tree.data().adoptedBy ? (
+                    <button className="btn btn-sm" disabled>
+                      Adopted
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        adoptTree(
+                          tree.data().id,
+                          `https://gateway.pinata.cloud/ipfs/${tree?.ipfsHash}`
+                        )
+                      }
+                      className="btn btn-primary btn-sm"
+                    >
+                      Adopt
+                    </button>
+                  )}
+                </div>
+              </Link>
+            ))}
+        </div>
       </div>
-    </div>
     </>
   );
 }

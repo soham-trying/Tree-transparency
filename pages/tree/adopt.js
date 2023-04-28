@@ -14,34 +14,19 @@ import Link from "next/link";
 import { treeContractAddress } from "@/constants/contract-address";
 import Head from "next/head";
 import Image from "next/image";
-import { useCollection } from "react-firebase-hooks/firestore";
+import { useCollectionOnce } from "react-firebase-hooks/firestore";
 import Loading from "@/components/Loading";
 
 export default function () {
   // const [trees, setTrees] = useState([]);
-  const [trees, loadingTrees, errorTrees] = useCollection(
-    collection(firestore, "Trees")
+  const [trees, loadingTrees, errorTrees, reloadTrees] = useCollectionOnce(
+    collection(firestore, "Trees"),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
   );
 
   const { user } = useUserContext();
-
-  useEffect(() => {
-    // getTrees();
-  }, []);
-
-  const getTrees = async () => {
-    const treesRef = await getDocs(collection(firestore, "Trees"));
-
-    const treesData = [];
-
-    treesRef.forEach((snapshot) => {
-      if (snapshot.data().adoptedBy) return;
-      treesData.push({ id: snapshot.id, ...snapshot.data() });
-    });
-
-    console.log(treesData);
-    setTrees(treesData);
-  };
 
   const adoptTree = async (id, metadataURI) => {
     // Create Contract
@@ -57,13 +42,15 @@ export default function () {
     const connection = contract.connect(signer);
     const result = await contract.mint(connection.address, metadataURI);
     const anotherResult = await result.wait();
+    console.log(anotherResult);
 
     const treeRef = await updateDoc(doc(firestore, "Trees", id), {
       adoptedBy: doc(firestore, `Users/${user.email}`),
       transactionHash: result.hash,
     });
 
-    getTrees();
+    reloadTrees();
+
     alert("Adopted Tree");
   };
 
@@ -82,16 +69,12 @@ export default function () {
           {loadingTrees && <Loading />}
           {trees &&
             trees.docs.map((tree) => (
-              <Link
-                href={`/tree/${tree.id}`}
-                className="relative group"
-                key={tree.data().id}
-              >
-                <div className="w-full overflow-hidden bg-gray-200 rounded-md min-h-80 aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
+              <div className="" key={tree.id}>
+                <div className="w-full overflow-hidden duration-200 bg-gray-200 rounded-md min-h-80 aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
                   <Image
                     width={200}
                     height={320}
-                    src={tree.data().imageUrl}
+                    src={tree.data().imageUrl || ""}
                     alt={tree.data().name}
                     className="object-cover object-center w-full h-full lg:h-full lg:w-full"
                   />
@@ -100,22 +83,14 @@ export default function () {
                   <div className="flex justify-between mt-4">
                     <div>
                       <h3 className="text-sm font-bold text-base-content">
-                        <a href="#">
-                          <span
-                            aria-hidden="true"
-                            className="absolute inset-0"
-                          ></span>
+                        <Link href={`/tree/${tree.id}`}>
                           {tree.data().name}
-                        </a>
+                        </Link>
                       </h3>
                       <p className="mt-1 text-sm text-base-content opacity-70">
                         {tree.data().species} &middot; {tree.data().type}
                       </p>
-                      <p className="mt-1 text-sm text-base-content opacity-70">
-                        {tree.data().ipfsHash}
-                      </p>
                     </div>
-                    {/* <p className="text-sm font-medium">$35</p> */}
                   </div>
 
                   {tree.data().adoptedBy ? (
@@ -123,20 +98,22 @@ export default function () {
                       Adopted
                     </button>
                   ) : (
-                    <button
-                      onClick={() =>
-                        adoptTree(
-                          tree.data().id,
-                          `https://gateway.pinata.cloud/ipfs/${tree?.ipfsHash}`
-                        )
-                      }
+                    <div
                       className="btn btn-primary btn-sm"
+                      onClick={() => {
+                        adoptTree(
+                          tree.id,
+                          `https://gateway.pinata.cloud/ipfs/${
+                            tree.data()?.ipfsHash
+                          }`
+                        );
+                      }}
                     >
                       Adopt
-                    </button>
+                    </div>
                   )}
                 </div>
-              </Link>
+              </div>
             ))}
         </div>
       </div>

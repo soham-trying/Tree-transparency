@@ -1,10 +1,11 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { IconBell, IconMenu2, IconTrees, IconX } from "@tabler/icons-react";
+import { IconMenu2, IconTrees, IconX } from "@tabler/icons-react";
 import clsx from "clsx";
 import Link from "next/link";
 import { useUserStore } from "@/store/user";
-import { signOut } from "firebase/auth";
+import { useUserContext } from "@/services/userContext";
+import { useRouter } from "next/router";
 
 const navigation = [
   { name: "Adopt", href: "adopt" },

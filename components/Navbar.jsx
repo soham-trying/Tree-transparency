@@ -5,12 +5,10 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useUserStore } from "@/store/user";
 import { signOut } from "firebase/auth";
-import { useRouter } from "next/router";
-import { useUserContext } from "@/services/userContext";
 
 const navigation = [
-  { name: "Adopt", href: "/tree/adopt" },
-  { name: "Donate", href: "/donate" },
+  { name: "Adopt", href: "adopt" },
+  { name: "Donate", href: "donate" },
 ];
 
 const commonProfileOptions = [

@@ -23,6 +23,15 @@ function Hero() {
         <div className="flex items-center justify-center mb-6">
           <IconTrees size={100} />
         </div>
+        <div className="hidden sm:mb-8 sm:flex sm:justify-center">
+          <div className="relative px-3 py-1 text-sm leading-6 rounded-full opacity-70 ring-1 ring-base-content/10 hover:ring-base-content/20">
+            Announcing our next round of funding.
+            <a href="#" className="font-semibold text-primary">
+              <span className="absolute inset-0" aria-hidden="true" />
+              Read more <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-base-content sm:text-6xl">
             Maintain <span className="text-primary">Trees</span> Around You

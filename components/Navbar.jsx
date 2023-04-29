@@ -8,8 +8,8 @@ import { useUserContext } from "@/services/userContext";
 import { useRouter } from "next/router";
 
 const navigation = [
-  { name: "Adopt", href: "adopt" },
-  { name: "Donate", href: "donate" },
+  { name: "Adopt", href: "/tree/adopt" },
+  { name: "Donate", href: "/donate" },
 ];
 
 const commonProfileOptions = [
@@ -186,7 +186,7 @@ function ProfileDropdown() {
                 className="block px-4 py-2 duration-200 hover:bg-base-100"
               >
                 {item.name}
-                {item.name}
+               
               </Link>
             </Menu.Item>
           ))}

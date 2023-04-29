@@ -18,14 +18,8 @@ const commonProfileOptions = [
 
 const ngoProfileOptions = [{ name: "Add Tree", href: "/tree/add" }];
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 const volunteerProfileOptions = [{ name: "Verify Tree", href: "/tree/verify" }];
 
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 export default function Navbar() {
   const router = useRouter();
 
@@ -173,8 +167,6 @@ function ProfileDropdown() {
                 </Link>
               </Menu.Item>
             ))}
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           {userStore?.type === "Volunteers" &&
             volunteerProfileOptions.map((item) => (
               <Menu.Item>
@@ -186,10 +178,6 @@ function ProfileDropdown() {
                 </Link>
               </Menu.Item>
             ))}
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
           {commonProfileOptions.map((item) => (
             <Menu.Item>
               <Link
@@ -197,27 +185,13 @@ function ProfileDropdown() {
                 className="block px-4 py-2 duration-200 hover:bg-base-100"
               >
                 {item.name}
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
                 {item.name}
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
               </Link>
             </Menu.Item>
           ))}
           <Menu.Item>
             <div
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
               onClick={() => handleSignOut()}
-=======
-              onClick={() => signOut()}
->>>>>>> Stashed changes
-=======
-              onClick={() => signOut()}
->>>>>>> Stashed changes
               className="block px-4 py-2 duration-200 hover:bg-base-100"
             >
               Sign out

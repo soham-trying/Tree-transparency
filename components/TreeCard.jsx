@@ -11,7 +11,7 @@ export default function TreeCard({
   adoptedBy,
 }) {
   return (
-    <div key={id}>
+    <div>
       <div className="w-full overflow-hidden duration-200 bg-gray-200 rounded-md min-h-80 aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
         <Image
           width={200}

@@ -1,9 +1,12 @@
 import { useDocumentOnce } from "react-firebase-hooks/firestore";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, firestore } from "@/services/firebase";
 import Link from "next/link";
 import { IconCircleCheck, IconCircleX, IconCopy } from "@tabler/icons-react";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import Loading from "@/components/Loading";
+import { useUserContext } from "@/services/userContext";
 
 export default function Tree({
   id,
@@ -21,40 +24,8 @@ export default function Tree({
 }) {
   const router = useRouter();
 
-  const [userData, loadingUser] = useDocumentOnce(
-    doc(firestore, "Users", auth.currentUser.email)
-  );
-
-  function verifyTree() {
-    const treeRef = doc(firestore, "Trees", id);
-    updateDoc(treeRef, {
-      isVerified: true,
-      verifiedBy: doc(firestore, `Users/${userData.id}`),
-    })
-      .then(() => {
-        alert("Verified Tree");
-      })
-      .catch((err) => console.error(err));
-    router.reload();
-  }
-
-  function unVerifyTree() {
-    const treeRef = doc(firestore, "Trees", id);
-    updateDoc(treeRef, {
-      isVerified: false,
-      verifiedBy: doc(firestore, `Users/${userData.id}`),
-    })
-      .then(() => {
-        alert("UnVerified Tree");
-      })
-      .catch((err) => console.error(err));
-
-    router.reload();
-  }
-
   return (
     <>
-      !loadingUser && (
       <div className="container px-4 pt-6 mx-auto">
         <nav className="mb-4">
           <div className="breadcrumbs">
@@ -95,21 +66,12 @@ export default function Tree({
                 <td>Verified</td>
                 <td>
                   {!isVerified ? (
-                    userData.data().volunteerNgo === ngo ? (
-                      <button
-                        className="btn btn-primary btn-sm"
-                        onClick={() => verifyTree()}
-                      >
-                        Verify
-                      </button>
-                    ) : (
-                      <div className="gap-2 btn btn-sm btn-error">
-                        <span>
-                          <IconCircleX />
-                        </span>
-                        Verified
-                      </div>
-                    )
+                    <div className="gap-2 btn btn-sm btn-error">
+                      <span>
+                        <IconCircleX />
+                      </span>
+                      Unverified
+                    </div>
                   ) : (
                     <button
                       onClick={() => unVerifyTree()}
@@ -164,7 +126,6 @@ export default function Tree({
           <img className="w-full h-full" src={imageUrl} alt={name} />
         </div>
       </div>
-      )
     </>
   );
 }

@@ -216,7 +216,9 @@ export default function EditProfile() {
                   className="mt-1 select select-bordered"
                 >
                   {ngos.map((ngo) => (
-                    <option value={ngo.id} key={ngo.id}>{ngo.username}</option>
+                    <option value={ngo.id} key={ngo.id}>
+                      {ngo.username}
+                    </option>
                   ))}
                 </select>
               </div>

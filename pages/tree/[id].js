@@ -1,4 +1,7 @@
-import { useDocumentOnce } from "react-firebase-hooks/firestore";
+import {
+  useDocumentDataOnce,
+  useDocumentOnce,
+} from "react-firebase-hooks/firestore";
 import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, firestore } from "@/services/firebase";
 import Link from "next/link";
@@ -24,9 +27,13 @@ export default function Tree({
 }) {
   const router = useRouter();
 
+  const [ngoDoc, ngoLoading, ngoError] = useDocumentDataOnce(
+    doc(firestore, "Users", ngo)
+  );
+
   return (
     <>
-      <div className="container px-4 pt-6 mx-auto">
+      <div className="max-w-4xl px-4 pt-6 mx-auto">
         <nav className="mb-4">
           <div className="breadcrumbs">
             <ul>
@@ -37,7 +44,7 @@ export default function Tree({
             </ul>
           </div>
         </nav>
-        <div className="prose">
+        <div className="max-w-full prose prose-lg">
           <h1>{name}</h1>
           <p>{description}</p>
 
@@ -86,6 +93,13 @@ export default function Tree({
                 </td>
               </tr>
 
+              {isVerified && (
+                <tr>
+                  <td>Verified By</td>
+                  <td>{verifiedBy}</td>
+                </tr>
+              )}
+
               <tr>
                 <td>Adopted By</td>
                 <td>{!adoptedBy ? "Not Adopted" : adoptedBy}</td>
@@ -94,7 +108,9 @@ export default function Tree({
               {ngo && (
                 <tr>
                   <td>NGO</td>
-                  <td>{ngo}</td>
+                  <td>
+                    <Link href={`/ngo/${ngo}`}>{ngoLoading ? "Loading" : ngoDoc.username}</Link>
+                  </td>
                 </tr>
               )}
 
@@ -123,7 +139,7 @@ export default function Tree({
             </tbody>
           </table>
 
-          <img className="w-full h-full" src={imageUrl} alt={name} />
+          <img className="w-full h-full rounded-xl" src={imageUrl} alt={name} />
         </div>
       </div>
     </>

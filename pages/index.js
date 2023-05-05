@@ -1,5 +1,11 @@
-import { IconChevronRight, IconTrees } from "@tabler/icons-react";
+import {
+  IconBrandGithub,
+  IconBrandLinkedin,
+  IconChevronRight,
+  IconTrees,
+} from "@tabler/icons-react";
 import Head from "next/head";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -11,10 +17,14 @@ export default function Home() {
         <Hero />
         <Statistics />
         <Promo />
+        <Team />
       </main>
       <footer class="footer footer-center p-4 text-base-content">
         <div>
-          <p>Copyright © 2023 - All right reserved by GDSC Supremacy</p>
+          <p>
+            Copyright © 2023 - All rights reserved by{" "}
+            <span className="font-bold text-primary">GDSC Supremacy</span>
+          </p>
         </div>
       </footer>
     </>
@@ -82,92 +92,94 @@ function Hero() {
 
 function Promo() {
   return (
-    <div className="relative px-6 overflow-hidden">
-      <div className="pt-16 pb-80 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
-        <div className="relative px-4 mx-auto max-w-7xl sm:static sm:px-6 lg:px-8">
-          <div className="sm:max-w-lg">
-            <h1 className="text-4xl font-bold tracking-tight text-base-content font sm:text-6xl">
-              Adopt Trees Now
-            </h1>
-            <p className="mt-4 text-xl opacity-70">
-              The best time to plant a tree was 20 years ago. The second best
-              time is now.
-            </p>
-          </div>
-          <div>
-            <div className="mt-10">
-              {/* Decorative image grid */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl"
-              >
-                <div className="absolute transform sm:left-1/2 sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
-                  <div className="flex items-center space-x-6 lg:space-x-8">
-                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 overflow-hidden rounded-lg w-44 sm:opacity-0 lg:opacity-100">
-                        <img
-                          src="https://images.unsplash.com/photo-1565721567189-72a61209bb81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjI2fHx0cmVlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
-                          alt=""
-                          className="object-cover object-center w-full h-full"
-                        />
+    <div className="relative">
+      <div className="relative h-full p-6 overflow-hidden">
+        <div className="pt-16 pb-80 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
+          <div className="relative px-4 mx-auto max-w-7xl sm:static sm:p-6 lg:p-8">
+            <div className="sm:max-w-lg">
+              <h1 className="text-4xl font-bold tracking-tight text-base-content font sm:text-6xl">
+                Adopt Trees Now
+              </h1>
+              <p className="mt-4 text-xl opacity-70">
+                The best time to plant a tree was 20 years ago. The second best
+                time is now.
+              </p>
+            </div>
+            <div>
+              <div className="mt-10">
+                {/* Decorative image grid */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl"
+                >
+                  <div className="absolute transform sm:left-1/2 sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
+                    <div className="flex items-center space-x-6 lg:space-x-8">
+                      <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                        <div className="h-64 overflow-hidden rounded-lg w-44 sm:opacity-0 lg:opacity-100">
+                          <img
+                            src="https://images.unsplash.com/photo-1565721567189-72a61209bb81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjI2fHx0cmVlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
+                            alt=""
+                            className="object-cover object-center w-full h-full"
+                          />
+                        </div>
+                        <div className="h-64 overflow-hidden rounded-lg w-44">
+                          <img
+                            src="https://images.unsplash.com/photo-1599940824399-b87987ceb72a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1854&q=80"
+                            alt=""
+                            className="object-cover object-center w-full h-full"
+                          />
+                        </div>
                       </div>
-                      <div className="h-64 overflow-hidden rounded-lg w-44">
-                        <img
-                          src="https://images.unsplash.com/photo-1599940824399-b87987ceb72a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1854&q=80"
-                          alt=""
-                          className="object-cover object-center w-full h-full"
-                        />
+                      <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                        <div className="h-64 overflow-hidden rounded-lg w-44">
+                          <img
+                            src="https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                            alt=""
+                            className="object-cover object-center w-full h-full"
+                          />
+                        </div>
+                        <div className="h-64 overflow-hidden rounded-lg w-44">
+                          <img
+                            src="https://images.unsplash.com/photo-1533579286939-3e7b8bec52f0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=876&q=80"
+                            alt=""
+                            className="object-cover object-center w-full h-full"
+                          />
+                        </div>
+                        <div className="h-64 overflow-hidden rounded-lg w-44">
+                          <img
+                            src="https://images.unsplash.com/photo-1528027575047-56782a87e021?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                            alt=""
+                            className="object-cover object-center w-full h-full"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 overflow-hidden rounded-lg w-44">
-                        <img
-                          src="https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                          alt=""
-                          className="object-cover object-center w-full h-full"
-                        />
-                      </div>
-                      <div className="h-64 overflow-hidden rounded-lg w-44">
-                        <img
-                          src="https://images.unsplash.com/photo-1533579286939-3e7b8bec52f0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=876&q=80"
-                          alt=""
-                          className="object-cover object-center w-full h-full"
-                        />
-                      </div>
-                      <div className="h-64 overflow-hidden rounded-lg w-44">
-                        <img
-                          src="https://images.unsplash.com/photo-1528027575047-56782a87e021?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                          alt=""
-                          className="object-cover object-center w-full h-full"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 overflow-hidden rounded-lg w-44">
-                        <img
-                          src="https://images.unsplash.com/photo-1614183733044-a2bbd68e0b5d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                          alt=""
-                          className="object-cover object-center w-full h-full"
-                        />
-                      </div>
-                      <div className="h-64 overflow-hidden rounded-lg w-44">
-                        <img
-                          src="https://images.unsplash.com/photo-1603976328262-4c1b46d7e6e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                          alt=""
-                          className="object-cover object-center w-full h-full"
-                        />
+                      <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                        <div className="h-64 overflow-hidden rounded-lg w-44">
+                          <img
+                            src="https://images.unsplash.com/photo-1614183733044-a2bbd68e0b5d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                            alt=""
+                            className="object-cover object-center w-full h-full"
+                          />
+                        </div>
+                        <div className="h-64 overflow-hidden rounded-lg w-44">
+                          <img
+                            src="https://images.unsplash.com/photo-1603976328262-4c1b46d7e6e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                            alt=""
+                            className="object-cover object-center w-full h-full"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <a
-                href="/tree/adopt"
-                className="inline-block px-8 py-3 font-medium text-center text-white duration-300 border border-transparent rounded-md bg-primary hover:opacity-90"
-              >
-                Click here to adopt
-              </a>
+                <a
+                  href="/tree/adopt"
+                  className="inline-block px-8 py-3 font-medium text-center duration-300 border border-transparent rounded-md bg-primary text-primary-content hover:opacity-90"
+                >
+                  Adopt Now
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -202,6 +214,84 @@ function Statistics() {
             </div>
           ))}
         </dl>
+      </div>
+    </div>
+  );
+}
+
+function Team() {
+  const members = [
+    {
+      name: "Vijay Prajapati",
+      github: "https://github.com/Vijay-SP",
+      linkedin: "https://linkedin.com/in/vijay",
+    },
+    {
+      name: "Deon Gracias",
+      github: "https://github.com/deon-gracias",
+      linkedin: "https://linkedin.com/in/deongracias",
+      photo:
+        "https://media.licdn.com/dms/image/D4D03AQHuSNIxXCz4Zg/profile-displayphoto-shrink_800_800/0/1664049718892?e=1688601600&v=beta&t=YESs32ErclCFFI7jT7P54aJodhQh2MCJTlL8xNkeyxk",
+    },
+    {
+      name: "Hisbaan Sayed",
+      github: "https://github.com/hisbo",
+      linkedin: "https://linkedin.com/in/hisbo",
+    },
+    {
+      name: "Ryan Valiaparambil",
+      github: "https://github.com/ryan-v",
+      linkedin: "https://linkedin.com/in/ryan",
+    },
+  ];
+
+  return (
+    <div class="py-24 sm:py-32 relative">
+      <div class="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3">
+        <div class="max-w-2xl">
+          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
+            Meet our leadership
+          </h2>
+          <p class="mt-6 text-lg leading-8 opacity-80">
+            Libero fames augue nisl porttitor nisi, quis. Id ac elit odio vitae
+            elementum enim vitae ullamcorper suspendisse.
+          </p>
+        </div>
+        <ul
+          role="list"
+          class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2"
+        >
+          {members.map((member) => (
+            <li key={member.name}>
+              <div class="flex items-center gap-x-6">
+                <img
+                  class="h-32 w-32 rounded-full"
+                  src={member.photo || ""}
+                  alt={member.name}
+                />
+                <div>
+                  <h3 class="font-semibold leading-7 text-xl tracking-tight">
+                    {member.name}
+                  </h3>
+                  <div className="flex gap-2 mt-2">
+                    <Link
+                      href={member.github}
+                      className="duration-200 btn btn-circle hover:btn-primary"
+                    >
+                      <IconBrandGithub />
+                    </Link>
+                    <Link
+                      href={member.linkedin}
+                      className="duration-200 btn btn-circle hover:btn-primary"
+                    >
+                      <IconBrandLinkedin />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

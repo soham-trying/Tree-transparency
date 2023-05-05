@@ -158,7 +158,7 @@ function ProfileDropdown() {
       >
         <Menu.Items className="absolute right-0 z-10 w-48 pb-1 mt-2 text-sm origin-top-right rounded-md shadow-lg bg-base-300 ring-1 ring-black ring-opacity-5 focus:outline-none">
           <Menu.Item>
-            <div className="flex justify-center gap-1 py-3 bg-base-200">
+            <div className="py-3 text-center bg-base-200">
               Welcome, <span className="text-primary">{userStore.username}</span>
             </div>
           </Menu.Item>

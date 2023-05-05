@@ -155,7 +155,7 @@ function ProfileDropdown() {
             ))}
           {userStore?.type === "Volunteers" &&
             volunteerProfileOptions.map((item) => (
-              <Menu.Item>
+              <Menu.Item key={item.href}>
                 <Link
                   href={item.href}
                   className="block px-4 py-2 duration-200 hover:bg-base-100"
@@ -165,7 +165,7 @@ function ProfileDropdown() {
               </Menu.Item>
             ))}
           {commonProfileOptions.map((item) => (
-            <Menu.Item>
+            <Menu.Item key={item.href}>
               <Link
                 href={item.href}
                 className="block px-4 py-2 duration-200 hover:bg-base-100"

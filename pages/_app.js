@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }) {
   const { setUser, userStore } = useUserStore();
 
   useEffect(() => {
-    auth.onAuthStateChanged((res) => {
+    const unsubscribe = auth.onAuthStateChanged((res) => {
       if (!res.email) return;
 
       const email = res.email;
@@ -22,6 +22,8 @@ export default function App({ Component, pageProps }) {
         })
         .catch((err) => console.error(err));
     });
+
+    return () => unsubscribe();
   }, []);
 
   return (

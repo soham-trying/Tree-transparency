@@ -1,10 +1,11 @@
-import GuardedPage from "@/components/GuardedPage"
+import GuardedPage from "@/components/GuardedPage";
 import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import { auth, firestore } from "@/services/firebase";
 import Image from "next/image";
 import { collection, query, where, doc, getDocs } from "firebase/firestore";
 import {
+  useCollection,
   useCollectionOnce,
   useDocumentOnce,
 } from "react-firebase-hooks/firestore";
@@ -21,71 +22,57 @@ import {
 export default function AdoptedTree() {
   const { userStore } = useUserStore();
 
-  const [trees, setTrees] = useState()
-
-  useEffect(() => {
-
-    userStore?.email && fetchTrees()
-  }, [userStore.email])
-
-  async function fetchTrees() {
-    const trees = await getDocs(
+  const [trees, loadingTrees] = useCollection(
+    userStore?.email &&
       query(
         collection(firestore, "Trees"),
-        where(
-          'adoptedBy', '==',
-          doc(firestore, "Users", userStore.email)
-        )
+        where("adoptedBy", "==", doc(firestore, "Users", userStore.email))
       )
-    )
-
-    setTrees(trees)
-  }
+  );
 
   return (
     <GuardedPage>
       <Header title="Adopted Trees" />
 
       <div className="container mx-auto">
-        {/* {loadingTrees && <Loading />} */}
+        {loadingTrees && <Loading />}
         <div className="grid grid-cols-1 px-4 mt-6 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {/* {!trees && !loadingTrees && "No Results Found"} */}
           {trees &&
             userStore &&
-            trees.docs
-              .map((tree) => (
-                <div key={tree.id}>
-                  <div className="w-full overflow-hidden duration-200 bg-gray-200 rounded-md min-h-80 aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                    <Image
-                      width={200}
-                      height={320}
-                      src={tree.data().imageUrl}
-                      alt={tree.data().name}
-                      className="object-cover object-center w-full h-full lg:h-full lg:w-full"
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <div className="flex justify-between mt-4">
-                      <div>
-                        <h3 className="font-bold text-md text-base-content">
-                          <div>{tree.data().name}</div>
-                        </h3>
-                        <p className="mt-1 text-sm text-base-content opacity-70">
-                          {tree.data().species} &middot; {tree.data().type}
-                        </p>
-                      </div>
-                      <div className="flex gap-2">
-                        <Link
-                          href={`/tree/${tree.id}`}
-                          className="btn btn-circle btn-md"
-                        >
-                          <IconExternalLink />
-                        </Link>
-                      </div>
+            trees.docs.map((tree) => (
+              <div key={tree.id}>
+                <div className="w-full overflow-hidden duration-200 bg-gray-200 rounded-md min-h-80 aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                  <Image
+                    width={200}
+                    height={320}
+                    src={tree.data().imageUrl}
+                    alt={tree.data().name}
+                    className="object-cover object-center w-full h-full lg:h-full lg:w-full"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <div className="flex justify-between mt-4">
+                    <div>
+                      <h3 className="font-bold text-md text-base-content">
+                        <div>{tree.data().name}</div>
+                      </h3>
+                      <p className="mt-1 text-sm text-base-content opacity-70">
+                        {tree.data().species} &middot; {tree.data().type}
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <Link
+                        href={`/tree/${tree.id}`}
+                        className="btn btn-circle btn-md"
+                      >
+                        <IconExternalLink />
+                      </Link>
                     </div>
                   </div>
                 </div>
-              ))}
+              </div>
+            ))}
         </div>
       </div>
     </GuardedPage>

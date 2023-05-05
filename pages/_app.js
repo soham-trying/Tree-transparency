@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }) {
       if (!user.email) return;
 
       const email = user.email;
-      const photoURL = user.photoURL;
+      const photoURL = user?.photoURL ? user.photoURL : undefined;
       const docRef = doc(firestore, "Users", email);
 
       getDoc(docRef)

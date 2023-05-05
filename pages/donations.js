@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  collection,
-  getDocs,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { firestore } from "../services/firebase.js";
+import Header from "@/components/Header.jsx";
+import { IconCopy } from "@tabler/icons-react";
 
 export default function Transactions() {
   const [isFetching, setFetching] = useState(true);
@@ -28,33 +27,45 @@ export default function Transactions() {
   }
 
   return (
-    <div>
-      {isFetching ? (
-        <div className="text-gray">Fetching</div>
-      ) : (
-        <table className="w-full text-gray table-auto border divide-y divide-slate-200">
-          <thead>
-            <th>Payment ID</th>
-            <th>Amount</th>
-            <th>Hash</th>
-          </thead>
-          <tbody>
-            {payments.map((payment) => (
-              <tr key={payment.razorpay_payment_id}>
-                <td className="text-center">{payment.razorpay_payment_id}</td>
-                <td className="text-center">{payment.amount}</td>
-          
-                <td className="truncate text-center">
-                  <input
-                    className="p-2 text-black border rounded"
-                    value={payment.hash}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+    <>
+      <Header title="Donations" />
+
+      <div className="container mx-auto mt-12">
+        {isFetching ? (
+          <div>Fetching</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="table w-full table-compact">
+              <thead>
+                <th>Payment ID</th>
+                <th>Amount</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Hash</th>
+              </thead>
+              <tbody>
+                {payments.map((payment) => (
+                  <tr key={payment.razorpay_payment_id}>
+                    <th>{payment.razorpay_payment_id}</th>
+                    <td>{payment.amount}</td>
+                    <td>{payment.fromUser}</td>
+                    <td>{payment.fromTo || payment.fromUser}</td>
+                    <td className="input-group">
+                      <input
+                        className="input input-bordered"
+                        value={payment.hash}
+                      />
+                      <button className="btn">
+                        <IconCopy />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </>
   );
 }

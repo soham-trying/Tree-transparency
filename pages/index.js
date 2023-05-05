@@ -12,6 +12,11 @@ export default function Home() {
         <Statistics />
         <Promo />
       </main>
+      <footer class="footer footer-center p-4 text-base-content">
+        <div>
+          <p>Copyright © 2023 - All right reserved by GDSC Supremacy</p>
+        </div>
+      </footer>
     </>
   );
 }
@@ -19,7 +24,7 @@ export default function Home() {
 function BackgroundAsset({ position }) {
   return (
     <div
-      className="absolute inset-x-0 top-[calc(100%-1rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[1rem]"
+      className="absolute inset-x-0 top-[calc(100%-1rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[5rem]"
       aria-hidden="true"
     >
       <div

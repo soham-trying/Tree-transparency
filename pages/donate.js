@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import { transactionDataContractAddress } from "@/constants/contract-address.js";
 import TransactionData from "../artifacts/contracts/transact.sol/TransactionData.json";
+import { IconCopy } from "@tabler/icons-react";
 
 export default function pay() {
   const [name, setName] = useState("");
@@ -193,16 +194,13 @@ export default function pay() {
           transactionHash={transactionHash}
         />
       ) : (
-        <div className="px-4">
-          <div className="flex flex-col gap-4 mb-10 md:grid-cols-2 md:gap-8">
-            <label
-              htmlFor="charity"
-              className="block text-lg font-medium text-gray-700"
-            >
-              Select a NGO:
+        <div className="px-4 space-y-4">
+          <div className="form-control">
+            <label htmlFor="charity" className="label">
+              Select a NGO
             </label>
             <select
-              className="w-full border-gray-300 rounded-md shadow-sm select select-bordered focus:border-indigo-500 focus:ring-indigo-500"
+              className="select select-bordered"
               id="charity"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -215,18 +213,16 @@ export default function pay() {
                 </option>
               ))}
             </select>
+          </div>
 
-            <label
-              htmlFor="amount"
-              className="block mt-6 text-lg font-medium text-gray-700"
-            >
-              Donation Amount:
+          <div className="form-control">
+            <label htmlFor="amount" className="label">
+              Donation Amount
             </label>
             <input
-              className="w-full border-gray-300 rounded-md shadow-sm input input-bordered focus:border-indigo-500 focus:ring-indigo-500"
+              className="input input-bordered"
               placeholder="Enter donation amount"
               type="number"
-              name="amount"
               id="amount"
               value={amount}
               onChange={(e) => setAmount(e.currentTarget.value)}
@@ -240,9 +236,7 @@ export default function pay() {
             >
               Donate Now
             </button>
-            <div className="justify-center mt-6 text-sm font-medium text-gray-500 justify">
-              
-            </div>
+            <div className="justify-center mt-6 text-sm font-medium text-gray-500 justify"></div>
           </div>
         </div>
       )}
@@ -252,29 +246,23 @@ export default function pay() {
 
 function SuccessPage({ payment_id, amount, transactionHash }) {
   return (
-    <div className="min-h-screen py-12 bg-gray-100">
-      <div className="max-w-md mx-auto overflow-hidden bg-white rounded-lg shadow-lg">
-        <div className="px-6 py-8 bg-green-500">
-          <h2 className="text-4xl font-bold text-white">Payment Successful</h2>
-        </div>
-        <div className="p-8">
-          <div className="flex flex-col gap-4">
-            <div className="flex justify-between pb-4 border-b-2 border-gray-300">
-              <p className="text-lg font-medium text-gray-700">Payment ID:</p>
-              <p className="text-lg font-medium text-gray-900">{payment_id}</p>
-            </div>
-            <div className="flex justify-between pb-4 border-b-2 border-gray-300">
-              <p className="text-lg font-medium text-gray-700">Amount:</p>
-              <p className="text-lg font-medium text-green-500">${amount}</p>
-            </div>
-            <div className="flex justify-between gap-5">
-              <p className="gap-3 text-lg font-medium text-gray-700">
-                Transaction Hash:
-              </p>
-              <p className="gap-8 px-4 py-2 overflow-x-auto text-lg font-medium text-gray-900 break-all bg-gray-200 rounded-lg">
-                {transactionHash}
-              </p>
-            </div>
+    <div className="max-w-xl mx-auto overflow-hidden shadow-lg rounded-2xl">
+      <div className="px-6 py-8 text-white bg-success">
+        <h2 className="text-4xl font-bold text-center">Payment Successful</h2>
+      </div>
+      <div className="p-8">
+        <div className="grid divide-y">
+          <div className="flex items-center justify-between p-4">
+            <p>Payment ID</p>
+            <p className="text-lg font-bold">{payment_id}</p>
+          </div>
+          <div className="flex items-center justify-between p-4">
+            <p>Amount</p>
+            <p className="text-lg font-bold text-success">${amount}</p>
+          </div>
+          <div className="flex items-center justify-between p-4">
+            <p>Transaction Hash</p>
+            <p>{transactionHash}</p>
           </div>
         </div>
       </div>

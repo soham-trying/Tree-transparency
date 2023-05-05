@@ -1,13 +1,14 @@
 import { useUserContext } from "@/services/userContext";
+import { useUserStore } from "@/store/user";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 export default function GuardedPage({ children }) {
-  const { user } = useUserContext();
+  const { userStore } = useUserStore();
   const router = useRouter();
 
   useEffect(() => {
-    !user && router.push("/");
+    !userStore && router.push("/");
   }, []);
 
   return <>{children}</>;

@@ -11,6 +11,8 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     auth.onAuthStateChanged((res) => {
+      if (!res.email) return;
+
       const email = res.email;
       const docRef = doc(firestore, "Users", email);
 

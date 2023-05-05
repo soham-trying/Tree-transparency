@@ -1,13 +1,14 @@
+import GuardedPage from "@/components/GuardedPage"
 import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import { auth, firestore } from "@/services/firebase";
 import Image from "next/image";
-import { collection, query, where } from "firebase/firestore";
+import { collection, query, where, doc, getDocs } from "firebase/firestore";
 import {
   useCollectionOnce,
   useDocumentOnce,
 } from "react-firebase-hooks/firestore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useUserStore } from "@/store/user";
 import { useUserContext } from "@/services/userContext";
 import Link from "next/link";
@@ -19,22 +20,39 @@ import {
 
 export default function AdoptedTree() {
   const { userStore } = useUserStore();
-  const [trees, loadingTrees, errorTrees, reloadTrees] = useCollectionOnce(
-    collection(firestore, "Trees")
-  );
+
+  const [trees, setTrees] = useState()
+
+  useEffect(() => {
+
+    userStore?.email && fetchTrees()
+  }, [userStore.email])
+
+  async function fetchTrees() {
+    const trees = await getDocs(
+      query(
+        collection(firestore, "Trees"),
+        where(
+          'adoptedBy', '==',
+          doc(firestore, "Users", userStore.email)
+        )
+      )
+    )
+
+    setTrees(trees)
+  }
 
   return (
-    <>
+    <GuardedPage>
       <Header title="Adopted Trees" />
 
       <div className="container mx-auto">
-        {loadingTrees && <Loading />}
-        <div className="grid grid-cols-1 mt-6 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {!trees && !loadingTrees && "No Results Found"}
+        {/* {loadingTrees && <Loading />} */}
+        <div className="grid grid-cols-1 px-4 mt-6 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+          {/* {!trees && !loadingTrees && "No Results Found"} */}
           {trees &&
             userStore &&
             trees.docs
-              .filter((tree) => tree.data().adoptedBy === userStore.email)
               .map((tree) => (
                 <div key={tree.id}>
                   <div className="w-full overflow-hidden duration-200 bg-gray-200 rounded-md min-h-80 aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
@@ -57,18 +75,6 @@ export default function AdoptedTree() {
                         </p>
                       </div>
                       <div className="flex gap-2">
-                        {tree.data().isVerified ? (
-                          <button className="btn btn-success btn-circle">
-                            <IconCircleCheck />
-                          </button>
-                        ) : (
-                          <button
-                            className="btn btn-error btn-circle"
-                            onClick={() => verifyTree(tree.id)}
-                          >
-                            <IconCircleX />
-                          </button>
-                        )}
                         <Link
                           href={`/tree/${tree.id}`}
                           className="btn btn-circle btn-md"
@@ -82,6 +88,6 @@ export default function AdoptedTree() {
               ))}
         </div>
       </div>
-    </>
+    </GuardedPage>
   );
 }

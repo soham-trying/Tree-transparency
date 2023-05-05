@@ -99,8 +99,7 @@ export default function Navbar() {
 function ProfileDropdown() {
   const { userStore, clear } = useUserStore();
   const router = useRouter();
-  const { logOutUser, loginWithGoogle, setError, user, loading, error } =
-    useUserContext();
+  const { logOutUser, user } = useUserContext();
 
   const handleSignOut = async () => {
     try {
@@ -112,14 +111,13 @@ function ProfileDropdown() {
     }
   };
 
-  return !userStore.id ? (
+  return !userStore.email ? (
     <Link href="/login" className="btn btn-primary">
       Login
     </Link>
   ) : (
     <Menu as="div" className="relative ml-3">
       <div>
-        {console.log(userStore)}
         <Menu.Button className="flex items-center gap-2 p-1 text-sm rounded-lg focus:ring-2 focus:ring-primary focus:outline-none">
           <span className="sr-only">Open user menu</span>
           {userStore.photoURL ? (
@@ -186,7 +184,6 @@ function ProfileDropdown() {
                 className="block px-4 py-2 duration-200 hover:bg-base-100"
               >
                 {item.name}
-               
               </Link>
             </Menu.Item>
           ))}

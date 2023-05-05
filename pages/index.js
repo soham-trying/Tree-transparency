@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import {
   IconBrandGithub,
   IconBrandLinkedin,
@@ -19,14 +20,8 @@ export default function Home() {
         <Promo />
         <Team />
       </main>
-      <footer class="footer footer-center p-4 text-base-content">
-        <div>
-          <p>
-            Copyright © 2023 - All rights reserved by{" "}
-            <span className="font-bold text-primary">GDSC Supremacy</span>
-          </p>
-        </div>
-      </footer>
+
+      <Footer />
     </>
   );
 }
@@ -79,9 +74,9 @@ function Hero() {
             <a href="#" className="btn btn-primary">
               Get started
             </a>
-            <a href="/aboutus" className="gap-2 btn btn-ghost">
+            <Link href="/about" className="gap-2 btn btn-ghost">
               Learn more <IconChevronRight />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

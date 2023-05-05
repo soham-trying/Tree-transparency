@@ -2,7 +2,14 @@ import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import { auth, firestore } from "@/services/firebase";
 import Image from "next/image";
-import { collection, doc, query, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  orderBy,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import {
   useCollectionOnce,
   useDocumentOnce,
@@ -11,20 +18,28 @@ import { useEffect } from "react";
 import { useUserStore } from "@/store/user";
 import { useUserContext } from "@/services/userContext";
 import Link from "next/link";
-import { IconCircleCheck, IconCircleX, IconExternalLink } from "@tabler/icons-react";
+import {
+  IconCircleCheck,
+  IconCircleX,
+  IconExternalLink,
+} from "@tabler/icons-react";
 
 export default function VerifyTree() {
-  const [trees, loadingTrees, errorTrees, reloadTrees] = useCollectionOnce(
-    collection(firestore, "Trees")
-  );
-
   const { userStore } = useUserStore();
+
+  const [trees, loadingTrees, errorTrees, reloadTrees] = useCollectionOnce(
+    userStore?.volunteerNgo &&
+      query(
+        collection(firestore, "Trees"),
+        where("ngo", "==", doc(firestore, "Users", userStore.volunteerNgo))
+      )
+  );
 
   function verifyTree(id) {
     const treeRef = doc(firestore, "Trees", id);
     updateDoc(treeRef, {
       isVerified: true,
-      verifiedBy: doc(firestore, `Users/${user.id}`),
+      verifiedBy: doc(firestore, `Users`, userStore.email),
     })
       .then(() => {
         alert("Verified Tree");
@@ -37,17 +52,13 @@ export default function VerifyTree() {
     <>
       <Header title="Verify Trees" />
 
-      <div className="container mx-auto">
+      <div className="container px-4 mx-auto">
         {loadingTrees && <Loading />}
         <div className="grid grid-cols-1 mt-6 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {trees &&
             userStore &&
             trees.docs
-              .filter(
-                (tree) =>
-                  !tree.isVerified &&
-                  tree.data()?.ngo?.id === userStore.volunteerNgo
-              )
+              .filter((tree) => !tree.data().isVerified)
               .map((tree) => (
                 <div key={tree.id}>
                   <div className="w-full overflow-hidden duration-200 bg-gray-200 rounded-md min-h-80 aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
@@ -70,18 +81,6 @@ export default function VerifyTree() {
                         </p>
                       </div>
                       <div className="flex gap-2">
-                        {tree.data().isVerified ? (
-                          <button className="btn btn-success btn-circle">
-                            <IconCircleCheck />
-                          </button>
-                        ) : (
-                          <button
-                            className="btn btn-error btn-circle"
-                            onClick={() => verifyTree(tree.id)}
-                          >
-                            <IconCircleX />
-                          </button>
-                        )}
                         <Link
                           href={`/tree/${tree.id}`}
                           className="btn btn-circle btn-md"
@@ -90,6 +89,19 @@ export default function VerifyTree() {
                         </Link>
                       </div>
                     </div>
+                    {tree.data().isVerified ? (
+                      <button className="gap-2 btn btn-success">
+                        <IconCircleCheck />
+                        Verified
+                      </button>
+                    ) : (
+                      <button
+                        className="gap-2 btn btn-secondary"
+                        onClick={() => verifyTree(tree.id)}
+                      >
+                        Verify
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}

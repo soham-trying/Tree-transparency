@@ -11,15 +11,16 @@ export default function App({ Component, pageProps }) {
   const { setUser } = useUserStore();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((res) => {
-      if (!res.email) return;
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user.email) return;
 
-      const email = res.email;
+      const email = user.email;
+      const photoURL = user.photoURL;
       const docRef = doc(firestore, "Users", email);
 
       getDoc(docRef)
         .then((res) => {
-          setUser({ email, ...res.data() });
+          setUser({ email, photoURL, ...res.data() });
         })
         .catch((err) => console.error(err));
     });

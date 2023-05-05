@@ -133,7 +133,7 @@ function ProfileDropdown() {
         >
           {theme === "emerald" ? <IconMoon /> : <IconSun />}
         </button>
-        <Menu.Button className="gap-2 btn btn-ghost btn-sm">
+        <Menu.Button className="gap-2 btn btn-ghost btn-sm btn-circle">
           <span className="sr-only">Open user menu</span>
           {userStore.photoURL ? (
             <img
@@ -144,7 +144,6 @@ function ProfileDropdown() {
           ) : (
             <IconUser />
           )}
-          <span>{userStore.username}</span>
         </Menu.Button>
       </div>
       <Transition
@@ -156,7 +155,12 @@ function ProfileDropdown() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 text-sm origin-top-right rounded-md shadow-lg bg-base-300 ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-0 z-10 w-48 pb-1 mt-2 text-sm origin-top-right rounded-md shadow-lg bg-base-300 ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Item>
+            <div className="flex justify-center gap-1 py-3 bg-base-200">
+              Welcome, <span className="text-primary">{userStore.username}</span>
+            </div>
+          </Menu.Item>
           {userStore?.type === "NGOs" &&
             ngoProfileOptions.map((item) => (
               <Menu.Item key={item.href}>

@@ -30,24 +30,21 @@ export default function Transactions() {
   return (
     <div>
       {isFetching ? (
-        <div className="text-white">Fetching</div>
+        <div className="text-gray">Fetching</div>
       ) : (
-        <table className="w-full text-white table-auto">
+        <table className="w-full text-gray table-auto border divide-y divide-slate-200">
           <thead>
             <th>Payment ID</th>
             <th>Amount</th>
-            <th>From</th>
-            <th>To</th>
             <th>Hash</th>
           </thead>
           <tbody>
             {payments.map((payment) => (
               <tr key={payment.razorpay_payment_id}>
-                <td>{payment.razorpay_payment_id}</td>
-                <td>{payment.amount}</td>
-                <td>{payment.fromname}</td>
-                <td>{payment.name}</td>
-                <td className="truncate">
+                <td className="text-center">{payment.razorpay_payment_id}</td>
+                <td className="text-center">{payment.amount}</td>
+          
+                <td className="truncate text-center">
                   <input
                     className="p-2 text-black border rounded"
                     value={payment.hash}

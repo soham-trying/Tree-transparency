@@ -18,6 +18,7 @@ import { useTheme } from "next-themes";
 const navigation = [
   { name: "Adopt", href: "/tree/adopt" },
   { name: "Donate", href: "/donate" },
+  { name: "Donations", href: "/donations" },
 ];
 
 const commonProfileOptions = [

@@ -241,15 +241,7 @@ export default function pay() {
               Donate Now
             </button>
             <div className="justify-center mt-6 text-sm font-medium text-gray-500 justify">
-              <div className="justify-end mx-20 justify">OR</div>
-              <br />
-              <a
-                className="inline-block px-4 py-2 ml-4 text-sm font-medium text-white bg-indigo-600 rounded-md donate-with-crypto hover:bg-indigo-700"
-                href="https://commerce.coinbase.com/checkout/e8bfba4f-9db2-44aa-a5c4-67cd37112f69"
-              >
-                Donate with Crypto
-              </a>
-              <script src="https://commerce.coinbase.com/v1/checkout.js?version=201807"></script>
+              
             </div>
           </div>
         </div>

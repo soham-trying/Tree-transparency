@@ -5,9 +5,10 @@ import { auth, firestore } from "@/services/firebase";
 import { useUserStore } from "@/store/user";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect } from "react";
+import { ThemeProvider } from "next-themes";
 
 export default function App({ Component, pageProps }) {
-  const { setUser, userStore } = useUserStore();
+  const { setUser } = useUserStore();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((res) => {
@@ -27,11 +28,13 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   return (
-    <UserContextProvider>
-      <main className="h-screen">
-        <Navbar />
-        <Component {...pageProps} />
-      </main>
-    </UserContextProvider>
+    <ThemeProvider>
+      <UserContextProvider>
+        <main className="h-screen">
+          <Navbar />
+          <Component {...pageProps} />
+        </main>
+      </UserContextProvider>
+    </ThemeProvider>
   );
 }

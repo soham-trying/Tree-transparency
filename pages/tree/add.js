@@ -103,6 +103,8 @@ export default function TreeForm() {
       ...rest,
       ngo: doc(firestore, `Users/${user.email}`),
       ipfsHash,
+      isVerified: false,
+      isAdopted: false,
     });
 
     console.log(treeRef.id);

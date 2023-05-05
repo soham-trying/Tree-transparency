@@ -1,11 +1,19 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { IconMenu2, IconTrees, IconUser, IconX } from "@tabler/icons-react";
+import {
+  IconMenu2,
+  IconMoon,
+  IconSun,
+  IconTrees,
+  IconUser,
+  IconX,
+} from "@tabler/icons-react";
 import clsx from "clsx";
 import Link from "next/link";
 import { useUserStore } from "@/store/user";
 import { useUserContext } from "@/services/userContext";
 import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
 
 const navigation = [
   { name: "Adopt", href: "/tree/adopt" },
@@ -25,7 +33,7 @@ export default function Navbar() {
   const router = useRouter();
 
   return (
-    <Disclosure as="nav" className="bg-base-200">
+    <Disclosure as="nav">
       {({ open }) => (
         <>
           <div className="container px-2 mx-auto sm:px-6 lg:px-8">
@@ -97,6 +105,7 @@ export default function Navbar() {
 }
 
 function ProfileDropdown() {
+  const { theme, setTheme } = useTheme();
   const { userStore, clear } = useUserStore();
   const router = useRouter();
   const { logOutUser, user } = useUserContext();
@@ -117,8 +126,14 @@ function ProfileDropdown() {
     </Link>
   ) : (
     <Menu as="div" className="relative ml-3">
-      <div>
-        <Menu.Button className="flex items-center gap-2 p-1 text-sm rounded-lg focus:ring-2 focus:ring-primary focus:outline-none">
+      <div className="flex items-center gap-1">
+        <button
+          className="btn btn-ghost btn-circle btn-sm"
+          onClick={() => setTheme(theme === "emerald" ? "forest" : "emerald")}
+        >
+          {theme === "emerald" ? <IconMoon /> : <IconSun />}
+        </button>
+        <Menu.Button className="gap-2 btn btn-ghost btn-sm">
           <span className="sr-only">Open user menu</span>
           {userStore.photoURL ? (
             <img

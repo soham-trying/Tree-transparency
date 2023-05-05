@@ -46,6 +46,7 @@ export default function () {
     console.log(anotherResult);
 
     await updateDoc(doc(firestore, "Trees", id), {
+      isAdopted: true,
       adoptedBy: doc(firestore, `Users/${user.email}`),
       transactionHash: result.hash,
     });

@@ -15,6 +15,9 @@ module.exports = {
       },
     },
   },
+  daisyui: {
+    // themes: ["forest", "emerald"],
+  },
   plugins: [
     require("daisyui"),
     require("@tailwindcss/aspect-ratio"),

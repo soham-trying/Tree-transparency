@@ -19,8 +19,6 @@ export default function Transactions() {
 
     getDocs(collection(firestore, "payments")).then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        // alert(doc.id + " => " + doc.data());
         data.push(doc.data());
       });
 

@@ -20,10 +20,7 @@ import {
 export default function AdoptedTree() {
   const { userStore } = useUserStore();
   const [trees, loadingTrees, errorTrees, reloadTrees] = useCollectionOnce(
-    query(
-      collection(firestore, "Trees"),
-      where("adoptedBy", "==", `Users/${userStore.email}`)
-    )
+    collection(firestore, "Trees")
   );
 
   return (
@@ -36,51 +33,53 @@ export default function AdoptedTree() {
           {!trees && !loadingTrees && "No Results Found"}
           {trees &&
             userStore &&
-            trees.docs.map((tree) => (
-              <div key={tree.id}>
-                <div className="w-full overflow-hidden duration-200 bg-gray-200 rounded-md min-h-80 aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                  <Image
-                    width={200}
-                    height={320}
-                    src={tree.data().imageUrl}
-                    alt={tree.data().name}
-                    className="object-cover object-center w-full h-full lg:h-full lg:w-full"
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <div className="flex justify-between mt-4">
-                    <div>
-                      <h3 className="font-bold text-md text-base-content">
-                        <div>{tree.data().name}</div>
-                      </h3>
-                      <p className="mt-1 text-sm text-base-content opacity-70">
-                        {tree.data().species} &middot; {tree.data().type}
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      {tree.data().isVerified ? (
-                        <button className="btn btn-success btn-circle">
-                          <IconCircleCheck />
-                        </button>
-                      ) : (
-                        <button
-                          className="btn btn-error btn-circle"
-                          onClick={() => verifyTree(tree.id)}
+            trees.docs
+              .filter((tree) => tree.data().adoptedBy === userStore.email)
+              .map((tree) => (
+                <div key={tree.id}>
+                  <div className="w-full overflow-hidden duration-200 bg-gray-200 rounded-md min-h-80 aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                    <Image
+                      width={200}
+                      height={320}
+                      src={tree.data().imageUrl}
+                      alt={tree.data().name}
+                      className="object-cover object-center w-full h-full lg:h-full lg:w-full"
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <div className="flex justify-between mt-4">
+                      <div>
+                        <h3 className="font-bold text-md text-base-content">
+                          <div>{tree.data().name}</div>
+                        </h3>
+                        <p className="mt-1 text-sm text-base-content opacity-70">
+                          {tree.data().species} &middot; {tree.data().type}
+                        </p>
+                      </div>
+                      <div className="flex gap-2">
+                        {tree.data().isVerified ? (
+                          <button className="btn btn-success btn-circle">
+                            <IconCircleCheck />
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-error btn-circle"
+                            onClick={() => verifyTree(tree.id)}
+                          >
+                            <IconCircleX />
+                          </button>
+                        )}
+                        <Link
+                          href={`/tree/${tree.id}`}
+                          className="btn btn-circle btn-md"
                         >
-                          <IconCircleX />
-                        </button>
-                      )}
-                      <Link
-                        href={`/tree/${tree.id}`}
-                        className="btn btn-circle btn-md"
-                      >
-                        <IconExternalLink />
-                      </Link>
+                          <IconExternalLink />
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
         </div>
       </div>
     </>

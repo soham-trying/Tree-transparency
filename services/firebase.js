@@ -5,12 +5,13 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAJi-5WDT_iOggQel4In0FpqMCMrE_mdS8",
-  authDomain: "tree-transparency-9294d.firebaseapp.com",
-  projectId: "tree-transparency-9294d",
-  storageBucket: "tree-transparency-9294d.appspot.com",
-  messagingSenderId: "250170920366",
-  appId: "1:250170920366:web:023074e47a165721430c3f"
+  apiKey: "AIzaSyBSHKAC7xw_IslNrybvzrPd0bWYIlO4nVc",
+  authDomain: "treetransperancy.firebaseapp.com",
+  projectId: "treetransperancy",
+  storageBucket: "treetransperancy.appspot.com",
+  messagingSenderId: "234658785180",
+  appId: "1:234658785180:web:02692a167159ce08a28a59",
+  measurementId: "G-5CEZEPWN9Q"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);

@@ -113,11 +113,11 @@ export default function EditProfile() {
 
   function EditProfileSection({ title, description, children }) {
     return (
-      <div className="pb-12 border-b border-gray-900/10">
-        <h2 className="text-base font-semibold leading-7 text-gray-900">
+      <div className="pb-12 border-b border-base-content border-opacity-30">
+        <h2 className="text-xl font-semibold leading-7">
           {title}
         </h2>
-        <p className="mt-1 text-sm leading-6 text-gray-600">{description}</p>
+        <p className="mt-1 text-sm leading-6 opacity-70">{description}</p>
         <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
           {children}
         </div>

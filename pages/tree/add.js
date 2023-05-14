@@ -139,7 +139,7 @@ export default function TreeForm() {
       <Head>
         <title>Add Trees</title>
       </Head>
-      <div className="container py-8 mx-auto">
+      <div className="container py-6 mx-auto px-4 sm:px-6 lg:px-8">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="max-w-lg p-6 mx-auto bg-white rounded-lg shadow-md"

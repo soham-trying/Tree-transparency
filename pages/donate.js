@@ -194,7 +194,7 @@ export default function pay() {
           transactionHash={transactionHash}
         />
       ) : (
-        <div className="px-4 space-y-4">
+        <div className="container mx-auto space-y-4 px-4 sm:px-6 lg:px-8">
           <div className="form-control">
             <label htmlFor="charity" className="label">
               Select a NGO
@@ -258,11 +258,11 @@ function SuccessPage({ payment_id, amount, transactionHash }) {
           </div>
           <div className="flex items-center justify-between p-4">
             <p>Amount</p>
-            <p className="text-lg font-bold text-success">${amount}</p>
+            <p className="text-lg font-bold text-success">₹{amount}</p>
           </div>
           <div className="flex items-center justify-between p-4">
             <p>Transaction Hash</p>
-            <p>{transactionHash}</p>
+            <input className="input input-bordered" contentEditable={false} value={transactionHash} />
           </div>
         </div>
       </div>

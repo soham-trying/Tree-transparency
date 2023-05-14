@@ -30,7 +30,7 @@ export default function Transactions() {
     <>
       <Header title="Donations" />
 
-      <div className="container mx-auto mt-12">
+      <div className="container mx-auto mt-12 px-4 sm:px-6 lg:px-8">
         {isFetching ? (
           <div>Fetching</div>
         ) : (

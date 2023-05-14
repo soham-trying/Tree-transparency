@@ -61,7 +61,7 @@ export default function () {
       <Head>
         <title>Adopt Trees</title>
       </Head>
-      <div className="container px-4 mx-auto sm:px-6">
+      <div className="container py-6 mx-auto px-4 sm:px-6 lg:px-8">
         {loadingTrees ? (
           <Loading />
         ) : (
@@ -69,7 +69,7 @@ export default function () {
             {errorTrees && <strong>Error: {JSON.stringify(error)}</strong>}
             {trees &&
               trees.docs
-                .filter((tree) => !tree.data().adoptedBy)
+                .filter((tree) => !tree.data().adoptedBy && tree.data().isVerified)
                 .map((tree) => (
                   <div key={tree.id}>
                     <div className="w-full overflow-hidden duration-200 bg-gray-200 rounded-md min-h-80 aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
@@ -101,7 +101,7 @@ export default function () {
                         </div>
                       </div>
                       {tree.data().adoptedBy ? (
-                        <button className="btn btn-sm" disabled>
+                        <button className="btn" disabled>
                           Adopted
                         </button>
                       ) : (
@@ -109,12 +109,11 @@ export default function () {
                           onClick={() =>
                             adoptTree(
                               tree.id,
-                              `https://gateway.pinata.cloud/ipfs/${
-                                tree.data()?.ipfsHash
+                              `https://gateway.pinata.cloud/ipfs/${tree.data()?.ipfsHash
                               }`
                             )
                           }
-                          className="btn btn-primary btn-sm"
+                          className="btn btn-primary"
                         >
                           Adopt
                         </button>

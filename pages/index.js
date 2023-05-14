@@ -219,7 +219,8 @@ function Team() {
     {
       name: "Vijay Prajapati",
       github: "https://github.com/Vijay-SP",
-      linkedin: "https://linkedin.com/in/vijay",
+      linkedin: "https://linkedin.com/in/vijayyy",
+      photo : "https://media.licdn.com/dms/image/D4D03AQHetW2zMnp6LQ/profile-displayphoto-shrink_400_400/0/1680570103592?e=1689811200&v=beta&t=1qCOztEsUjbheuJmiMEayl_rb5ByI5ZCskkFEln08qg"
     },
     {
       name: "Deon Gracias",
@@ -230,13 +231,15 @@ function Team() {
     },
     {
       name: "Hisbaan Sayed",
-      github: "https://github.com/hisbo",
-      linkedin: "https://linkedin.com/in/hisbo",
+      github: "https://github.com/Hisbaansay",
+      linkedin: "https://linkedin.com/in/hisbaansay",
+      photo: "https://media.licdn.com/dms/image/C4E03AQE28YYwmunlag/profile-displayphoto-shrink_400_400/0/1660898971054?e=1689811200&v=beta&t=5Mg0kS_UTh-POsV74OtSxkoTUjOK8aRvbKL5QQwChpw"
     },
     {
       name: "Ryan Valiaparambil",
       github: "https://github.com/ryan-v",
       linkedin: "https://linkedin.com/in/ryan",
+      photo: "https://media.licdn.com/dms/image/C5603AQEtxDqzt-_WRg/profile-displayphoto-shrink_400_400/0/1622632735058?e=1689811200&v=beta&t=muVcY27G0xs4I2FPH6MYnQ2USllWhKwQ4j5p3LjLOXk"
     },
   ];
 
@@ -248,8 +251,7 @@ function Team() {
             Meet our leadership
           </h2>
           <p class="mt-6 text-lg leading-8 opacity-80">
-            Libero fames augue nisl porttitor nisi, quis. Id ac elit odio vitae
-            elementum enim vitae ullamcorper suspendisse.
+           
           </p>
         </div>
         <ul

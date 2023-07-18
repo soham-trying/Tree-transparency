@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (!user.email) return;
+      if (!user && !user.email) return;
 
       const email = user.email;
       const photoURL = user?.photoURL ? user.photoURL : undefined;

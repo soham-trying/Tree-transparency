@@ -220,7 +220,8 @@ function Team() {
       name: "Vijay Prajapati",
       github: "https://github.com/Vijay-SP",
       linkedin: "https://linkedin.com/in/vijayyy",
-      photo : "https://media.licdn.com/dms/image/D4D03AQHetW2zMnp6LQ/profile-displayphoto-shrink_400_400/0/1680570103592?e=1689811200&v=beta&t=1qCOztEsUjbheuJmiMEayl_rb5ByI5ZCskkFEln08qg"
+      photo:
+        "https://media.licdn.com/dms/image/D4D03AQHetW2zMnp6LQ/profile-displayphoto-shrink_400_400/0/1680570103592?e=1689811200&v=beta&t=1qCOztEsUjbheuJmiMEayl_rb5ByI5ZCskkFEln08qg",
     },
     {
       name: "Deon Gracias",
@@ -229,23 +230,26 @@ function Team() {
       photo:
         "https://media.licdn.com/dms/image/D4D03AQHuSNIxXCz4Zg/profile-displayphoto-shrink_800_800/0/1664049718892?e=1688601600&v=beta&t=YESs32ErclCFFI7jT7P54aJodhQh2MCJTlL8xNkeyxk",
     },
-    // {
-    //   name: "Hisbaan Sayed",
-    //   github: "https://github.com/Hisbaansay",
-    //   linkedin: "https://linkedin.com/in/hisbaansay",
-    //   photo: "https://media.licdn.com/dms/image/C4E03AQE28YYwmunlag/profile-displayphoto-shrink_400_400/0/1660898971054?e=1689811200&v=beta&t=5Mg0kS_UTh-POsV74OtSxkoTUjOK8aRvbKL5QQwChpw"
-    // },
-    {
-      name: "Mahek Intwala",
-      github: "https://github.com/Hisbaansay",
-      linkedin: "https://linkedin.com/in/hisbaansay",
-      photo: "https://media.licdn.com/dms/image/C4E03AQE28YYwmunlag/profile-displayphoto-shrink_400_400/0/1660898971054?e=1689811200&v=beta&t=5Mg0kS_UTh-POsV74OtSxkoTUjOK8aRvbKL5QQwChpw"
-    },
     {
       name: "Ryan Valiaparambil",
       github: "https://github.com/ryan-v",
       linkedin: "https://linkedin.com/in/ryan",
-      photo: "https://media.licdn.com/dms/image/C5603AQEtxDqzt-_WRg/profile-displayphoto-shrink_400_400/0/1622632735058?e=1689811200&v=beta&t=muVcY27G0xs4I2FPH6MYnQ2USllWhKwQ4j5p3LjLOXk"
+      photo:
+        "https://media.licdn.com/dms/image/C5603AQEtxDqzt-_WRg/profile-displayphoto-shrink_400_400/0/1622632735058?e=1689811200&v=beta&t=muVcY27G0xs4I2FPH6MYnQ2USllWhKwQ4j5p3LjLOXk",
+    },
+    {
+      name: "Hisbaan Sayed",
+      github: "https://github.com/Hisbaansay",
+      linkedin: "https://linkedin.com/in/hisbaansay",
+      photo:
+        "https://media.licdn.com/dms/image/C4E03AQE28YYwmunlag/profile-displayphoto-shrink_400_400/0/1660898971054?e=1689811200&v=beta&t=5Mg0kS_UTh-POsV74OtSxkoTUjOK8aRvbKL5QQwChpw",
+    },
+    {
+      name: "Mahek Intwala",
+      github: "https://github.com/imahek28",
+      linkedin: "https://www.linkedin.com/in/mahek-intwala-99aaa6235/",
+      photo:
+        "https://media.licdn.com/dms/image/C4D03AQEUYpJjnazBiw/profile-displayphoto-shrink_200_200/0/1661009979351?e=1695859200&v=beta&t=DphpbBOkDBZ3FUiKbO8bkEp1UQmPeKv83l47knwrYgk",
     },
   ];
 
@@ -256,9 +260,7 @@ function Team() {
           <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
             Meet our leadership
           </h2>
-          <p class="mt-6 text-lg leading-8 opacity-80">
-           
-          </p>
+          <p class="mt-6 text-lg leading-8 opacity-80"></p>
         </div>
         <ul
           role="list"

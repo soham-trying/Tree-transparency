@@ -168,7 +168,7 @@ export default function Login() {
 
             <div className="divider">Or continue with</div>
 
-            <div className="flex items-center justify-center gap-4 justify">
+            <div className="flex items-center justify-center gap-4">
               <button
                 onClick={() => {
                   signInWithGoogle()
@@ -181,7 +181,7 @@ export default function Login() {
                     })
                     .catch((err) => console.error(err));
                 }}
-                className="flex flex-row items-center justify-center gap-2 btn btn-white jus justify"
+                className="flex flex-row items-center justify-center gap-2 btn btn-white w-full"
               >
                 <IconBrandGoogle /> Google
               </button>

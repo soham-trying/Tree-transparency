@@ -34,7 +34,10 @@ export default function Navbar() {
   const router = useRouter();
 
   return (
-    <Disclosure as="nav">
+    <Disclosure
+      as="nav"
+      className="sticky top-0 blur-filter backdrop-blur-lg bg-base-100/50 z-10 shadow-sm"
+    >
       {({ open }) => (
         <>
           <div className="container px-2 mx-auto sm:px-6 lg:px-8">
@@ -159,7 +162,8 @@ function ProfileDropdown() {
         <Menu.Items className="absolute right-0 z-10 w-48 pb-1 mt-2 text-sm origin-top-right rounded-md shadow-lg bg-base-300 ring-1 ring-black ring-opacity-5 focus:outline-none">
           <Menu.Item>
             <div className="py-3 text-center bg-base-200">
-              Welcome, <span className="text-primary">{userStore.username}</span>
+              Welcome,{" "}
+              <span className="text-primary">{userStore.username}</span>
             </div>
           </Menu.Item>
           {userStore?.type === "NGOs" &&

@@ -229,8 +229,14 @@ function Team() {
       photo:
         "https://media.licdn.com/dms/image/D4D03AQHuSNIxXCz4Zg/profile-displayphoto-shrink_800_800/0/1664049718892?e=1688601600&v=beta&t=YESs32ErclCFFI7jT7P54aJodhQh2MCJTlL8xNkeyxk",
     },
+    // {
+    //   name: "Hisbaan Sayed",
+    //   github: "https://github.com/Hisbaansay",
+    //   linkedin: "https://linkedin.com/in/hisbaansay",
+    //   photo: "https://media.licdn.com/dms/image/C4E03AQE28YYwmunlag/profile-displayphoto-shrink_400_400/0/1660898971054?e=1689811200&v=beta&t=5Mg0kS_UTh-POsV74OtSxkoTUjOK8aRvbKL5QQwChpw"
+    // },
     {
-      name: "Hisbaan Sayed",
+      name: "Mahek Intwala",
       github: "https://github.com/Hisbaansay",
       linkedin: "https://linkedin.com/in/hisbaansay",
       photo: "https://media.licdn.com/dms/image/C4E03AQE28YYwmunlag/profile-displayphoto-shrink_400_400/0/1660898971054?e=1689811200&v=beta&t=5Mg0kS_UTh-POsV74OtSxkoTUjOK8aRvbKL5QQwChpw"

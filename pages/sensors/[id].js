@@ -16,12 +16,12 @@ export default function Sensor() {
   const sensorStore = useSensorStore();
 
   const data = [
-    { id: 0, height: 35, status: "Growing" },
-    { id: 1, height: 35, status: "Growing" },
+    { id: 0, height: 34.7, status: "Growing" },
+    { id: 1, height: 34.7, status: "Growing" },
     { id: 2, height: 35, status: "Growing" },
     { id: 3, height: 0, status: "Needs Care" },
-    { id: 4, height: 35, status: "Growing" },
-    { id: 5, height: 15, status: "Needs Care" },
+    { id: 4, height: 34.7, status: "Growing" },
+    { id: 5, height: 14.4, status: "Needs Care" },
   ];
 
   function addData() {

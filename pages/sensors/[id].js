@@ -17,11 +17,14 @@ export default function Sensor() {
 
   const data = [
     { id: 0, height: 34.7, status: "Growing" },
-    { id: 1, height: 34.7, status: "Growing" },
+    { id: 1, height: 34.4, status: "Growing" },
     { id: 2, height: 35, status: "Growing" },
     { id: 3, height: 0, status: "Needs Care" },
     { id: 4, height: 34.7, status: "Growing" },
     { id: 5, height: 14.4, status: "Needs Care" },
+    { id: 6, height: 34.2, status: "Growing" },
+    { id: 7, height: 34.6, status: "Growing" },
+    { id: 8, height: 35, status: "Growing" },
   ];
 
   function addData() {
@@ -31,7 +34,7 @@ export default function Sensor() {
 
   return (
     <>
-      <Header title={`Sensor ${id}`} />
+      <Header title={`Plant ${id}`} />
 
       <div className="container mx-auto mt-12 px-4 sm:px-6 lg:px-8">
         {!sensorStore.data[id] ? (
@@ -62,7 +65,8 @@ export default function Sensor() {
                     <tr key={id}>
                       <th>{data.id}</th>
                       <th>{data.height} cm</th>
-                      <td>{data.status}</td>
+                      {data.status == "Needs Care" ?
+                      <td className="bg-green">{data.status}</td>:<td >{data.status}</td>}
                     </tr>
                   ))}
                 </tbody>

@@ -17,7 +17,7 @@ export default function Sensors() {
 
   return (
     <>
-      <Header title="Sensors" />
+      <Header title="Plant Status(A non-volunteer based growth tracking system)" />
 
       <div className="container grid grid-cols-3 mx-auto mt-12 px-4 sm:px-6 lg:px-8 gap-6">
         <button
@@ -31,7 +31,7 @@ export default function Sensors() {
           <Link href={`/sensors/${id}`} alt="link" key={id} className="border-2 border-base-content/50 p-4 rounded-xl hover:border-primary duration-150">
             <div className="flex flex-col justify-between h-full">
               <div>
-                <h6 className="font-thin">Sensor </h6>
+                <h6 className="font-thin">Plant </h6>
                 <h3 className="font-bold text-xl text-base-content">
                   <div>{id}</div>
                 </h3>

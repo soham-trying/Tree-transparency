@@ -19,6 +19,7 @@ const navigation = [
   { name: "Adopt", href: "/tree/adopt" },
   { name: "Donate", href: "/donate" },
   { name: "Donations", href: "/donations" },
+  { name: "My Plants", href: "/sensors" },
 ];
 
 const commonProfileOptions = [

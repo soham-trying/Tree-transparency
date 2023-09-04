@@ -8,7 +8,7 @@ import { IconExternalLink } from "@tabler/icons-react";
 import { IconCircle } from "@tabler/icons-react";
 import { IconCircleFilled } from "@tabler/icons-react";
 
-export default function Transactions() {
+export default function Sensors() {
   const sensorStore = useSensorStore();
 
   function addSensor() {

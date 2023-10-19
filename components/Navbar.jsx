@@ -17,9 +17,8 @@ import { useTheme } from "next-themes";
 
 const navigation = [
   { name: "Adopt", href: "/tree/adopt" },
-  { name: "Donate", href: "/donate" },
   { name: "Donations", href: "/donations" },
-  { name: "My Plants", href: "/sensors" },
+  // { name: "My Plants", href: "/sensors" },
 ];
 
 const commonProfileOptions = [
@@ -31,8 +30,13 @@ const ngoProfileOptions = [{ name: "Add Tree", href: "/tree/add" }];
 
 const volunteerProfileOptions = [{ name: "Verify Tree", href: "/tree/verify" }];
 
+const companiesProfileOptions = [{ name: "Donate", href: "/donate" }];
+
+const individualProfileOptions = [{ name: "Donate", href: "/donate" }];
+
 export default function Navbar() {
   const router = useRouter();
+  const { userStore } = useUserStore();
 
   return (
     <Disclosure
@@ -60,20 +64,51 @@ export default function Navbar() {
                 </Link>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        className={clsx(
-                          item.href === router.pathname
-                            ? "bg-primary text-primary-content"
-                            : "hover:bg-primary hover:text-primary-content",
-                          "rounded-md px-3 py-2 text-sm font-medium duration-200"
-                        )}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
+                    {userStore && userStore.type &&
+                      navigation.map((item) => (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          className={clsx(
+                            item.href === router.pathname
+                              ? "bg-primary text-primary-content"
+                              : "hover:bg-primary hover:text-primary-content",
+                            "rounded-md px-3 py-2 text-sm font-medium duration-200"
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    {userStore &&
+                      userStore?.type === "Private Companies" &&
+                      companiesProfileOptions.map((item) => (
+                        <Link
+                          href={item.href}
+                          className={clsx(
+                            item.href === router.pathname
+                              ? "bg-primary text-primary-content"
+                              : "hover:bg-primary hover:text-primary-content",
+                            "rounded-md px-3 py-2 text-sm font-medium duration-200"
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    {userStore &&
+                      userStore?.type === "Individual" &&
+                      individualProfileOptions.map((item) => (
+                        <Link
+                          href={item.href}
+                          className={clsx(
+                            item.href === router.pathname
+                              ? "bg-primary text-primary-content"
+                              : "hover:bg-primary hover:text-primary-content",
+                            "rounded-md px-3 py-2 text-sm font-medium duration-200"
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
                   </div>
                 </div>
               </div>
@@ -163,7 +198,6 @@ function ProfileDropdown() {
         <Menu.Items className="absolute right-0 z-10 w-48 pb-1 mt-2 text-sm origin-top-right rounded-md shadow-lg bg-base-300 ring-1 ring-black ring-opacity-5 focus:outline-none">
           <Menu.Item>
             <div className="py-3 text-center bg-base-200">
-              Welcome,{" "}
               <span className="text-primary">{userStore.username}</span>
             </div>
           </Menu.Item>
@@ -189,6 +223,7 @@ function ProfileDropdown() {
                 </Link>
               </Menu.Item>
             ))}
+
           {commonProfileOptions.map((item) => (
             <Menu.Item key={item.href}>
               <Link

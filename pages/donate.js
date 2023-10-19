@@ -11,7 +11,7 @@ import TransactionData from "../artifacts/contracts/transact.sol/TransactionData
 import { IconCopy } from "@tabler/icons-react";
 
 export default function pay() {
-  const [name, setName] = useState("");
+  const [org, setOrg] = useState("");
   const [amount, setAmount] = useState(0);
   const [paySuccess, setPaySuccess] = useState(false);
   const [paymentDetails, setPaymentDetails] = useState("");
@@ -98,12 +98,12 @@ export default function pay() {
     return result.hash;
   };
 
-  const displayRazorpay = async (amount) => {
+  const displayRazorpay = async (amount,  org) => {
     var myHeaders = new Headers();
 
     myHeaders.append(
       "Authorization",
-      "Basic cnpwX3Rlc3RfRDRzRHVKNWEzZkVMeDE6d1ZnMVRMYzJpZEtkZDc1QlZEVFRRaVow"
+      "Basic hDaah8khGYGdnPlIH0Bk0PCt"
     );
     myHeaders.append("Content-Type", "application/json");
 
@@ -132,7 +132,7 @@ export default function pay() {
         }
 
         const options = {
-          key: "rzp_test_W488yU9uOndfwZ",
+          key: "rzp_test_Vx5bKnJJCz2Jvb",
           amount: amount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
           currency: "INR",
           name: "",
@@ -145,7 +145,11 @@ export default function pay() {
                 addDoc(collection(firestore, "payments"), {
                   amount,
                   hash,
-                  fromUser: auth.currentUser.uid,
+                  fromUser: {
+                    name: auth.currentUser.displayName,
+                    uid: auth.currentUser.uid,
+                  },
+                  toOrg: orgs.find((value) => value.id === org),
                   ...res,
                 })
                   .then(() => console.log("Document was saved"))
@@ -202,8 +206,8 @@ export default function pay() {
             <select
               className="select select-bordered"
               id="charity"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={org}
+              onChange={(e) => setOrg(e.target.value)}
               required
             >
               <option value="Select">-- Please Select --</option>
@@ -232,7 +236,7 @@ export default function pay() {
           <div className="flex flex-col items-center">
             <button
               className="w-full px-4 py-2 font-semibold text-white rounded-lg shadow-md btn btn-primary md:w-64 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              onClick={() => displayRazorpay(amount)}
+              onClick={() => displayRazorpay(amount, org)}
             >
               Donate Now
             </button>
@@ -262,7 +266,11 @@ function SuccessPage({ payment_id, amount, transactionHash }) {
           </div>
           <div className="flex items-center justify-between p-4">
             <p>Transaction Hash</p>
-            <input className="input input-bordered" contentEditable={false} value={transactionHash} />
+            <input
+              className="input input-bordered"
+              contentEditable={false}
+              value={transactionHash}
+            />
           </div>
         </div>
       </div>

@@ -68,6 +68,7 @@ export default function Tree({
                   </Link>
                 </td>
               </tr>
+              
 
               <tr>
                 <td>Verified</td>
@@ -134,12 +135,19 @@ export default function Tree({
                       </button>
                     </div>
                   </td>
+                  
                 </tr>
+                
+                
               )}
+              <tr>
+                <td className="align-top">NFT</td>
+                <td><img className="w-48 h-80 rounded-xl" src={imageUrl} alt={name} /></td>
+              </tr> 
             </tbody>
           </table>
 
-          <img className="w-full h-full rounded-xl" src={imageUrl} alt={name} />
+          
         </div>
       </div>
     </>

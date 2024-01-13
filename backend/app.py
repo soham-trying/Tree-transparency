@@ -73,7 +73,7 @@ def detect_growth():
             "maskeda_thresh2": array_to_base64(maskeda_thresh2),
             "diff": array_to_base64(diff)
         }
-        print(f"\n\nRESULT {result[growth_detected]} \n\n")
+        print(f"\n\nRESULT {result} \n\n")
         return jsonify(result)
 
     except Exception as e:

@@ -18,6 +18,7 @@ import { useTheme } from "next-themes";
 const navigation = [
   { name: "Adopt", href: "/tree/adopt" },
   { name: "Donations", href: "/donations" },
+  { name: "Growth Track", href: "/tree/growth-track" },
   // { name: "My Plants", href: "/sensors" },
 ];
 

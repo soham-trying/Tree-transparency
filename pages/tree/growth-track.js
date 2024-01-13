@@ -39,6 +39,7 @@ export default function () {
   };
 
   const detectGrowth = async () => {
+    setResult(null)
     try {
       const formData = new FormData();
       formData.append("file1", image1);

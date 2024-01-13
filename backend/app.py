@@ -36,6 +36,8 @@ def detect_growth():
         img1 = cv2.imdecode(np.frombuffer(file1.read(), np.uint8), cv2.IMREAD_COLOR)
         img2 = cv2.imdecode(np.frombuffer(file2.read(), np.uint8), cv2.IMREAD_COLOR)
 
+        img2 = cv2.resize(img2, (img1.shape[1], img1.shape[0]))
+
         # Masking the 1st image
         s1 = pcv.rgb2gray_hsv(rgb_img=img1, channel='s')
         s_thresh1 = pcv.threshold.binary(gray_img=s1, threshold=85, max_value=255, object_type='light')

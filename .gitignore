@@ -24,8 +24,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-
-
 # vercel
 .vercel
 
@@ -44,3 +42,6 @@ typechain-types
 cache
 artifacts
 
+# flask backend
+/backend/*
+!/backend/app.py

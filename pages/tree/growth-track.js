@@ -78,58 +78,60 @@ export default function () {
       <Head>
         <title>Growth Track</title>
       </Head>
-      <div className="container mx-auto space-y-4 px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 m-6 gap-y-6">
-          <div className="gap-2">
-            <label htmlFor="image1" className="">
+      <div className="container mx-auto space-y-2 px-2 sm:px-4 lg:px-6">
+        <div className="max-w-lg p-3 mx-auto bg-white rounded-lg shadow-md">
+          <div className="mb-6">
+            <label htmlFor="image1" className="block mb-2 font-bold text-gray-700">
               Upload Image 1:
             </label>
             <input
-              className="input"
+              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
               type="file"
               id="image1"
               accept="image/*"
               onChange={handleImage1Change}
             />
           </div>
-          <div className="gap-2">
-            <label htmlFor="image2" className="">
+          <div className="mb-6">
+            <label htmlFor="image2" className="block mb-2 font-bold text-gray-700">
               Upload Image 2:
             </label>
             <input
-              className="input"
+              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
               type="file"
               id="image2"
               accept="image/*"
               onChange={handleImage2Change}
             />
           </div>
-          <div className="space-y-2">
-            <button onClick={detectGrowth} className="btn btn-primary">
+          <div className="flex items-center justify-center mt-6">
+            <button onClick={detectGrowth} className="px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline">
               Detect Growth
             </button>
           </div>
         </div>
+
+
         {result && (
-          <div className="container mx-auto space-y-4 px-4 sm:px-6 lg:px-8">
+          <div className="container py-6 mx-auto space-y-4 px-4 sm:px-6 lg:px-8">
             <div className="overflow-x-auto">
               <table className="table w-full table-compact">
                 <thead>
                   <tr>
-                    <th>Growth Detected</th>
-                    <th>Growth Score</th>
+                    <th className="text-center">Growth Detected</th>
+                    <th className="text-center">Growth Score</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>
+                    <td className="text-center">
                       {result.growth_detected === "True" ? (
                         <span className="text-green-500">Significant Growth Detected!</span>
                       ) : (
                         <span className="text-red-500">No Significant Growth Detected</span>
                       )}
                     </td>
-                    <td>{result.mse && result.mse.toFixed(3)}</td>
+                    <td className="text-center">{result.mse && result.mse.toFixed(3)}</td>
                   </tr>
                 </tbody>
               </table>
@@ -138,39 +140,39 @@ export default function () {
               <table className="table w-full table-compact">
                 <thead>
                   <tr>
-                    <th>Mask of Image 1</th>
-                    <th>Mask of Image 2</th>
-                    <th>Difference Mask</th>
+                    <th className="text-center">Mask of Image 1</th>
+                    <th className="text-center">Mask of Image 2</th>
+                    <th className="text-center">Difference Mask</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>
+                    <td className="text-center">
                       {result.maskeda_thresh1 && (
                         <img
                           src={`data:image/png;base64,${result.maskeda_thresh1}`}
                           alt="Masked Image 1"
-                          className="border"
+                          className="border mx-auto block"
                           style={{ maxWidth: '200px', maxHeight: '200px' }}
                         />
                       )}
                     </td>
-                    <td>
+                    <td className="text-center">
                       {result.maskeda_thresh2 && (
                         <img
                           src={`data:image/png;base64,${result.maskeda_thresh2}`}
                           alt="Masked Image 2"
-                          className="border"
+                          className="border mx-auto block"
                           style={{ maxWidth: '200px', maxHeight: '200px' }}
                         />
                       )}
                     </td>
-                    <td>
+                    <td className="text-center">
                       {result.diff && (
                         <img
                           src={`data:image/png;base64,${result.diff}`}
                           alt="Difference Image"
-                          className="border"
+                          className="border mx-auto block"
                           style={{ maxWidth: '200px', maxHeight: '200px' }}
                         />
                       )}

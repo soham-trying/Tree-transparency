@@ -22,6 +22,7 @@ export default function Tree({
   description,
   adoptedBy,
   verifiedBy,
+  prevOwner,
   ipfsHash,
   transactionHash,
 }) {
@@ -68,7 +69,7 @@ export default function Tree({
                   </Link>
                 </td>
               </tr>
-              
+
 
               <tr>
                 <td>Verified</td>
@@ -106,6 +107,15 @@ export default function Tree({
                 <td>{!adoptedBy ? "Not Adopted" : adoptedBy}</td>
               </tr>
 
+              <tr>
+                <td>Previous Owners</td>
+                <td>
+                  {!prevOwner.length
+                    ? "No Previous Owners"
+                    : prevOwner.map((owner) => owner.id).join(", ")}
+                </td>
+              </tr>
+
               {ngo && (
                 <tr>
                   <td>NGO</td>
@@ -135,19 +145,19 @@ export default function Tree({
                       </button>
                     </div>
                   </td>
-                  
+
                 </tr>
-                
-                
+
+
               )}
               <tr>
                 <td className="align-top">NFT</td>
                 <td><img className="w-48 h-80 rounded-xl" src={imageUrl} alt={name} /></td>
-              </tr> 
+              </tr>
             </tbody>
           </table>
 
-          
+
         </div>
       </div>
     </>
@@ -159,6 +169,9 @@ export async function getServerSideProps(context) {
   const adoptedBy = tree.data()?.adoptedBy?.id || "";
   const ngo = tree.data()?.ngo?.id || "";
   const verifiedBy = tree.data()?.verifiedBy?.id || "";
+  const prevOwner = tree.data()?.prevOwner?.map(owner => ({
+    id: owner.id,
+  })) || [];
 
   return {
     props: {
@@ -167,6 +180,7 @@ export async function getServerSideProps(context) {
       adoptedBy,
       ngo,
       verifiedBy,
+      prevOwner,
     },
   };
 }

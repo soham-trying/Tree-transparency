@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import { auth, firestore } from "@/services/firebase";
 import Image from "next/image";
-import { collection, query, where, doc, getDocs } from "firebase/firestore";
+import { collection, query, where, doc, getDoc, updateDoc } from "firebase/firestore";
 import {
   useCollection,
   useCollectionOnce,
@@ -24,11 +24,33 @@ export default function AdoptedTree() {
 
   const [trees, loadingTrees] = useCollection(
     userStore?.email &&
-      query(
-        collection(firestore, "Trees"),
-        where("adoptedBy", "==", doc(firestore, "Users", userStore.email))
-      )
+    query(
+      collection(firestore, "Trees"),
+      where("adoptedBy", "==", doc(firestore, "Users", userStore.email))
+    )
   );
+
+  const putUpForAdoption = async (id) => {
+    const treeDocRef = doc(firestore, "Trees", id);
+    const treeSnapshot = await getDoc(treeDocRef);
+    const treeData = treeSnapshot.data();
+
+    let updatedPrevOwners = [];
+
+    if (treeData.prevOwner) {
+      updatedPrevOwners = [...treeData.prevOwner, treeData.adoptedBy];
+    } else {
+      updatedPrevOwners = [treeData.adoptedBy];
+    }
+
+    await updateDoc(treeDocRef, {
+      isAdopted: false,
+      adoptedBy: '',
+      prevOwner: updatedPrevOwners,
+    });
+
+    alert("Tree has been put up for Adoption");
+  }
 
   return (
     <GuardedPage>
@@ -60,6 +82,14 @@ export default function AdoptedTree() {
                       <p className="mt-1 text-sm text-base-content opacity-70">
                         {tree.data().species} &middot; {tree.data().type}
                       </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        className="btn btn-ghost"
+                        onClick={() => putUpForAdoption(tree.id)}
+                      >
+                        Sell
+                      </button>
                     </div>
                     <div className="flex gap-2">
                       <Link

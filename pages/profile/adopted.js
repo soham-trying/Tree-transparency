@@ -3,7 +3,14 @@ import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import { auth, firestore } from "@/services/firebase";
 import Image from "next/image";
-import { collection, query, where, doc, getDoc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 import {
   useCollection,
   useCollectionOnce,
@@ -18,16 +25,17 @@ import {
   IconCircleX,
   IconExternalLink,
 } from "@tabler/icons-react";
+import { IconCurrencyDollar } from "@tabler/icons-react";
 
 export default function AdoptedTree() {
   const { userStore } = useUserStore();
 
   const [trees, loadingTrees] = useCollection(
     userStore?.email &&
-    query(
-      collection(firestore, "Trees"),
-      where("adoptedBy", "==", doc(firestore, "Users", userStore.email))
-    )
+      query(
+        collection(firestore, "Trees"),
+        where("adoptedBy", "==", doc(firestore, "Users", userStore.email))
+      )
   );
 
   const putUpForAdoption = async (id) => {
@@ -45,12 +53,12 @@ export default function AdoptedTree() {
 
     await updateDoc(treeDocRef, {
       isAdopted: false,
-      adoptedBy: '',
+      adoptedBy: "",
       prevOwner: updatedPrevOwners,
     });
 
     alert("Tree has been put up for Adoption");
-  }
+  };
 
   return (
     <GuardedPage>
@@ -85,16 +93,14 @@ export default function AdoptedTree() {
                     </div>
                     <div className="flex gap-2">
                       <button
-                        className="btn btn-ghost"
+                        className="btn btn-circle btn-md btn-error"
                         onClick={() => putUpForAdoption(tree.id)}
                       >
-                        Sell
+                        <IconCurrencyDollar />
                       </button>
-                    </div>
-                    <div className="flex gap-2">
                       <Link
                         href={`/tree/${tree.id}`}
-                        className="btn btn-circle btn-md"
+                        className="btn btn-circle btn-md btn-primary"
                       >
                         <IconExternalLink />
                       </Link>

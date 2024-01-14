@@ -31,24 +31,22 @@ export default function () {
 
   const adoptTree = async (id, metadataURI) => {
     // Create Contract
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send("eth_requestAccounts", []);
-    const signer = provider.getSigner();
+    // const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // await provider.send("eth_requestAccounts", []);
+    // const signer = provider.getSigner();
 
-    const contract = new ethers.Contract(
-      treeContractAddress,
-      TreeToken.abi,
-      signer
-    );
-    const connection = contract.connect(signer);
-    const result = await contract.mint(connection.address, metadataURI);
-    const anotherResult = await result.wait();
-    console.log(anotherResult);
+    // const contract = new ethers.Contract(
+    //   treeContractAddress,
+    //   TreeToken.abi,
+    //   signer
+    // );
+    // const connection = contract.connect(signer);
+    // const anotherResult = await result.wait();
+    // console.log(anotherResult);
 
     await updateDoc(doc(firestore, "Trees", id), {
       isAdopted: true,
       adoptedBy: doc(firestore, `Users/${user.email}`),
-      transactionHash: result.hash,
     });
 
     reloadTrees();

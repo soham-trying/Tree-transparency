@@ -89,26 +89,23 @@ export default function TreeForm() {
     console.log(ipfsHash);
 
     // Mint token
-    // const provider = new ethers.providers.Web3Provider(window.ethereum);
-    // const signer = provider.getSigner();
-    // const contract = new ethers.Contract(
-    //   treeContractAddress,
-    //   TreeToken.abi,
-    //   signer
-    // );
-    // const connection = contract.connect(signer);
-    // const addr = connection.address;
-    // const res = await contract.mint(addr, metadataURI);
-
-    // await res.wait();
-    // console.log(await contract.isContentOwned(metadataURI));
-
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(
+      treeContractAddress,
+      TreeToken.abi,
+      signer
+    );
+    const connection = contract.connect(signer);
+    const res = await contract.mint(connection.address, metadataURI);
+    const transactionHash = (await res.wait()).hash;
 
     // Add to Firebase
     const treeRef = await addDoc(collection(firestore, "Trees"), {
       ...rest,
       ngo: doc(firestore, `Users/${user.email}`),
       ipfsHash,
+      transactionHash,
       isVerified: false,
       isAdopted: false,
     });
@@ -121,7 +118,7 @@ export default function TreeForm() {
 
     uploadTask.on(
       "state_changed",
-      (snapshot) => { },
+      (snapshot) => {},
       (err) => console.log(err),
       () => {
         getDownloadURL(uploadTask.snapshot.ref)

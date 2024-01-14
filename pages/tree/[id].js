@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
 import { useUserContext } from "@/services/userContext";
+import Head from "next/head";
 
 export default function Tree({
   id,
@@ -34,6 +35,9 @@ export default function Tree({
 
   return (
     <>
+      <Head>
+        <title>{name} Details</title>
+      </Head>
       <div className="max-w-4xl px-4 pt-6 mx-auto">
         <nav className="mb-4">
           <div className="breadcrumbs">

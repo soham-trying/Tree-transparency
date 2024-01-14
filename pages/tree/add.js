@@ -22,6 +22,7 @@ export default function TreeForm() {
   const { user } = useUserContext();
   const [trees, setTrees] = useState([]);
   const [balance, setBalance] = useState();
+  const [isSubmitting, setSubmitting] = useState(false);
 
   const router = useRouter();
 
@@ -75,6 +76,11 @@ export default function TreeForm() {
   };
 
   const onSubmit = async (data) => {
+    if (isSubmitting) {
+      return;
+    }
+    setSubmitting(true);
+
     const { images, ...rest } = data;
     const image = images[0];
 
@@ -97,8 +103,8 @@ export default function TreeForm() {
     // await res.wait();
     // console.log(await contract.isContentOwned(metadataURI));
 
-    // Add to Firebase
 
+    // Add to Firebase
     const treeRef = await addDoc(collection(firestore, "Trees"), {
       ...rest,
       ngo: doc(firestore, `Users/${user.email}`),
@@ -115,7 +121,7 @@ export default function TreeForm() {
 
     uploadTask.on(
       "state_changed",
-      (snapshot) => {},
+      (snapshot) => { },
       (err) => console.log(err),
       () => {
         getDownloadURL(uploadTask.snapshot.ref)
@@ -126,12 +132,15 @@ export default function TreeForm() {
             });
             alert("Added Tree");
           })
-          .catch((err) => console.error(err));
+          .catch((error) => {
+            console.error(error);
+          })
+          .finally(() => {
+            setSubmitting(false);
+            reset();
+          });
       }
     );
-
-    reset();
-    // alert("Added Tree");
   };
 
   return (
@@ -250,9 +259,11 @@ export default function TreeForm() {
           <div className="flex items-center justify-center mt-6">
             <button
               type="submit"
+              disabled={isSubmitting}
               className="px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline"
+              onClick={() => handleSubmit(onSubmit)}
             >
-              Submit
+              {isSubmitting ? "Submitting..." : "Submit"}
             </button>
           </div>
         </form>

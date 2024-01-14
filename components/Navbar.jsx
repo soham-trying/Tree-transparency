@@ -14,6 +14,8 @@ import { useUserStore } from "@/store/user";
 import { useUserContext } from "@/services/userContext";
 import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
+import { IconQrcodeOff } from "@tabler/icons-react";
+import { IconScan } from "@tabler/icons-react";
 
 const navigation = [
   { name: "Adopt", href: "/tree/adopt" },
@@ -65,7 +67,8 @@ export default function Navbar() {
                 </Link>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {userStore && userStore.type &&
+                    {userStore &&
+                      userStore.type &&
                       navigation.map((item) => (
                         <Link
                           key={item.name}
@@ -174,6 +177,9 @@ function ProfileDropdown() {
         >
           {theme === "emerald" ? <IconMoon /> : <IconSun />}
         </button>
+        <a href="/qr-scanner" className="btn btn-ghost btn-circle btn-sm">
+          <IconScan />
+        </a>
         <Menu.Button className="gap-2 btn btn-ghost btn-sm btn-circle">
           <span className="sr-only">Open user menu</span>
           {userStore.photoURL ? (

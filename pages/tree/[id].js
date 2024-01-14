@@ -7,9 +7,11 @@ import { auth, firestore } from "@/services/firebase";
 import Link from "next/link";
 import { IconCircleCheck, IconCircleX, IconCopy } from "@tabler/icons-react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Loading from "@/components/Loading";
 import { useUserContext } from "@/services/userContext";
+import { IconQrcode } from "@tabler/icons-react";
+import QRCode from "qrcode.react";
 
 export default function Tree({
   id,
@@ -32,6 +34,13 @@ export default function Tree({
     doc(firestore, "Users", ngo)
   );
 
+  function unVerifyTree() {
+    updateDoc(doc(firestore, "Trees", id), {
+      isVerified: false,
+      verifiedBy: null,
+    });
+  }
+
   return (
     <>
       <div className="max-w-4xl px-4 pt-6 mx-auto">
@@ -46,7 +55,14 @@ export default function Tree({
           </div>
         </nav>
         <div className="max-w-full prose prose-lg">
-          <h1>{name}</h1>
+          <h1 className="flex gap-6 items-center">
+            {name}
+
+            <label htmlFor="qr-modal" className="group">
+              <IconQrcode className="w-10 h-10 opacity-40 group-hover:opacity-100 duration-100" />
+            </label>
+          </h1>
+
           <p>{description}</p>
 
           <table>
@@ -69,7 +85,6 @@ export default function Tree({
                   </Link>
                 </td>
               </tr>
-
 
               <tr>
                 <td>Verified</td>
@@ -120,7 +135,9 @@ export default function Tree({
                 <tr>
                   <td>NGO</td>
                   <td>
-                    <Link href={`/ngo/${ngo}`}>{ngoLoading ? "Loading" : ngoDoc.username}</Link>
+                    <Link href={`/ngo/${ngo}`}>
+                      {ngoLoading ? "Loading" : ngoDoc.username}
+                    </Link>
                   </td>
                 </tr>
               )}
@@ -145,19 +162,57 @@ export default function Tree({
                       </button>
                     </div>
                   </td>
-
                 </tr>
-
-
               )}
               <tr>
                 <td className="align-top">NFT</td>
-                <td><img className="w-48 h-80 rounded-xl" src={imageUrl} alt={name} /></td>
+                <td>
+                  <img
+                    className="w-48 h-80 rounded-xl"
+                    src={imageUrl}
+                    alt={name}
+                  />
+                </td>
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
 
-
+      <input type="checkbox" id="qr-modal" className="modal-toggle" />
+      <div className="modal" role="dialog">
+        <div className="modal-box">
+          <div className="flex flex-col items-center justify-center">
+            <div className="p-2 bg-white">
+              <QRCode
+                id="qr-code"
+                value={router.asPath}
+                size={200}
+              />
+            </div>
+          </div>
+          <div className="modal-action">
+            <button
+              onClick={() => {
+                const qrCodeURL = document
+                  .getElementById("qr-code")
+                  ?.toDataURL("image/png")
+                  .replace("image/png", "image/octet-stream");
+                let aEl = document.createElement("a");
+                aEl.href = qrCodeURL;
+                aEl.download = `tree_${id}.png`;
+                document.body.appendChild(aEl);
+                aEl.click();
+                document.body.removeChild(aEl);
+              }}
+              className="btn btn-primary"
+            >
+              Download QR
+            </button>
+            <label htmlFor="qr-modal" className="btn">
+              Close
+            </label>
+          </div>
         </div>
       </div>
     </>
@@ -169,9 +224,10 @@ export async function getServerSideProps(context) {
   const adoptedBy = tree.data()?.adoptedBy?.id || "";
   const ngo = tree.data()?.ngo?.id || "";
   const verifiedBy = tree.data()?.verifiedBy?.id || "";
-  const prevOwner = tree.data()?.prevOwner?.map(owner => ({
-    id: owner.id,
-  })) || [];
+  const prevOwner =
+    tree.data()?.prevOwner?.map((owner) => ({
+      id: owner.id,
+    })) || [];
 
   return {
     props: {

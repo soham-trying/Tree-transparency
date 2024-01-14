@@ -9,6 +9,8 @@ import {
 } from "firebase/firestore";
 import { treeType } from "@/constants/tree-type";
 import { treeSpecies } from "@/constants/tree-species";
+import { treeContractAddress } from "@/constants/contract-address";
+import TreeToken from "@/artifacts/contracts/TreeNFT.sol/TreeToken.json";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -87,6 +89,7 @@ export default function TreeForm() {
     // Push to IPFS
     const ipfsHash = await handleFile(image);
     console.log(ipfsHash);
+    const metadataURI=`https://gateway.pinata.cloud/ipfs/${ipfsHash}`
 
     // Mint token
     const provider = new ethers.providers.Web3Provider(window.ethereum);

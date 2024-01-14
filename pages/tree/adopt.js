@@ -29,7 +29,7 @@ export default function () {
 
   const { user } = useUserContext();
 
-  const adoptTree = async (id, metadataURI) => {
+  const adoptTree = async (id) => {
     // Create Contract
     // const provider = new ethers.providers.Web3Provider(window.ethereum);
     // await provider.send("eth_requestAccounts", []);
@@ -104,13 +104,7 @@ export default function () {
                         </button>
                       ) : (
                         <button
-                          onClick={() =>
-                            adoptTree(
-                              tree.id,
-                              `https://gateway.pinata.cloud/ipfs/${tree.data()?.ipfsHash
-                              }`
-                            )
-                          }
+                          onClick={() =>adoptTree(tree.id)}
                           className="btn btn-primary"
                         >
                           Adopt

@@ -232,8 +232,8 @@ function Team() {
     },
     {
       name: "Ryan Valiaparambil",
-      github: "https://github.com/ryan-v",
-      linkedin: "https://linkedin.com/in/ryan",
+      github: "https://github.com/vryan-06",
+      linkedin: "https://www.linkedin.com/in/ryan-v-20690b1b9",
       photo:
         "https://media.licdn.com/dms/image/C5603AQEtxDqzt-_WRg/profile-displayphoto-shrink_400_400/0/1622632735058?e=1689811200&v=beta&t=muVcY27G0xs4I2FPH6MYnQ2USllWhKwQ4j5p3LjLOXk",
     },

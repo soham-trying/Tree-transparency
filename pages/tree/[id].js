@@ -12,6 +12,7 @@ import Loading from "@/components/Loading";
 import { useUserContext } from "@/services/userContext";
 import { IconQrcode } from "@tabler/icons-react";
 import QRCode from "qrcode.react";
+import Head from "next/head";
 
 export default function Tree({
   id,
@@ -43,6 +44,9 @@ export default function Tree({
 
   return (
     <>
+      <Head>
+        <title>{name} Details</title>
+      </Head>
       <div className="max-w-4xl px-4 pt-6 mx-auto">
         <nav className="mb-4">
           <div className="breadcrumbs">
@@ -184,11 +188,7 @@ export default function Tree({
         <div className="modal-box">
           <div className="flex flex-col items-center justify-center">
             <div className="p-2 bg-white">
-              <QRCode
-                id="qr-code"
-                value={router.asPath}
-                size={200}
-              />
+              <QRCode id="qr-code" value={router.asPath} size={200} />
             </div>
           </div>
           <div className="modal-action">

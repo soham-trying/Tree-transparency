@@ -100,15 +100,17 @@ export default function TreeForm() {
       signer
     );
     const connection = contract.connect(signer);
-    const res = await contract.mint(connection.address, metadataURI);
-    const transactionHash = (await res.wait()).hash;
+    const result = await contract.mint(connection.address, metadataURI);
+    const anotherResult = await result.wait();
+    console.log(anotherResult);
+
 
     // Add to Firebase
     const treeRef = await addDoc(collection(firestore, "Trees"), {
       ...rest,
       ngo: doc(firestore, `Users/${user.email}`),
       ipfsHash,
-      transactionHash,
+      transactionHash: result.hash,
       isVerified: false,
       isAdopted: false,
     });

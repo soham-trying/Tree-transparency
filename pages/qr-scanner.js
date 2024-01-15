@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useZxing } from "react-zxing";
@@ -37,16 +38,21 @@ export default function QRScanner() {
   });
 
   return (
-    <div className="max-w-4xl px-4 pt-6 mx-auto prose">
-      <h1>Scanner</h1>
+    <>
+      <Head>
+        <title>QR Scanner</title>
+      </Head>
+      <div className="max-w-4xl px-4 pt-6 mx-auto prose">
+        <h1>Scanner</h1>
 
-      <button
-        className={`btn ${status.status === QrStatus.Loading.status && "animate-pulse btn-info"} ${status.status === QrStatus.Error.status && "btn-error"} ${status.status === QrStatus.Success.status && "btn-success"}`}
-      >
-        {status.message}
-      </button>
+        <button
+          className={`btn ${status.status === QrStatus.Loading.status && "animate-pulse btn-info"} ${status.status === QrStatus.Error.status && "btn-error"} ${status.status === QrStatus.Success.status && "btn-success"}`}
+        >
+          {status.message}
+        </button>
 
-      <video className="artboard artboard-demo" ref={ref} />
-    </div>
+        <video className="artboard artboard-demo" ref={ref} />
+      </div>
+    </>
   );
 }

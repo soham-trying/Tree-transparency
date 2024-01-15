@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  getDocs,
+  getDoc,
   collection,
   deleteDoc,
   doc,
@@ -44,14 +44,26 @@ export default function () {
     // const anotherResult = await result.wait();
     // console.log(anotherResult);
 
-    await updateDoc(doc(firestore, "Trees", id), {
-      isAdopted: true,
-      adoptedBy: doc(firestore, `Users/${user.email}`),
-    });
+    const treeDocRef = doc(firestore, "Trees", id);
+    const treeSnapshot = await getDoc(treeDocRef);
+    const treeData = treeSnapshot.data();
 
-    reloadTrees();
+    //Not allowing user to readopt previously owned tree
+    const prevOwner = treeData?.prevOwner || [];
+    const prevOwnerEmails = prevOwner.map(reference => reference.id);
+    console.log(prevOwnerEmails);
 
-    alert("Adopted Tree");
+    if(prevOwnerEmails.includes(user.email)){
+      console.log("User cannot readopt a tree that they previously adopted.");
+      alert("You had previously adopted this tree");
+    }else{
+      await updateDoc(treeDocRef, {
+        isAdopted: true,
+        adoptedBy: doc(firestore, `Users/${user.email}`),
+      });
+      reloadTrees();
+      alert("Adopted Tree");
+    }
   };
 
   return (
@@ -104,7 +116,7 @@ export default function () {
                         </button>
                       ) : (
                         <button
-                          onClick={() =>adoptTree(tree.id)}
+                          onClick={() => adoptTree(tree.id)}
                           className="btn btn-primary"
                         >
                           Adopt

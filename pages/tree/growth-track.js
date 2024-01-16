@@ -42,40 +42,40 @@ export default function () {
   };
 
   const detectGrowth = async () => {
-    setResult(testResult);
+    // setResult(testResult);
     
-    // setResult(null)
-    // try {
-    //   const formData = new FormData();
-    //   formData.append("file1", image1);
-    //   formData.append("file2", image2);
+    setResult(null)
+    try {
+      const formData = new FormData();
+      formData.append("file1", image1);
+      formData.append("file2", image2);
 
-    //   const response = await fetch("http://127.0.0.1:5000/detect_growth", {
-    //     method: "POST",
-    //     body: formData,
-    //   });
+      const response = await fetch("http://127.0.0.1:5000/detect_growth", {
+        method: "POST",
+        body: formData,
+      });
 
-    //   // Checking the response for growth
-    //   if (response.ok) {
-    //     const result = await response.json();
-    //     console.log(result)
-    //     // console.log(`Result from response ${result}`);
-    //     setResult(result);
-    //     console.log(result.growth_detected == "True" ? "Significant Growth Detected!" : "No Significant Growth Detected.");
-    //     // alert(result.growth_detected == "True" ? "Significant Growth Detected!" : "No Significant Growth Detected.");
-    //   } else {
-    //     // alert("Failed to detect growth.");
-    //     console.log("Failed to detect growth.");
-    //   }
-    // } catch (error) {
-    //   console.error("Error during growth detection:", error);
-    // }
+      // Checking the response for growth
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result)
+        // console.log(`Result from response ${result}`);
+        setResult(result);
+        console.log(result.growth_detected == "True" ? "Significant Growth Detected!" : "No Significant Growth Detected.");
+        // alert(result.growth_detected == "True" ? "Significant Growth Detected!" : "No Significant Growth Detected.");
+      } else {
+        // alert("Failed to detect growth.");
+        console.log("Failed to detect growth.");
+      }
+    } catch (error) {
+      console.error("Error during growth detection:", error);
+    }
 
     // Commenting for debugging
-    //  finally {
-    //   setImage1(null);
-    //   setImage2(null);
-    // };
+     finally {
+      setImage1(null);
+      setImage2(null);
+    };
   };
 
   return (

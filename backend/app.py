@@ -64,7 +64,7 @@ def detect_growth():
         mse_val, diff = mse(maskeda_thresh1, maskeda_thresh2)
 
         # Tracking growth
-        growth_threshold = 0.05
+        growth_threshold = 0.045
         growth_detected = mse_val > growth_threshold
         result = {
             "mse": mse_val,
@@ -86,8 +86,8 @@ def array_to_base64(arr):
 
 
 def mse(img1, img2):
-    h, w = img1.shape
-    diff = cv2.subtract(img1, img2)
+    h, w = img2.shape
+    diff = cv2.subtract(img2, img1)
     err = np.sum(diff**2)
     mse_val = err / (float(h*w))
     print("MSE:", mse_val)

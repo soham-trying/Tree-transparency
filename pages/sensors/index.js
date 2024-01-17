@@ -10,7 +10,7 @@ import { IconCircleFilled } from "@tabler/icons-react";
 
 export default function Sensors() {
   const sensorStore = useSensorStore();
-
+  const FetchAPI =
   function addSensor() {
     sensorStore.addSensor(Date.now());
   }
@@ -21,7 +21,7 @@ export default function Sensors() {
 
       <div className="container grid grid-cols-3 mx-auto mt-12 px-4 sm:px-6 lg:px-8 gap-6">
         <button
-          onClick={addSensor}
+          onClick={FetchAPI}
           className="bg-primary h-[200px] flex items-center justify-center gap-2 rounded-xl hover:opacity-90 duration-150"
         >
           <IconPlus />

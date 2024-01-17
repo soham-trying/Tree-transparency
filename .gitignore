@@ -45,4 +45,5 @@ artifacts
 # flask backend
 /backend/*
 !/backend/app.py
+!/backend/old_app.py
 !/backend/result.js

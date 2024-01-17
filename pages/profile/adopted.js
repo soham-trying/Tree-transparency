@@ -26,42 +26,50 @@ import {
   IconExternalLink,
 } from "@tabler/icons-react";
 import { IconCurrencyDollar } from "@tabler/icons-react";
+import Head from "next/head";
 
 export default function AdoptedTree() {
   const { userStore } = useUserStore();
 
   const [trees, loadingTrees] = useCollection(
     userStore?.email &&
-      query(
-        collection(firestore, "Trees"),
-        where("adoptedBy", "==", doc(firestore, "Users", userStore.email))
-      )
+    query(
+      collection(firestore, "Trees"),
+      where("adoptedBy", "==", doc(firestore, "Users", userStore.email))
+    )
   );
 
   const putUpForAdoption = async (id) => {
-    const treeDocRef = doc(firestore, "Trees", id);
-    const treeSnapshot = await getDoc(treeDocRef);
-    const treeData = treeSnapshot.data();
+    const confirmResult = window.confirm("Are you sure you want to put this tree up for adoption?");
 
-    let updatedPrevOwners = [];
+    if (confirmResult) {
+      const treeDocRef = doc(firestore, "Trees", id);
+      const treeSnapshot = await getDoc(treeDocRef);
+      const treeData = treeSnapshot.data();
 
-    if (treeData.prevOwner) {
-      updatedPrevOwners = [...treeData.prevOwner, treeData.adoptedBy];
-    } else {
-      updatedPrevOwners = [treeData.adoptedBy];
+      let updatedPrevOwners = [];
+
+      if (treeData.prevOwner) {
+        updatedPrevOwners = [...treeData.prevOwner, treeData.adoptedBy];
+      } else {
+        updatedPrevOwners = [treeData.adoptedBy];
+      }
+
+      await updateDoc(treeDocRef, {
+        isAdopted: false,
+        adoptedBy: "",
+        prevOwner: updatedPrevOwners,
+      });
+
+      alert("Tree has been put up for Adoption");
     }
-
-    await updateDoc(treeDocRef, {
-      isAdopted: false,
-      adoptedBy: "",
-      prevOwner: updatedPrevOwners,
-    });
-
-    alert("Tree has been put up for Adoption");
   };
 
   return (
     <GuardedPage>
+      <Head>
+        <title>My Trees</title>
+      </Head>
       <Header title="Adopted Trees" />
 
       <div className="container mx-auto">

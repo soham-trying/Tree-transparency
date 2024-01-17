@@ -5,6 +5,10 @@ from plantcv import plantcv as pcv
 from flask_cors import CORS
 import base64
 
+from PIL import Image
+import requests
+from io import BytesIO
+
 app = Flask(__name__)
 CORS(app)
 
@@ -26,17 +30,35 @@ def index():
 @app.route("/detect_growth", methods=["POST"])
 def detect_growth():
     try:
-        if 'file1' not in request.files or 'file2' not in request.files:
-            return jsonify({"error": "Please provide 'file1' and 'file2' in the request."})
+        # print("\n\n\n")
+        # print(request.form)
+        # print("\n\n\n")
+        if 'file2' not in request.files:
+            return jsonify({"error": "Please provide 'file2' in the request."})
+        
+        if 'url' not in request.form:
+            return jsonify({"error": "No 'url' provided in the request."})
 
-        file1 = request.files['file1']
-        file2 = request.files['file2']
 
         # Reading the images
-        img1 = cv2.imdecode(np.frombuffer(file1.read(), np.uint8), cv2.IMREAD_COLOR)
+        url=request.form['url']
+        # print("\n\n\n")
+        # print("URL", url)
+        # print("\n\n\n")
+        imageResponse = requests.get(url)
+        if imageResponse.status_code != 200:
+            raise Exception(f"Failed to fetch the image. Status code: {imageResponse.status_code}")
+
+        img1_pil = Image.open(BytesIO(imageResponse.content))
+        img1 = np.array(img1_pil)
+        img1 = img1[:, :, ::-1].copy()
+
+
+        file2 = request.files['file2']
         img2 = cv2.imdecode(np.frombuffer(file2.read(), np.uint8), cv2.IMREAD_COLOR)
 
-        img2 = cv2.resize(img2, (img1.shape[1], img1.shape[0]))
+        # Resizing image 1
+        img1 = cv2.resize(img1, (img2.shape[1], img2.shape[0]))
 
         # Masking the 1st image
         s1 = pcv.rgb2gray_hsv(rgb_img=img1, channel='s')

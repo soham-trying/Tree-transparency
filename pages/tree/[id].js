@@ -13,6 +13,7 @@ import { useUserContext } from "@/services/userContext";
 import { IconQrcode } from "@tabler/icons-react";
 import QRCode from "qrcode.react";
 import Head from "next/head";
+import { IconCirclePlus } from "@tabler/icons-react";
 
 export default function Tree({
   id,
@@ -45,7 +46,7 @@ export default function Tree({
   return (
     <>
       <Head>
-        <title>{name} Details</title>
+        <title>Plant Details</title>
       </Head>
       <div className="max-w-4xl px-4 pt-6 mx-auto">
         <nav className="mb-4">
@@ -168,6 +169,30 @@ export default function Tree({
                   </td>
                 </tr>
               )}
+
+              {adoptedBy && (<tr>
+                <td>Growth Status</td>
+                <td>
+                  <Link
+                    href={`/tree/growth-track/${id}`}
+                    className="btn btn-sm btn-accent"
+                  >
+                      <IconCirclePlus />
+                      Track Growth
+                  </Link>
+                </td>
+              </tr>
+                // <button
+                //   className="btn btn-sm btn-success"
+                //   onClick={() => trackGrowth(id)}
+                // >
+                //   <span>
+                //     <IconCirclePlus />
+                //   </span>
+                //   Track Growth
+                // </button>
+              )}
+
               <tr>
                 <td className="align-top">NFT</td>
                 <td>

@@ -4,6 +4,7 @@ import { firestore } from "../services/firebase.js";
 import Header from "@/components/Header.jsx";
 import { IconCopy } from "@tabler/icons-react";
 import { useUserStore } from "@/store/user.js";
+import Head from "next/head.js";
 
 export default function Transactions() {
   const [isFetching, setFetching] = useState(true);
@@ -30,6 +31,9 @@ export default function Transactions() {
 
   return (
     <>
+      <Head>
+        <title>Donations</title>
+      </Head>
       <Header title="Donations" />
 
       <div className="container mx-auto mt-12 px-4 sm:px-6 lg:px-8">

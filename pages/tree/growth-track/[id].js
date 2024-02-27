@@ -42,6 +42,7 @@ export default function Tree({
   );
 
   // Growth Track part
+  const [treeImageUrl, setTreeImageUrl] = useState(imageUrl)
   const [image1, setImage1] = useState(null);
   const [image2, setImage2] = useState(null);
   const [result, setResult] = useState(null);
@@ -100,6 +101,7 @@ export default function Tree({
         getDownloadURL(uploadTask.snapshot.ref)
           .then(async (url) => {
           console.log(url);
+          setTreeImageUrl(url)
           await updateDoc(doc(firestore, "Trees", id), {
             imageUrl: url,
           });
@@ -172,7 +174,7 @@ export default function Tree({
               <tr>
                 <td className="align-top">Previous Image</td>
                 <td>
-                  <img className="w-48 h-80" src={imageUrl} alt={name} />
+                  <img className="w-48 h-80" src={treeImageUrl} alt={name} />
                 </td>
               </tr>
 

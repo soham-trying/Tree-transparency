@@ -1,9 +1,15 @@
 import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { firestore, storage } from "@/services/firebase";
+import {
   useDocumentDataOnce,
   useDocumentOnce,
 } from "react-firebase-hooks/firestore";
 import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
-import { auth, firestore } from "@/services/firebase";
 import Link from "next/link";
 import { IconCircleCheck, IconCircleX, IconCopy } from "@tabler/icons-react";
 import { useRouter } from "next/router";
@@ -14,8 +20,7 @@ import { IconQrcode } from "@tabler/icons-react";
 import QRCode from "qrcode.react";
 import Head from "next/head";
 import { IconCirclePlus } from "@tabler/icons-react";
-import { testResult } from "@/backend/result.js"
-
+import { testResult } from "@/backend/result.js";
 
 export default function Tree({
   id,
@@ -32,13 +37,12 @@ export default function Tree({
   ipfsHash,
   transactionHash,
 }) {
-
   const [ngoDoc, ngoLoading, ngoError] = useDocumentDataOnce(
     doc(firestore, "Users", ngo)
   );
 
-
   // Growth Track part
+  const [treeImageUrl, setTreeImageUrl] = useState(imageUrl)
   const [image1, setImage1] = useState(null);
   const [image2, setImage2] = useState(null);
   const [result, setResult] = useState(null);
@@ -65,17 +69,18 @@ export default function Tree({
     }
   };
 
-
   const detectGrowth = async () => {
     // setResult(testResult);
 
-    setResult(null)
+    setResult(null);
     try {
       const formData = new FormData();
       // formData.append("file1", image1);
+      const storageRef = ref(storage, `/planted/${id}`);
+      const imageUrl = await getDownloadURL(storageRef);
+
       formData.append("url", imageUrl);
       formData.append("file2", image1);
-      console.log("Sent to API")
 
       const response = await fetch("http://127.0.0.1:5000/detect_growth", {
         method: "POST",
@@ -85,10 +90,36 @@ export default function Tree({
       // Checking the response for growth
       if (response.ok) {
         const result = await response.json();
-        console.log(result)
+
+
+    const uploadTask = uploadBytesResumable(storageRef, image1);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {},
+      (err) => console.log(err),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then(async (url) => {
+          console.log(url);
+          setTreeImageUrl(url)
+          await updateDoc(doc(firestore, "Trees", id), {
+            imageUrl: url,
+          });
+          alert("Updated Tree Image");
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+      }
+    );
+        console.log(result);
         // console.log(`Result from response ${result}`);
         setResult(result);
-        console.log(result.growth_detected == "True" ? "Significant Growth Detected!" : "No Significant Growth Detected.");
+        console.log(
+          result.growth_detected == "True"
+            ? "Significant Growth Detected!"
+            : "No Significant Growth Detected."
+        );
         // alert(result.growth_detected == "True" ? "Significant Growth Detected!" : "No Significant Growth Detected.");
       } else {
         // alert("Failed to detect growth.");
@@ -105,7 +136,6 @@ export default function Tree({
     // };
   };
 
-
   return (
     <>
       <Head>
@@ -115,18 +145,13 @@ export default function Tree({
         <nav className="mb-4">
           <div className="breadcrumbs">
             <ul>
-              <li>
-                Growth Track
-              </li>
+              <li>Growth Track</li>
               <li>{id}</li>
             </ul>
           </div>
         </nav>
         <div className="max-w-full prose prose-lg">
-          <h1 className="flex gap-6 items-center">
-            {name}
-          </h1>
-
+          <h1 className="flex gap-6 items-center">{name}</h1>
 
           <table>
             <tbody>
@@ -149,11 +174,7 @@ export default function Tree({
               <tr>
                 <td className="align-top">Previous Image</td>
                 <td>
-                  <img
-                    className="w-48 h-80"
-                    src={imageUrl}
-                    alt={name}
-                  />
+                  <img className="w-48 h-80" src={treeImageUrl} alt={name} />
                 </td>
               </tr>
 
@@ -181,7 +202,10 @@ export default function Tree({
 
           <div className="max-w-lg p-3 mx-auto">
             <div className="flex items-center justify-center">
-              <button onClick={detectGrowth} className="px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline">
+              <button
+                onClick={detectGrowth}
+                className="px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-700 focus:outline-none focus:shadow-outline"
+              >
                 Detect Growth
               </button>
             </div>
@@ -201,12 +225,18 @@ export default function Tree({
                     <tr>
                       <td className="text-center">
                         {result.growth_detected === "True" ? (
-                          <span className="text-green-500">Significant Growth Detected!</span>
+                          <span className="text-green-500">
+                            Significant Growth Detected!
+                          </span>
                         ) : (
-                          <span className="text-red-500">No Significant Growth Detected</span>
+                          <span className="text-red-500">
+                            No Significant Growth Detected
+                          </span>
                         )}
                       </td>
-                      <td className="text-center">{result.mse && result.mse.toFixed(3)}</td>
+                      <td className="text-center">
+                        {result.mse && result.mse.toFixed(3)}
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -228,7 +258,7 @@ export default function Tree({
                             src={`data:image/png;base64,${result.maskeda_thresh1}`}
                             alt="Masked Image 1"
                             className="border mx-auto block"
-                            style={{ maxWidth: '200px', maxHeight: '200px' }}
+                            style={{ maxWidth: "200px", maxHeight: "200px" }}
                           />
                         )}
                       </td>
@@ -238,7 +268,7 @@ export default function Tree({
                             src={`data:image/png;base64,${result.maskeda_thresh2}`}
                             alt="Masked Image 2"
                             className="border mx-auto block"
-                            style={{ maxWidth: '200px', maxHeight: '200px' }}
+                            style={{ maxWidth: "200px", maxHeight: "200px" }}
                           />
                         )}
                       </td>
@@ -248,7 +278,7 @@ export default function Tree({
                             src={`data:image/png;base64,${result.diff}`}
                             alt="Difference Image"
                             className="border mx-auto block"
-                            style={{ maxWidth: '200px', maxHeight: '200px' }}
+                            style={{ maxWidth: "200px", maxHeight: "200px" }}
                           />
                         )}
                       </td>
@@ -258,7 +288,6 @@ export default function Tree({
               </div>
             </div>
           )}
-
         </div>
       </div>
     </>

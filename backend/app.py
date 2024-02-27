@@ -62,25 +62,25 @@ def detect_growth():
 
         # Masking the 1st image
         s1 = pcv.rgb2gray_hsv(rgb_img=img1, channel='s')
-        s_thresh1 = pcv.threshold.binary(gray_img=s1, threshold=85, max_value=255, object_type='light')
+        s_thresh1 = pcv.threshold.binary(gray_img=s1, threshold=85, object_type='light')
         s_mblur1 = pcv.median_blur(gray_img=s_thresh1, ksize=5)
         b1 = pcv.rgb2gray_lab(rgb_img=img1, channel='b')
-        b_thresh1 = pcv.threshold.binary(gray_img=b1, threshold=160, max_value=255, object_type='light')
+        b_thresh1 = pcv.threshold.binary(gray_img=b1, threshold=160, object_type='light')
         bs1 = pcv.logical_or(bin_img1=s_mblur1, bin_img2=b_thresh1)
         masked1 = pcv.apply_mask(img=img1, mask=bs1, mask_color='white')
         masked1_a = pcv.rgb2gray_lab(rgb_img=masked1, channel='a')
-        maskeda_thresh1 = pcv.threshold.binary(gray_img=masked1_a, threshold=115, max_value=255, object_type='dark')
+        maskeda_thresh1 = pcv.threshold.binary(gray_img=masked1_a, threshold=115, object_type='dark')
 
         # Masking the 2nd image
         s2 = pcv.rgb2gray_hsv(rgb_img=img2, channel='s')
-        s_thresh2 = pcv.threshold.binary(gray_img=s2, threshold=85, max_value=255, object_type='light')
+        s_thresh2 = pcv.threshold.binary(gray_img=s2, threshold=85, object_type='light')
         s_mblur2 = pcv.median_blur(gray_img=s_thresh2, ksize=5)
         b2 = pcv.rgb2gray_lab(rgb_img=img2, channel='b')
-        b_thresh2 = pcv.threshold.binary(gray_img=b2, threshold=160, max_value=255, object_type='light')
+        b_thresh2 = pcv.threshold.binary(gray_img=b2, threshold=160, object_type='light')
         bs2 = pcv.logical_or(bin_img1=s_mblur2, bin_img2=b_thresh2)
         masked2 = pcv.apply_mask(img=img2, mask=bs2, mask_color='white')
         masked2_a = pcv.rgb2gray_lab(rgb_img=masked2, channel='a')
-        maskeda_thresh2 = pcv.threshold.binary(gray_img=masked2_a, threshold=115, max_value=255, object_type='dark')
+        maskeda_thresh2 = pcv.threshold.binary(gray_img=masked2_a, threshold=115, object_type='dark')
 
         # Finding MSE and DIFF
         mse_val, diff = mse(maskeda_thresh1, maskeda_thresh2)

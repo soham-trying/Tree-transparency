@@ -13,7 +13,7 @@ import { IconTrees } from "@tabler/icons-react";
 export default function App({ Component, pageProps }) {
   const router = useRouter();
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const { setUser } = useUserStore();
 
@@ -35,27 +35,28 @@ export default function App({ Component, pageProps }) {
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    const handleStart = (url) => url !== router.asPath && setLoading(true);
-    const handleComplete = (url) => url === router.asPath && setLoading(false);
+  // useEffect(() => {
+  //   const handleStart = (url) => url !== router.asPath && setLoading(true);
+  //   const handleComplete = (url) => url === router.asPath && setLoading(false);
 
-    router.events.on("routeChangeStart", handleStart);
-    router.events.on("routeChangeComplete", handleComplete);
-    router.events.on("routeChangeError", handleComplete);
+  //   router.events.on("routeChangeStart", handleStart);
+  //   router.events.on("routeChangeComplete", handleComplete);
+  //   router.events.on("routeChangeError", handleComplete);
 
-    return () => {
-      router.events.off("routeChangeStart", handleStart);
-      router.events.off("routeChangeComplete", handleComplete);
-      router.events.off("routeChangeError", handleComplete);
-    };
-  }, [router]);
+  //   return () => {
+  //     router.events.off("routeChangeStart", handleStart);
+  //     router.events.off("routeChangeComplete", handleComplete);
+  //     router.events.off("routeChangeError", handleComplete);
+  //   };
+  // }, [router]);
 
   return (
     <ThemeProvider>
       <UserContextProvider>
         <main className="h-screen">
           <Navbar />
-          {loading ? <Loading /> : <Component {...pageProps} />}
+          {/* {loading ? <Loading /> : <Component {...pageProps} />} */}
+          <Component {...pageProps} />
         </main>
       </UserContextProvider>
     </ThemeProvider>

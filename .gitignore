@@ -47,4 +47,5 @@ artifacts
 !/backend/app.py
 !/backend/old_app.py
 !/backend/result.js
+!/backend/requirements.txt
 !/backend/tree-images-test-data

@@ -120,7 +120,11 @@ export default function TreeForm() {
       ...rest,
       ngo: doc(firestore, `Users/${user.email}`),
       ipfsHash,
-      coordinates,
+      coordinates: {
+        accuracy: coordinates.accuracy,
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude,
+      },
       transactionHash: result.hash,
       isVerified: false,
       isAdopted: false,

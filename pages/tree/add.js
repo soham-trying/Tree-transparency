@@ -25,6 +25,7 @@ export default function TreeForm() {
   const [trees, setTrees] = useState([]);
   const [balance, setBalance] = useState();
   const [isSubmitting, setSubmitting] = useState(false);
+  const [coordinates, setCoordinates] = useState(null);
 
   const router = useRouter();
 
@@ -32,7 +33,17 @@ export default function TreeForm() {
     if (!window.ethereum) alert("Install Metamask") && router.push("/");
 
     connectToWallet();
+    handleGetLocation();
   }, []);
+
+  const handleGetLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setCoordinates(coords);
+      },
+      (err) => [console.log(err)]
+    );
+  };
 
   const connectToWallet = async () => {
     const [account] = await window.ethereum.request({
@@ -89,7 +100,7 @@ export default function TreeForm() {
     // Push to IPFS
     const ipfsHash = await handleFile(image);
     console.log(ipfsHash);
-    const metadataURI=`https://gateway.pinata.cloud/ipfs/${ipfsHash}`
+    const metadataURI = `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
 
     // Mint token
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -104,12 +115,16 @@ export default function TreeForm() {
     const anotherResult = await result.wait();
     console.log(anotherResult);
 
-
     // Add to Firebase
     const treeRef = await addDoc(collection(firestore, "Trees"), {
       ...rest,
       ngo: doc(firestore, `Users/${user.email}`),
       ipfsHash,
+      coordinates: {
+        accuracy: coordinates.accuracy,
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude,
+      },
       transactionHash: result.hash,
       isVerified: false,
       isAdopted: false,
@@ -235,6 +250,15 @@ export default function TreeForm() {
               className="block mb-2 font-bold text-gray-700"
             >
               Location
+            </label>
+            <label className="block mb-2 font-bold">
+              {coordinates && (
+                <span>
+                  <iframe
+                    src={`https://maps.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}&z=15&output=embed`}
+                  ></iframe>
+                </span>
+              )}
             </label>
             <input
               type="text"

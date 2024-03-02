@@ -250,7 +250,7 @@ export default function TreeForm() {
               {coordinates && (
                 <span>
                   <iframe
-                    src={`https://maps.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}&hl=es;z=14&amp;output=embed`}
+                    src={`https://maps.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}&z=15&output=embed`}
                   ></iframe>
                   {/* {coordinates.latitude}, {coordinates.longitude} */}
                 </span>

@@ -120,6 +120,7 @@ export default function TreeForm() {
       ...rest,
       ngo: doc(firestore, `Users/${user.email}`),
       ipfsHash,
+      coordinates,
       transactionHash: result.hash,
       isVerified: false,
       isAdopted: false,
@@ -252,7 +253,6 @@ export default function TreeForm() {
                   <iframe
                     src={`https://maps.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}&z=15&output=embed`}
                   ></iframe>
-                  {/* {coordinates.latitude}, {coordinates.longitude} */}
                 </span>
               )}
             </label>

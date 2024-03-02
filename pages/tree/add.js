@@ -25,6 +25,7 @@ export default function TreeForm() {
   const [trees, setTrees] = useState([]);
   const [balance, setBalance] = useState();
   const [isSubmitting, setSubmitting] = useState(false);
+  const [coordinates, setCoordinates] = useState(null);
 
   const router = useRouter();
 
@@ -32,7 +33,16 @@ export default function TreeForm() {
     if (!window.ethereum) alert("Install Metamask") && router.push("/");
 
     connectToWallet();
+    handleGetLocation();
   }, []);
+
+  const handleGetLocation = () => {
+    navigator.geolocation.getCurrentPosition(({coords}) => {
+      setCoordinates(coords)
+    }, (err) => [
+      console.log(err)
+    ])
+  }
 
   const connectToWallet = async () => {
     const [account] = await window.ethereum.request({
@@ -235,6 +245,9 @@ export default function TreeForm() {
               className="block mb-2 font-bold text-gray-700"
             >
               Location
+            </label>
+            <label className="block mb-2 font-bold">
+              {coordinates.latitude}, {coordinates.longitude}
             </label>
             <input
               type="text"

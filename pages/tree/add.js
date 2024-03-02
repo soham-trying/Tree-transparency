@@ -37,12 +37,13 @@ export default function TreeForm() {
   }, []);
 
   const handleGetLocation = () => {
-    navigator.geolocation.getCurrentPosition(({coords}) => {
-      setCoordinates(coords)
-    }, (err) => [
-      console.log(err)
-    ])
-  }
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setCoordinates(coords);
+      },
+      (err) => [console.log(err)]
+    );
+  };
 
   const connectToWallet = async () => {
     const [account] = await window.ethereum.request({
@@ -99,7 +100,7 @@ export default function TreeForm() {
     // Push to IPFS
     const ipfsHash = await handleFile(image);
     console.log(ipfsHash);
-    const metadataURI=`https://gateway.pinata.cloud/ipfs/${ipfsHash}`
+    const metadataURI = `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
 
     // Mint token
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -113,7 +114,6 @@ export default function TreeForm() {
     const result = await contract.mint(connection.address, metadataURI);
     const anotherResult = await result.wait();
     console.log(anotherResult);
-
 
     // Add to Firebase
     const treeRef = await addDoc(collection(firestore, "Trees"), {
@@ -247,7 +247,14 @@ export default function TreeForm() {
               Location
             </label>
             <label className="block mb-2 font-bold">
-              {coordinates.latitude}, {coordinates.longitude}
+              {coordinates && (
+                <span>
+                  <iframe
+                    src={`https://maps.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}&hl=es;z=14&amp;output=embed`}
+                  ></iframe>
+                  {/* {coordinates.latitude}, {coordinates.longitude} */}
+                </span>
+              )}
             </label>
             <input
               type="text"

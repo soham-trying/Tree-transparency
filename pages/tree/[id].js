@@ -22,6 +22,7 @@ export default function Tree({
   species,
   isVerified,
   ngo,
+  coordinates,
   type,
   description,
   adoptedBy,
@@ -170,18 +171,19 @@ export default function Tree({
                 </tr>
               )}
 
-              {adoptedBy && (<tr>
-                <td>Growth Status</td>
-                <td>
-                  <Link
-                    href={`/tree/growth-track/${id}`}
-                    className="btn btn-sm btn-accent"
-                  >
+              {adoptedBy && (
+                <tr>
+                  <td>Growth Status</td>
+                  <td>
+                    <Link
+                      href={`/tree/growth-track/${id}`}
+                      className="btn btn-sm btn-accent"
+                    >
                       <IconCirclePlus />
                       Track Growth
-                  </Link>
-                </td>
-              </tr>
+                    </Link>
+                  </td>
+                </tr>
                 // <button
                 //   className="btn btn-sm btn-success"
                 //   onClick={() => trackGrowth(id)}
@@ -203,6 +205,20 @@ export default function Tree({
                   />
                 </td>
               </tr>
+
+              {coordinates && (
+                <tr>
+                  <td className="align-top">Coordinates</td>
+                  <td>
+                    <p>
+                      {coordinates.latitude},{coordinates.longitude}
+                    </p>
+                    <iframe
+                      src={`https://maps.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}&z=15&output=embed`}
+                    ></iframe>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

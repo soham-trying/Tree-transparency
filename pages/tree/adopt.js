@@ -7,6 +7,7 @@ import {
   updateDoc,
   query,
   orderBy,
+  where,
 } from "firebase/firestore";
 import { ethers } from "ethers";
 import { firestore } from "@/services/firebase";
@@ -18,45 +19,30 @@ import Head from "next/head";
 import Image from "next/image";
 import { useCollectionOnce } from "react-firebase-hooks/firestore";
 import Loading from "@/components/Loading";
-import { IconExternalLink } from "@tabler/icons-react";
+import { IconExternalLink, IconSearch, IconFilter} from "@tabler/icons-react";
 import TreeCard from "@/components/TreeCard";
 
 export default function () {
-  // const [trees, setTrees] = useState([]);
   const [trees, loadingTrees, errorTrees, reloadTrees] = useCollectionOnce(
     collection(firestore, "Trees")
   );
 
   const { user } = useUserContext();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [ageFilter, setAgeFilter] = useState("");
+  const [speciesFilter, setSpeciesFilter] = useState("");
 
   const adoptTree = async (id) => {
-    // Create Contract
-    // const provider = new ethers.providers.Web3Provider(window.ethereum);
-    // await provider.send("eth_requestAccounts", []);
-    // const signer = provider.getSigner();
-
-    // const contract = new ethers.Contract(
-    //   treeContractAddress,
-    //   TreeToken.abi,
-    //   signer
-    // );
-    // const connection = contract.connect(signer);
-    // const anotherResult = await result.wait();
-    // console.log(anotherResult);
-
     const treeDocRef = doc(firestore, "Trees", id);
     const treeSnapshot = await getDoc(treeDocRef);
     const treeData = treeSnapshot.data();
 
-    //Not allowing user to readopt previously owned tree
     const prevOwner = treeData?.prevOwner || [];
     const prevOwnerEmails = prevOwner.map(reference => reference.id);
-    console.log(prevOwnerEmails);
 
-    if(prevOwnerEmails.includes(user.email)){
-      console.log("User cannot readopt a tree that they previously adopted.");
+    if (prevOwnerEmails.includes(user.email)) {
       alert("You had previously adopted this tree");
-    }else{
+    } else {
       await updateDoc(treeDocRef, {
         isAdopted: true,
         adoptedBy: doc(firestore, `Users/${user.email}`),
@@ -66,12 +52,82 @@ export default function () {
     }
   };
 
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleFilterChange = (event) => {
+    setAgeFilter(event.target.value);
+  };
+
+  const handleSpeciesFilterChange = (event) => {
+    setSpeciesFilter(event.target.value);
+  };
+
   return (
     <>
       <Head>
         <title>Adopt Trees</title>
       </Head>
       <div className="container py-6 mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-row justify-center items-center">
+        <div class="relative">
+  <input
+    class="appearance-none border-2 pl-10 border-gray-300 hover:border-gray-400 transition-colors rounded-md w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:ring-green-600 focus:border-green-600 focus:shadow-outline"
+    id="username"
+    type="text"
+    placeholder="Search..."
+    value={searchQuery}
+    onChange={handleSearch}
+  />
+  <div class="absolute right-0 inset-y-0 flex items-center">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="-ml-1 mr-3 h-5 w-5 text-gray-400 hover:text-gray-500"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M6 18L18 6M6 6l12 12"
+      />
+    </svg>
+  </div>
+
+  <div class="absolute left-2 opacity-50 inset-y-0 flex items-center">
+  <IconSearch />
+  
+  </div>
+</div>
+         
+          <div className="flex justify-between items-center gap-4 px-6 ">
+            <select
+              className="border border-gray-300 px-4 py-2 ml-6 rounded-md  focus:ring focus:ring-green-200"
+              value={ageFilter}
+              onChange={handleFilterChange}
+            >
+              <option value="">Select Age</option>
+              {[...Array(10).keys()].map(year => (
+                <option key={year + 1} value={year + 1}>{year + 1} year{year === 0 ? '' : 's'} old</option>
+              ))}
+              <option value="10+">10+ years old</option>
+            </select>
+            <select
+              className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring focus:ring-green-200"
+              value={speciesFilter}
+              onChange={handleSpeciesFilterChange}
+            >
+              <option value="">Select Species</option>
+              <option value="Medicinal Plant">Medicinal Plant</option>
+              <option value="Fruit Plant">Fruit Plant</option>
+              <option value="Shrubs">Shrubs</option>
+            </select>
+            <IconFilter />
+          </div>
+        </div>
         {loadingTrees ? (
           <Loading />
         ) : (
@@ -79,9 +135,16 @@ export default function () {
             {errorTrees && <strong>Error: {JSON.stringify(error)}</strong>}
             {trees &&
               trees.docs
-                .filter((tree) => !tree.data().adoptedBy && tree.data().isVerified)
+                .filter((tree) => {
+                  const treeData = tree.data();
+                  const nameMatch = treeData.name.toLowerCase().includes(searchQuery.toLowerCase());
+                  const ageMatch = !ageFilter || (ageFilter === "10+" && treeData.createdAt && Date.now() - treeData.createdAt.toMillis() >= 10 * 365 * 24 * 60 * 60 * 1000) || (ageFilter !== "10+" && treeData.createdAt && Date.now() - treeData.createdAt.toMillis() < (parseInt(ageFilter) * 365 * 24 * 60 * 60 * 1000) && Date.now() - treeData.createdAt.toMillis() >= ((parseInt(ageFilter) - 1) * 365 * 24 * 60 * 60 * 1000));
+                  const speciesMatch = !speciesFilter || treeData.species === speciesFilter;
+                  return nameMatch && ageMatch && speciesMatch && !treeData.adoptedBy && treeData.isVerified;
+                })
                 .map((tree) => (
                   <div key={tree.id}>
+                    {/* Tree Card Component can be used for better code structure */}
                     <div className="w-full overflow-hidden duration-200 bg-gray-200 rounded-md min-h-80 aspect-h-1 aspect-w-1 lg:aspect-none group-hover:opacity-75 lg:h-80">
                       <Image
                         width={200}

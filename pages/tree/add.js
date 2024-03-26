@@ -6,6 +6,7 @@ import {
   doc,
   getDocs,
   updateDoc,
+  serverTimestamp
 } from "firebase/firestore";
 import { treeType } from "@/constants/tree-type";
 import { treeSpecies } from "@/constants/tree-species";
@@ -126,6 +127,7 @@ export default function TreeForm() {
         longitude: coordinates.longitude,
       },
       transactionHash: result.hash,
+      createdAt: serverTimestamp(),
       isVerified: false,
       isAdopted: false,
     });

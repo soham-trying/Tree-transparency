@@ -19,6 +19,7 @@ export default function Tree({
   id,
   name,
   imageUrl,
+  createdAt,
   species,
   isVerified,
   ngo,
@@ -148,6 +149,11 @@ export default function Tree({
                 </tr>
               )}
 
+              <tr>
+                <td>Planted At</td>
+                <td>{!createdAt ? "Not Available" : createdAt}</td>
+              </tr>
+
               {transactionHash && (
                 <tr>
                   <td>Transaciton Hash</td>
@@ -269,6 +275,8 @@ export async function getServerSideProps(context) {
     tree.data()?.prevOwner?.map((owner) => ({
       id: owner.id,
     })) || [];
+  const createdAt = tree.data()?.createdAt?.toDate().toISOString() || "Date Not Available";
+
 
   return {
     props: {
@@ -278,6 +286,7 @@ export async function getServerSideProps(context) {
       ngo,
       verifiedBy,
       prevOwner,
+      createdAt
     },
   };
 }

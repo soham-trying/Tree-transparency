@@ -34,10 +34,6 @@ To deepen your understanding of the _Tree Transparency_ project and its underlyi
 
 - **Bachelor's Thesis**: This document contains the full exposition of our project, including development, testing, and analysis. View the thesis [here](https://github.com/Vijay-SP/Treetransparency/files/15229244/BachelorsThesis_Vijay.pdf).
 
-## Thesis
-
-[TreeTransparency Thesis.pdf](https://github.com/Vijay-SP/Treetransparency/files/15229244/BachelorsThesis_Vijay.pdf)
-
 
 ## Video Demonstration
 

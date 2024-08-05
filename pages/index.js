@@ -251,6 +251,20 @@ function Team() {
       photo:
         "https://media.licdn.com/dms/image/C4D03AQEUYpJjnazBiw/profile-displayphoto-shrink_200_200/0/1661009979351?e=1695859200&v=beta&t=DphpbBOkDBZ3FUiKbO8bkEp1UQmPeKv83l47knwrYgk",
     },
+    {
+      name: "Soham Parab",
+      github: "https://github.com/Soham-03",
+      linkedin: "https://www.linkedin.com/in/mahek-intwala-99aaa6235/",
+      photo:
+        "https://media.licdn.com/dms/image/C4D03AQEUYpJjnazBiw/profile-displayphoto-shrink_200_200/0/1661009979351?e=1695859200&v=beta&t=DphpbBOkDBZ3FUiKbO8bkEp1UQmPeKv83l47knwrYgk",
+    },
+    {
+      name: "Bryce Miranda",
+      github: "https://github.com/Soham-03",
+      linkedin: "https://www.linkedin.com/in/mahek-intwala-99aaa6235/",
+      photo:
+        "https://media.licdn.com/dms/image/C4D03AQEUYpJjnazBiw/profile-displayphoto-shrink_200_200/0/1661009979351?e=1695859200&v=beta&t=DphpbBOkDBZ3FUiKbO8bkEp1UQmPeKv83l47knwrYgk",
+    }
   ];
 
   return (

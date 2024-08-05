@@ -50,7 +50,7 @@ export default function () {
       formData.append("file1", image1);
       formData.append("file2", image2);
 
-      const response = await fetch("http://127.0.0.1:8001/detect_growth", {
+      const response = await fetch("https://backendd-nnzp.onrender.com/detect_growth", {
         method: "POST",
         body: formData,
       });

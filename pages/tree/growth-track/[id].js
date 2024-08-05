@@ -82,7 +82,7 @@ export default function Tree({
       formData.append("url", imageUrl);
       formData.append("file2", image1);
 
-      const response = await fetch("http://127.0.0.1:5000/detect_growth", {
+      const response = await fetch("https://backendd-nnzp.onrender.com/detect_growth", {
         method: "POST",
         body: formData,
       });

@@ -259,7 +259,7 @@ function Team() {
         "https://media.licdn.com/dms/image/D4D03AQG8yFD36F-83w/profile-displayphoto-shrink_400_400/0/1704803320655?e=1729123200&v=beta&t=nfiWokNmtwnJwV6kZtxv9dxx2S6ycos_o-V-Fh-W90U",
     },
     {
-      name: "Bryce Mirandaa",
+      name: "Bryce Miranda",
       github: "https://github.com/Soham-03",
       linkedin: "https://www.linkedin.com/in/brycemiranda5/",
       photo:

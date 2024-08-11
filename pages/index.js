@@ -217,53 +217,53 @@ function Statistics() {
 function Team() {
   const members = [
     {
-      name: "Vijay Prajapati",
-      github: "https://github.com/Vijay-SP",
-      linkedin: "https://linkedin.com/in/vijayyy",
+      name: "Ryan Valiaparambil",
+      github: "https://github.com/vryan-06",
+      linkedin: "https://www.linkedin.com/in/ryan-v-20690b1b9",
       photo:
-        "https://media.licdn.com/dms/image/D4D03AQHetW2zMnp6LQ/profile-displayphoto-shrink_400_400/0/1680570103592?e=1689811200&v=beta&t=1qCOztEsUjbheuJmiMEayl_rb5ByI5ZCskkFEln08qg",
+        "https://media.licdn.com/dms/image/D4D03AQETGIPXlVevzQ/profile-displayphoto-shrink_400_400/0/1694248571377?e=1729123200&v=beta&t=XbA7roy4JTHsVQNWsDemBnSbnRADEhAbY8zYQegzL70",
     },
     {
       name: "Deon Gracias",
       github: "https://github.com/deon-gracias",
       linkedin: "https://linkedin.com/in/deongracias",
       photo:
-        "https://media.licdn.com/dms/image/D4D03AQHuSNIxXCz4Zg/profile-displayphoto-shrink_800_800/0/1664049718892?e=1688601600&v=beta&t=YESs32ErclCFFI7jT7P54aJodhQh2MCJTlL8xNkeyxk",
+        "https://media.licdn.com/dms/image/v2/D4D03AQGX_zVxbvcuSQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1687517395359?e=1729123200&v=beta&t=rQHQYLhQZ5BZn_1ZmUVxBmbmHG2Pf7ISSzVOb1XAqVs",
     },
     {
-      name: "Ryan Valiaparambil",
-      github: "https://github.com/vryan-06",
-      linkedin: "https://www.linkedin.com/in/ryan-v-20690b1b9",
+      name: "Vijay Prajapati",
+      github: "https://github.com/Vijay-SP",
+      linkedin: "https://linkedin.com/in/vijayyy",
       photo:
-        "https://media.licdn.com/dms/image/C5603AQEtxDqzt-_WRg/profile-displayphoto-shrink_400_400/0/1622632735058?e=1689811200&v=beta&t=muVcY27G0xs4I2FPH6MYnQ2USllWhKwQ4j5p3LjLOXk",
+        "https://media.licdn.com/dms/image/v2/D4D03AQGWopv7kI7C9g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1716182337493?e=1729123200&v=beta&t=4luiJRH-atD9vjs6iiNfWSWYOi7pxM_-aO9QZs_7ElM",
     },
     {
       name: "Hisbaan Sayed",
       github: "https://github.com/Hisbaansay",
       linkedin: "https://linkedin.com/in/hisbaansay",
       photo:
-        "https://media.licdn.com/dms/image/C4E03AQE28YYwmunlag/profile-displayphoto-shrink_400_400/0/1660898971054?e=1689811200&v=beta&t=5Mg0kS_UTh-POsV74OtSxkoTUjOK8aRvbKL5QQwChpw",
+        "https://media.licdn.com/dms/image/v2/D4D03AQHOop9M4XfZAw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1716145589861?e=1729123200&v=beta&t=4oCe35_igb3KfBZp79PinYsxotdzZus4RV-Nf7BPiH8",
     },
     {
       name: "Mahek Intwala",
       github: "https://github.com/imahek28",
       linkedin: "https://www.linkedin.com/in/mahek-intwala-99aaa6235/",
       photo:
-        "https://media.licdn.com/dms/image/C4D03AQEUYpJjnazBiw/profile-displayphoto-shrink_200_200/0/1661009979351?e=1695859200&v=beta&t=DphpbBOkDBZ3FUiKbO8bkEp1UQmPeKv83l47knwrYgk",
+        "https://media.licdn.com/dms/image/C4D03AQEUYpJjnazBiw/profile-displayphoto-shrink_400_400/0/1661009981685?e=1729123200&v=beta&t=EU4zWqb2wL8bnXJHKMc8VAqbICwUNUYPLdAGty7SyCo",
     },
     {
       name: "Soham Parab",
       github: "https://github.com/Soham-03",
-      linkedin: "https://www.linkedin.com/in/mahek-intwala-99aaa6235/",
+      linkedin: "https://www.linkedin.com/in/sohamm-parab/",
       photo:
-        "https://media.licdn.com/dms/image/C4D03AQEUYpJjnazBiw/profile-displayphoto-shrink_200_200/0/1661009979351?e=1695859200&v=beta&t=DphpbBOkDBZ3FUiKbO8bkEp1UQmPeKv83l47knwrYgk",
+        "https://media.licdn.com/dms/image/D4D03AQG8yFD36F-83w/profile-displayphoto-shrink_400_400/0/1704803320655?e=1729123200&v=beta&t=nfiWokNmtwnJwV6kZtxv9dxx2S6ycos_o-V-Fh-W90U",
     },
     {
-      name: "Bryce Miranda",
+      name: "Bryce Mirandaa",
       github: "https://github.com/Soham-03",
-      linkedin: "https://www.linkedin.com/in/mahek-intwala-99aaa6235/",
+      linkedin: "https://www.linkedin.com/in/brycemiranda5/",
       photo:
-        "https://media.licdn.com/dms/image/C4D03AQEUYpJjnazBiw/profile-displayphoto-shrink_200_200/0/1661009979351?e=1695859200&v=beta&t=DphpbBOkDBZ3FUiKbO8bkEp1UQmPeKv83l47knwrYgk",
+        "https://media.licdn.com/dms/image/v2/D4E03AQF-Je10MDScWg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1678540214598?e=1729123200&v=beta&t=khha65qFp-7XOchOAkZQ54tu2ZjCgankhSEfnIU7ldM",
     }
   ];
 

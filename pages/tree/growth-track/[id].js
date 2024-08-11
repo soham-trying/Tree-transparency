@@ -312,6 +312,7 @@ export async function getServerSideProps(context) {
       ngo,
       verifiedBy,
       prevOwner,
+      createdAt: tree.data()?.createdAt?.toDate().toISOString() || "Date Not Available",
     },
   };
 }

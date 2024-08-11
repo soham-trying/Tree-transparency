@@ -264,6 +264,13 @@ function Team() {
       linkedin: "https://www.linkedin.com/in/brycemiranda5/",
       photo:
         "https://media.licdn.com/dms/image/v2/D4E03AQF-Je10MDScWg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1678540214598?e=1729123200&v=beta&t=khha65qFp-7XOchOAkZQ54tu2ZjCgankhSEfnIU7ldM",
+    },
+    {
+      name: "Nikhil Ramraje",
+      github: "",
+      linkedin: "https://www.linkedin.com/in/nikhil-ramraje2810/",
+      photo:
+      "https://media.licdn.com/dms/image/D4D03AQGt2d_G9MvVnA/profile-displayphoto-shrink_400_400/0/1708105861798?e=1729123200&v=beta&t=5-7pVo7UxzGgU5v0CtvaurJmcA-uoUxBYIitrPCwRn8"
     }
   ];
 

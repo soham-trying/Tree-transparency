@@ -4,7 +4,7 @@ export default function Footer() {
       <div>
         <p>
           Copyright © 2023 - All rights reserved by{" "}
-          <span className="font-bold text-primary">GDSC Supremacy</span>
+          <span className="font-bold text-primary">Tree Transparency</span>
         </p>
       </div>
     </footer>

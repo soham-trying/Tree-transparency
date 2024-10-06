@@ -217,60 +217,32 @@ function Statistics() {
 function Team() {
   const members = [
     {
-      name: "Ryan Valiaparambil",
-      github: "https://github.com/vryan-06",
-      linkedin: "https://www.linkedin.com/in/ryan-v-20690b1b9",
+      name: "Sahil Bane",
+      github: "https://github.com/SahilBane",
+      linkedin: "https://www.linkedin.com/in/sahil-bane-129755210/",
       photo:
-        "https://media.licdn.com/dms/image/D4D03AQETGIPXlVevzQ/profile-displayphoto-shrink_400_400/0/1694248571377?e=1729123200&v=beta&t=XbA7roy4JTHsVQNWsDemBnSbnRADEhAbY8zYQegzL70",
+        "https://media.licdn.com/dms/image/v2/D4D03AQG4si_ylEd75Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1715942814586?e=1733961600&v=beta&t=8ngouNhYUm54dIZrgpDrRlZul9nFUwwrLWUqHkA2yJw",
     },
     {
-      name: "Deon Gracias",
-      github: "https://github.com/deon-gracias",
-      linkedin: "https://linkedin.com/in/deongracias",
+      name: "Rahul Bothra",
+      github: "https://github.com/r21bothra/",
+      linkedin: "https://www.linkedin.com/in/rahulbothra21/",
       photo:
-        "https://media.licdn.com/dms/image/v2/D4D03AQGX_zVxbvcuSQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1687517395359?e=1729123200&v=beta&t=rQHQYLhQZ5BZn_1ZmUVxBmbmHG2Pf7ISSzVOb1XAqVs",
+        "https://media.licdn.com/dms/image/v2/D4D03AQGWBnQZ8QWv5A/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1663875487576?e=1733961600&v=beta&t=_DxIlwKxLYte7bQKBMwn03quynnqsRnbuJT3FB1t8Fw",
     },
     {
-      name: "Vijay Prajapati",
-      github: "https://github.com/Vijay-SP",
-      linkedin: "https://linkedin.com/in/vijayyy",
-      photo:
-        "https://media.licdn.com/dms/image/v2/D4D03AQGWopv7kI7C9g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1716182337493?e=1729123200&v=beta&t=4luiJRH-atD9vjs6iiNfWSWYOi7pxM_-aO9QZs_7ElM",
-    },
-    {
-      name: "Hisbaan Sayed",
-      github: "https://github.com/Hisbaansay",
-      linkedin: "https://linkedin.com/in/hisbaansay",
-      photo:
-        "https://media.licdn.com/dms/image/v2/D4D03AQHOop9M4XfZAw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1716145589861?e=1729123200&v=beta&t=4oCe35_igb3KfBZp79PinYsxotdzZus4RV-Nf7BPiH8",
-    },
-    {
-      name: "Mahek Intwala",
-      github: "https://github.com/imahek28",
-      linkedin: "https://www.linkedin.com/in/mahek-intwala-99aaa6235/",
-      photo:
-        "https://media.licdn.com/dms/image/C4D03AQEUYpJjnazBiw/profile-displayphoto-shrink_400_400/0/1661009981685?e=1729123200&v=beta&t=EU4zWqb2wL8bnXJHKMc8VAqbICwUNUYPLdAGty7SyCo",
-    },
-    {
-      name: "Soham Parab",
-      github: "https://github.com/Soham-03",
-      linkedin: "https://www.linkedin.com/in/sohamm-parab/",
-      photo:
-        "https://media.licdn.com/dms/image/D4D03AQG8yFD36F-83w/profile-displayphoto-shrink_400_400/0/1704803320655?e=1729123200&v=beta&t=nfiWokNmtwnJwV6kZtxv9dxx2S6ycos_o-V-Fh-W90U",
-    },
-    {
-      name: "Bryce Miranda",
-      github: "https://github.com/Soham-03",
-      linkedin: "https://www.linkedin.com/in/brycemiranda5/",
-      photo:
-        "https://media.licdn.com/dms/image/v2/D4E03AQF-Je10MDScWg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1678540214598?e=1729123200&v=beta&t=khha65qFp-7XOchOAkZQ54tu2ZjCgankhSEfnIU7ldM",
-    },
-    {
-      name: "Nikhil Ramraje",
+      name: "Arnesa Novaj",
       github: "",
-      linkedin: "https://www.linkedin.com/in/nikhil-ramraje2810/",
+      linkedin: "https://www.linkedin.com/in/arnesanovaj/",
       photo:
-      "https://media.licdn.com/dms/image/D4D03AQGt2d_G9MvVnA/profile-displayphoto-shrink_400_400/0/1708105861798?e=1729123200&v=beta&t=5-7pVo7UxzGgU5v0CtvaurJmcA-uoUxBYIitrPCwRn8"
+        "https://media.licdn.com/dms/image/v2/D4E03AQFmeaaShRNAiA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1727753162167?e=1733961600&v=beta&t=dSOiEGwLtWFsrGMdlYpmJ-Vo8hSGzZv1uzPQn2wshKM",
+    },
+    {
+      name: "Khadijah Rimawi",
+      github: "",
+      linkedin: "https://www.linkedin.com/in/khadijah-rimawi-3a31762bb/",
+      photo:
+        "https://media.licdn.com/dms/image/v2/D5603AQESGufNaph8wA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724649598375?e=1733961600&v=beta&t=Zmy6NM2betF4c5wAr0Qc6tWPiCYLPiM8PJNExpy_k_w",
     }
   ];
 
